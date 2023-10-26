@@ -10,9 +10,11 @@ defmodule BookshelfWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
 
-    plug :basic_auth,
-      username: System.get_env("USERNAME") || "user",
-      password: System.get_env("PASSWORD") || "password"
+    if Application.compile_env(:bookshelf, :basic_auth_enabled) do
+      plug :basic_auth,
+        username: Application.compile_env(:bookshelf, :basic_auth_username),
+        password: Application.compile_env(:bookshelf, :basic_auth_password)
+    end
   end
 
   pipeline :api do

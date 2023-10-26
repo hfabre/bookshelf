@@ -23,7 +23,7 @@ defmodule BookshelfWeb.BookController do
         |> redirect(to: Routes.live_books_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", authors: Books.list_authors(), changeset: changeset)
     end
   end
 
@@ -49,7 +49,7 @@ defmodule BookshelfWeb.BookController do
         |> redirect(to: Routes.live_books_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", book: book, changeset: changeset)
+        render(conn, "edit.html", book: book, authors: Books.list_authors(), changeset: changeset)
     end
   end
 

@@ -7,7 +7,16 @@ defmodule Bookshelf.BooksFixtures do
   @doc """
   Generate a book.
   """
-  def book_fixture(attrs \\ %{}) do
+  def book_fixture(
+        attrs \\ %{
+          title: "Book title",
+          author: "Book Author",
+          note: :awesome,
+          completion_state: :finished,
+          reading_state: :in_progress,
+          comment: "A comment"
+        }
+      ) do
     {:ok, book} =
       attrs
       |> Enum.into(%{})

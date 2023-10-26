@@ -8,7 +8,26 @@ defmodule Bookshelf.BooksTest do
 
     import Bookshelf.BooksFixtures
 
-    @invalid_attrs %{}
+    @create_attrs %{
+      title: "Book title",
+      author: "Book Author",
+      note: :awesome,
+      completion_state: :finished,
+      reading_state: :in_progress,
+      comment: "A comment"
+    }
+
+    @update_attrs %{
+      reading_state: :finished
+    }
+
+    @invalid_attrs %{
+      title: nil,
+      author: nil,
+      note: :invalid,
+      completion_state: :invalid,
+      reading_state: :invalid
+    }
 
     test "list_books/0 returns all books" do
       book = book_fixture()
@@ -21,9 +40,7 @@ defmodule Bookshelf.BooksTest do
     end
 
     test "create_book/1 with valid data creates a book" do
-      valid_attrs = %{}
-
-      assert {:ok, %Book{} = book} = Books.create_book(valid_attrs)
+      assert {:ok, %Book{} = _} = Books.create_book(@create_attrs)
     end
 
     test "create_book/1 with invalid data returns error changeset" do
@@ -32,9 +49,8 @@ defmodule Bookshelf.BooksTest do
 
     test "update_book/2 with valid data updates the book" do
       book = book_fixture()
-      update_attrs = %{}
 
-      assert {:ok, %Book{} = book} = Books.update_book(book, update_attrs)
+      assert {:ok, %Book{} = _} = Books.update_book(book, @update_attrs)
     end
 
     test "update_book/2 with invalid data returns error changeset" do
