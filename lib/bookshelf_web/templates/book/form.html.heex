@@ -1,0 +1,54 @@
+<.form let={f} for={@changeset} action={@action} multipart={true}>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <label>
+    Title: <%= text_input f, :title %>
+    <%= error_tag f, :title %>
+  </label>
+
+  <label>
+    Author: <%= text_input f, :author, list: "authors" %>
+    <datalist id="authors">
+      <%= for author <- @authors do %>
+        <option value={author}>
+          <%= author %>
+        </option>
+      <% end %>
+    </datalist>
+
+    <%= error_tag f, :author %>
+  </label>
+
+  <label>
+    Note: <%= select f, :note, Ecto.Enum.values(Bookshelf.Books.Book, :note) %>
+    <%= error_tag f, :note %>
+  </label>
+
+  <label>
+    Reading state: <%= select f, :reading_state, Ecto.Enum.mappings(Bookshelf.Books.Book, :reading_state) %>
+    <%= error_tag f, :reading_state %>
+  </label>
+
+  <label>
+    Completion state: <%= select f, :completion_state, Ecto.Enum.mappings(Bookshelf.Books.Book, :completion_state) %>
+    <%= error_tag f, :completion_state %>
+  </label>
+
+  <label>
+    File: <%= file_input f, :file %>
+    <%= error_tag f, :file %>
+  </label>
+
+  <label>
+    Comment: <%= text_input f, :comment %>
+    <%= error_tag f, :comment %>
+  </label>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+</.form>
