@@ -10,9 +10,7 @@ defmodule Bookshelf.BooksFixtures do
   def book_fixture(attrs \\ %{}) do
     {:ok, book} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> Bookshelf.Books.create_book()
 
     book

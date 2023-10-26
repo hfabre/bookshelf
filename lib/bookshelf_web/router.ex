@@ -9,7 +9,10 @@ defmodule BookshelfWeb.Router do
     plug :put_root_layout, {BookshelfWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :basic_auth, username: System.get_env("USERNAME") || "user", password: System.get_env("PASSWORD") || "password"
+
+    plug :basic_auth,
+      username: System.get_env("USERNAME") || "user",
+      password: System.get_env("PASSWORD") || "password"
   end
 
   pipeline :api do
