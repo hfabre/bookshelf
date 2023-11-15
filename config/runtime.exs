@@ -20,6 +20,13 @@ if System.get_env("PHX_SERVER") do
   config :bookshelf, BookshelfWeb.Endpoint, server: true
 end
 
+config :bookshelf,
+  basic_auth: [
+    enabled: config_env() != :test,
+    username: System.get_env("USERNAME") || "user",
+    password: System.get_env("PASSWORD") || "password"
+  ]
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

@@ -28,7 +28,12 @@ defmodule Bookshelf.Books do
 
   def search(query) do
     ilike = "%#{query}%"
-    q = from b in Book, where: ilike(b.title, ^ilike) or ilike(b.author, ^ilike), order_by: [desc: b.note]
+
+    q =
+      from b in Book,
+        where: ilike(b.title, ^ilike) or ilike(b.author, ^ilike),
+        order_by: [desc: b.note]
+
     Repo.all(q)
   end
 

@@ -3,9 +3,26 @@ defmodule BookshelfWeb.BookControllerTest do
 
   import Bookshelf.BooksFixtures
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{
+    title: "Book title",
+    author: "Book Author",
+    note: :awesome,
+    completion_state: :finished,
+    reading_state: :in_progress,
+    comment: "A comment"
+  }
+
+  @update_attrs %{
+    reading_state: :finished
+  }
+
+  @invalid_attrs %{
+    title: nil,
+    author: nil,
+    note: :invalid,
+    completion_state: :invalid,
+    reading_state: :invalid
+  }
 
   describe "index" do
     test "lists all books", %{conn: conn} do
@@ -22,14 +39,12 @@ defmodule BookshelfWeb.BookControllerTest do
   end
 
   describe "create book" do
-    test "redirects to show when data is valid", %{conn: conn} do
+    test "redirects to index when data is valid", %{conn: conn} do
       conn = post(conn, Routes.book_path(conn, :create), book: @create_attrs)
+      assert redirected_to(conn) == Routes.live_books_path(conn, :index)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.book_path(conn, :show, id)
-
-      conn = get(conn, Routes.book_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Book"
+      conn = get(conn, Routes.live_books_path(conn, :index))
+      assert html_response(conn, 200) =~ "Books"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -52,10 +67,10 @@ defmodule BookshelfWeb.BookControllerTest do
 
     test "redirects when data is valid", %{conn: conn, book: book} do
       conn = put(conn, Routes.book_path(conn, :update, book), book: @update_attrs)
-      assert redirected_to(conn) == Routes.book_path(conn, :show, book)
+      assert redirected_to(conn) == Routes.live_books_path(conn, :index)
 
-      conn = get(conn, Routes.book_path(conn, :show, book))
-      assert html_response(conn, 200)
+      conn = get(conn, Routes.live_books_path(conn, :index))
+      assert html_response(conn, 200) =~ "Books"
     end
 
     test "renders errors when data is invalid", %{conn: conn, book: book} do
@@ -78,7 +93,7 @@ defmodule BookshelfWeb.BookControllerTest do
   end
 
   defp create_book(_) do
-    book = book_fixture()
+    book = book_fixture(@create_attrs)
     %{book: book}
   end
 end

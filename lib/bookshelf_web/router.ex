@@ -1,6 +1,19 @@
 defmodule BookshelfWeb.Router do
-  import Plug.BasicAuth
+  require Logger
   use BookshelfWeb, :router
+
+  defp auth(conn, _opts) do
+    basic_auth = Application.get_env(:bookshelf, :basic_auth)
+
+    if basic_auth[:enabled] do
+      Plug.BasicAuth.basic_auth(conn,
+        username: basic_auth[:username],
+        password: basic_auth[:password]
+      )
+    else
+      conn
+    end
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -9,7 +22,7 @@ defmodule BookshelfWeb.Router do
     plug :put_root_layout, {BookshelfWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :basic_auth, username: System.get_env("USERNAME") || "user", password: System.get_env("PASSWORD") || "password"
+    plug :auth
   end
 
   pipeline :api do
