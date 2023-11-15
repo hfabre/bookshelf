@@ -27,6 +27,8 @@ To keep things simple uploaded file are simply written directly into the databas
 
 To start your Phoenix server:
 
+  * Setup a `.env.dev` file containing databse configuration variables: `DB_USERNAME`, `DB_PASSWORD`, `DB_HOST`
+  * Source your env file
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
