@@ -13,7 +13,10 @@ on:
 # Sets the ENV `MIX_ENV` to `test` for running tests
 env:
   MIX_ENV: test
-  # DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+  DB_HOST: localhost
+  DB_USERNAME: postgres
+  DB_PASSWORD: postgres
+  DB: postgres
 
 permissions:
   contents: read

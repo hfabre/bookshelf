@@ -2,9 +2,9 @@ import Config
 
 # Configure your database
 config :bookshelf, Bookshelf.Repo,
-  username: "admin",
-  password: "password",
-  hostname: "172.18.0.4",
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
+  hostname: System.get_env("DB_HOST"),
   database: "bookshelf_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
