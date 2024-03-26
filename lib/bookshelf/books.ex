@@ -22,7 +22,7 @@ defmodule Bookshelf.Books do
   end
 
   def list_authors do
-    q = from b in Book, select: b.author, order_by: [asc: b.author]
+    q = from b in Book, select: b.author, distinct: b.author, order_by: [asc: b.author]
     Repo.all(q)
   end
 
