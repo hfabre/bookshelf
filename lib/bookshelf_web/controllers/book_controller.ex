@@ -37,4 +37,11 @@ defmodule BookshelfWeb.BookController do
     |> put_flash(:info, "Book deleted successfully.")
     |> redirect(to: ~p"/books")
   end
+
+  def download(conn, %{"book_id" => id}) do
+    book = Books.get_book!(id)
+
+    conn
+    |> send_download({:binary, book.file}, filename: book.filename)
+  end
 end

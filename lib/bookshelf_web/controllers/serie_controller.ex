@@ -42,4 +42,22 @@ defmodule BookshelfWeb.SerieController do
     |> put_flash(:info, "Serie deleted successfully.")
     |> redirect(to: ~p"/series")
   end
+
+  def download(conn, %{"serie_id" => id}) do
+    serie = Series.get_serie!(id)
+    filename = "#{serie.title}.zip"
+    books =
+      serie.books
+      |> Enum.map(fn book -> {String.to_charlist(book.filename), book.file} end)
+
+    case :zip.zip(String.to_charlist(filename), books, [:memory]) do
+      {:ok, {_zip_filename, zip}} ->
+        conn
+        |> send_download({:binary, zip}, filename: filename)
+      {:error, reason} ->
+        conn
+        |> put_flash(:error, "Unable to build zip, error: #{reason}")
+        |> redirect(to: ~p"/series")
+    end
+  end
 end

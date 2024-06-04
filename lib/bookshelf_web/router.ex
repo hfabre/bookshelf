@@ -19,9 +19,17 @@ defmodule BookshelfWeb.Router do
 
     get "/", BookController, :index
 
-    resources "/books", BookController, only: [:index, :edit, :delete]
-    resources "/series", SerieController, only: [:index, :show, :edit, :delete]
-    resources "/authors", AuthorController, only: [:index, :show, :delete]
+    resources "/books", BookController, only: [:index, :edit, :delete] do
+      get "/download", BookController, :download, as: :download
+    end
+
+    resources "/series", SerieController, only: [:index, :show, :edit, :delete] do
+      get "/download", SerieController, :download, as: :download
+    end
+
+    resources "/authors", AuthorController, only: [:index, :show, :delete] do
+      get "/download", AuthorController, :download, as: :download
+    end
   end
 
   # Other scopes may use custom stacks.
