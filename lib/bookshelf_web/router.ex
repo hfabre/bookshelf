@@ -17,7 +17,7 @@ defmodule BookshelfWeb.Router do
   scope "/", BookshelfWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", BookController, :index
 
     resources "/books", BookController, only: [:index, :edit, :delete]
     resources "/series", SerieController, only: [:index, :show, :edit, :delete]
