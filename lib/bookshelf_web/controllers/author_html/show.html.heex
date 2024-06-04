@@ -1,0 +1,6 @@
+<.header>
+  Author <%= @author.name %>
+  <.back navigate={~p"/authors"}>Back to authors</.back>
+</.header>
+
+<.book_list books={@author.books} />

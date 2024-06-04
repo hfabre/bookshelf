@@ -1,0 +1,36 @@
+body{margin-left:5%;margin-right:5%;margin-top:5%;margin-bottom:5%}
+.nomargin{margin:0}
+p{text-indent:0.24in;margin-left:0;margin-right:0;text-align:justify;margin-top:5pt;margin-bottom:5pt;font-family:Georgia;font-size:109%}
+.p0{text-indent:0;margin-left:0;text-align:center;page-break-before:always;margin-top:0;margin-bottom:0}
+.p1{text-align:center}
+.p2{text-indent:0;margin-left:0;text-align:left;margin-top:0;margin-bottom:0}
+.p3{text-indent:0;margin-left:0;text-align:left;page-break-before:always;margin-top:0;margin-bottom:0}
+.p4{text-align:center;margin-top:0;margin-bottom:0}
+.p5{text-indent:0;margin-left:0;text-align:center;page-break-before:always;margin-top:48pt;margin-bottom:18pt}
+.p6{line-height:48pt;page-break-before:always;margin-top:0;margin-bottom:0}
+.p7{text-indent:0;margin-left:0;text-align:center;margin-top:0;margin-bottom:18pt}
+.p9{text-indent:0;margin-left:1in;margin-top:0;margin-bottom:0}
+.p10{text-indent:0;margin-left:1in;margin-right:1in;margin-top:0;margin-bottom:0}
+.p11{text-align:right}
+.p12{text-indent:0.2in;margin-left:0;text-align:center;margin-top:0;margin-bottom:0}
+.p13{text-indent:0.2in;margin-left:0;margin-top:0;margin-bottom:0}
+.p14{text-indent:0;margin-left:0;margin-top:0;margin-bottom:0}
+.p15{text-indent:0;margin-left:0;text-align:center;margin-top:0;margin-bottom:0}
+.t0{font-size:182%}
+.t3{font-size:145%;letter-spacing:-1.5pt}
+.t4{font-size:145%;letter-spacing:-1.5pt}
+.t5{font-size:164%}
+.t6{font-size:182%;letter-spacing:-1pt}
+.t7{font-size:236%}
+.t8{font-size:91%;vertical-align:super}
+.t9{font-size:182%}
+.t10{vertical-align:sub}
+.t11{vertical-align:super}
+.t12{vertical-align:sub}
+.t13{font-variant:small-caps}
+.t14{font-family:"Times New Roman"}
+.t15{font-family:"Times New Roman"}
+.t16{font-family:"Times New Roman";font-size:182%}
+.t17{font-family:"Times New Roman";font-size:182%}
+.t18{font-variant:small-caps}
+.t19{font-size:82%;font-variant:small-caps}

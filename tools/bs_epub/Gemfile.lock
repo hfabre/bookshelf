@@ -1,0 +1,30 @@
+PATH
+  remote: .
+  specs:
+    bs_epub (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bigdecimal (3.1.7)
+    byebug (11.1.3)
+    minitest (5.22.3)
+    ox (2.14.18)
+    rake (13.2.0)
+    rubyzip (2.3.2)
+
+PLATFORMS
+  ruby
+  x86_64-darwin-22
+
+DEPENDENCIES
+  bigdecimal (~> 3.1)
+  bs_epub!
+  byebug (~> 11.1)
+  minitest (~> 5.16)
+  ox (~> 2.14)
+  rake (~> 13.0)
+  rubyzip (~> 2.3)
+
+BUNDLED WITH
+   2.5.7

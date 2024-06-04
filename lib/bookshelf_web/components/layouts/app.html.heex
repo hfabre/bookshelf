@@ -1,0 +1,22 @@
+<header class="px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
+    <div class="flex items-center gap-4">
+      <a href="/">
+        <img src={~p"/images/logo.svg"} width="36" />
+      </a>
+      <%= live_render(@conn, BookshelfWeb.UploadLive) %>
+    </div>
+  </div>
+</header>
+<main class="px-4 py-20 sm:px-6 lg:px-8">
+  <ul id="menu">
+    <li><.link navigate={~p"/books"}>Books</.link></li>
+    <li><.link navigate={~p"/series"}>Series</.link></li>
+    <li><.link navigate={~p"/authors"}>Authors</.link></li>
+  </ul>
+
+  <div class="mx-auto max-w-2xl">
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+  </div>
+</main>

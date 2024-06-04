@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="fr">
+  <head>
+    <meta content="464ab386-d67f-4fac-8179-a904a9163c4e" name="dtb:uid"/>
+    <meta content="2" name="dtb:depth"/>
+    <meta content="calibre (0.7.29)" name="dtb:generator"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>La Compagnie des glaces</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="06be58e5-908a-4be0-ad63-80105f40ba7b" playOrder="1">
+      <navLabel>
+        <text>Préface</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_001.html"/>
+    </navPoint>
+    <navPoint id="e2705f95-1acb-4798-8959-5bc9f92d870e" playOrder="2">
+      <navLabel>
+        <text>chapitre premier</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_002.html"/>
+    </navPoint>
+    <navPoint id="3d2a5f7f-b094-420e-9310-67d751511a81" playOrder="3">
+      <navLabel>
+        <text>chapitre II</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_003.html"/>
+    </navPoint>
+    <navPoint id="d8852efb-bf20-45fd-9a15-48367de29307" playOrder="4">
+      <navLabel>
+        <text>chapitre III</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_004.html"/>
+    </navPoint>
+    <navPoint id="52986cb0-ea47-4039-bdd9-14903efe9cb7" playOrder="5">
+      <navLabel>
+        <text>chapitre IV</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_005.html"/>
+    </navPoint>
+    <navPoint id="d1edab1b-7bb6-42c7-bf2f-611d93aa7d2f" playOrder="6">
+      <navLabel>
+        <text>chapitre V</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_006.html"/>
+    </navPoint>
+    <navPoint id="2257649c-1a54-40ce-8d72-9516a3bfd8d1" playOrder="7">
+      <navLabel>
+        <text>chapitre VI</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_007.html"/>
+    </navPoint>
+    <navPoint id="fa36d0ab-c337-4ffe-820d-78f5f327e90f" playOrder="8">
+      <navLabel>
+        <text>chapitre VII</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_008.html"/>
+    </navPoint>
+    <navPoint id="f63a639c-bf60-42b0-9aee-baa16385ef44" playOrder="9">
+      <navLabel>
+        <text>chapitre VIII</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_009.html"/>
+    </navPoint>
+    <navPoint id="0c601dad-1839-40b9-be4a-b3dd99cf0196" playOrder="10">
+      <navLabel>
+        <text>chapitre IX</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_010.html"/>
+    </navPoint>
+    <navPoint id="aed64833-8b39-4a7e-8cff-7fcfbfc11ec1" playOrder="11">
+      <navLabel>
+        <text>chapitre X</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_011.html"/>
+    </navPoint>
+    <navPoint id="e43df643-f022-4675-87f0-ed3b3c65daa7" playOrder="12">
+      <navLabel>
+        <text>chapitre XI</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_012.html"/>
+    </navPoint>
+    <navPoint id="93c6f95e-9abe-458b-b84c-e4141ac12e3b" playOrder="13">
+      <navLabel>
+        <text>chapitre XII</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_013.html"/>
+    </navPoint>
+    <navPoint id="3b3010af-5076-4882-a3ae-3bef36bb9aa6" playOrder="14">
+      <navLabel>
+        <text>chapitre XIII</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_014.html"/>
+    </navPoint>
+    <navPoint id="6110dfaf-d046-4d6a-8672-8b07cf52eaac" playOrder="15">
+      <navLabel>
+        <text>chapitre XIV</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_015.html"/>
+    </navPoint>
+    <navPoint id="f8cf4c17-4182-40bf-a90f-ebd4ee3e6fa5" playOrder="16">
+      <navLabel>
+        <text>chapitre XV</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_016.html"/>
+    </navPoint>
+    <navPoint id="831d84a0-409f-4f9e-9327-d8f43dc7f2a6" playOrder="17">
+      <navLabel>
+        <text>chapitre XVI</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_017.html"/>
+    </navPoint>
+    <navPoint id="06b1bb03-46cf-45e3-aa07-51d47e52dd74" playOrder="18">
+      <navLabel>
+        <text>chapitre XVII</text>
+      </navLabel>
+      <content src="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_018.html"/>
+    </navPoint>
+  </navMap>
+</ncx>

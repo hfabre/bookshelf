@@ -1,0 +1,13 @@
+<.header>
+  Listing Series
+</.header>
+
+<div id="series" class="grid grid-cols-4 gap-8">
+  <div :for={serie <- @series}>
+    <% book = Bookshelf.Series.get_serie!(serie.id).books |> Enum.at(0) %>
+    <.link href={~p"/series/#{serie}"}>
+      <img src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+      <span><%= serie.title %></span>
+    </.link>
+  </div>
+</div>

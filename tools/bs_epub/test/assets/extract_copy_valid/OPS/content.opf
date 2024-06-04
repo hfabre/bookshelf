@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="BookId">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:title>Légendes espagnoles</dc:title>
+    <dc:creator opf:file-as="Bécquer, Gustavo-Adolfo" opf:role="aut">Gustavo-Adolfo Bécquer</dc:creator>
+    <dc:language>fr</dc:language>
+    <dc:subject>Contes</dc:subject>
+    <dc:publisher>Ebooks libres et gratuits</dc:publisher>
+    <dc:description>Ces contes fantastiques sont auréolés du surnaturel religieux romantique, auquel Gustavo Adolfo Bécquer apporta la touche de son lyrisme. «LES YEUX VERTS. Depuis longtemps je désirais écrire quelque chose sous ce titre. Aujourd’hui l’occasion se présente, je le mets en grandes lettres sur une feuille de papier, et aussitôt je laisse voler ma plume capricieuse. Je crois avoir vu des yeux pareils à ceux que j’ai peints dans cette légende. Est-ce en rêve ? je ne sais, mais je les ai vus. Je ne pourrai certes pas les décrire tels qu’ils étaient : lumineux, transparents, comme les gouttes de pluie qui glissent sur les feuilles des arbres, après un orage d’été. En tout cas, je compte sur l’imagination de mes lec-teurs pour comprendre ce que j’appellerai l’ébauche d’un tableau que je peindrai plus tard.»</dc:description>
+    <dc:date opf:event="creation">2024-03-20T17:07:15Z</dc:date>
+    <meta name="office:version" content="LibreOffice/7.6.4.1$Windows_X86_64 LibreOffice_project/e19e193f88cd6c0525a17fb7a176ed8e6a3e2aa1" />
+    <meta name="office:last-modification-date" content="2024-03-20T18:04:00" />
+    <meta name="office:creation-date" content="2024-03-20T17:30:00" />
+    <meta name="éditeur" content="Ebooks libres et gratuits" />
+    <meta name="amanuensis:generator" content="amanuensis" />
+    <meta name="amanuensis:version" content="green snake 22" />
+    <meta name="amanuensis:xhtml-creation-date" content="2024-03-20T18:07:15" />
+    <meta name="cover" content="img1" />
+    <dc:identifier id="BookId">urn:uuid:EA45EF0C-719D-1014-9657-D29C4E238E33</dc:identifier>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+    <item id="css1" href="style.css" media-type="text/css" />
+    <item id="img1" href="cover.jpg" media-type="image/jpeg" />
+    <item id="ch1" href="cover.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch2" href="book_0000.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch3" href="book_0001.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch4" href="book_0002.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch5" href="book_0003.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch6" href="book_0004.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch7" href="book_0005.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch8" href="book_0006.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch9" href="book_0007.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch10" href="book_0008.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch11" href="book_0009.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch12" href="book_0010.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch13" href="book_0011.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch14" href="book_0012.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch15" href="book_0013.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch16" href="book_0014.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch17" href="book_0015.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch18" href="book_0016.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch19" href="book_0017.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch20" href="book_0018.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch21" href="book_0019.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch22" href="book_0020.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch23" href="book_0021.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch24" href="book_0022.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch25" href="book_0023.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch26" href="book_0024.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch27" href="book_0025.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch28" href="book_0026.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch29" href="book_0027.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch30" href="book_0028.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch31" href="book_0029.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch32" href="book_0030.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch33" href="book_0031.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch34" href="book_0032.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch35" href="book_0033.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch36" href="book_0034.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch37" href="book_0035.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch38" href="book_0036.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch39" href="book_0037.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch40" href="book_0038.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch41" href="book_0039.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch42" href="book_0040.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch43" href="book_0041.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch44" href="book_0042.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch45" href="book_0043.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch46" href="book_0044.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch47" href="book_0045.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch48" href="book_0046.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch49" href="book_0047.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch50" href="book_0048.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch51" href="book_0049.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch52" href="book_0050.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch53" href="book_0051.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch54" href="book_0052.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch55" href="book_0053.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch56" href="book_0054.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch57" href="book_0055.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch58" href="book_0056.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch59" href="book_0057.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch60" href="book_0058.xhtml" media-type="application/xhtml+xml" />
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="ch1" />
+    <itemref idref="ch2" />
+    <itemref idref="ch3" />
+    <itemref idref="ch4" />
+    <itemref idref="ch5" />
+    <itemref idref="ch6" />
+    <itemref idref="ch7" />
+    <itemref idref="ch8" />
+    <itemref idref="ch9" />
+    <itemref idref="ch10" />
+    <itemref idref="ch11" />
+    <itemref idref="ch12" />
+    <itemref idref="ch13" />
+    <itemref idref="ch14" />
+    <itemref idref="ch15" />
+    <itemref idref="ch16" />
+    <itemref idref="ch17" />
+    <itemref idref="ch18" />
+    <itemref idref="ch19" />
+    <itemref idref="ch20" />
+    <itemref idref="ch21" />
+    <itemref idref="ch22" />
+    <itemref idref="ch23" />
+    <itemref idref="ch24" />
+    <itemref idref="ch25" />
+    <itemref idref="ch26" />
+    <itemref idref="ch27" />
+    <itemref idref="ch28" />
+    <itemref idref="ch29" />
+    <itemref idref="ch30" />
+    <itemref idref="ch31" />
+    <itemref idref="ch32" />
+    <itemref idref="ch33" />
+    <itemref idref="ch34" />
+    <itemref idref="ch35" />
+    <itemref idref="ch36" />
+    <itemref idref="ch37" />
+    <itemref idref="ch38" />
+    <itemref idref="ch39" />
+    <itemref idref="ch40" />
+    <itemref idref="ch41" />
+    <itemref idref="ch42" />
+    <itemref idref="ch43" />
+    <itemref idref="ch44" />
+    <itemref idref="ch45" />
+    <itemref idref="ch46" />
+    <itemref idref="ch47" />
+    <itemref idref="ch48" />
+    <itemref idref="ch49" />
+    <itemref idref="ch50" />
+    <itemref idref="ch51" />
+    <itemref idref="ch52" />
+    <itemref idref="ch53" />
+    <itemref idref="ch54" />
+    <itemref idref="ch55" />
+    <itemref idref="ch56" />
+    <itemref idref="ch57" />
+    <itemref idref="ch58" />
+    <itemref idref="ch59" />
+    <itemref idref="ch60" />
+  </spine>
+  <guide>
+    <reference href="cover.xhtml" type="cover" title="Couverture" />
+  </guide>
+</package>

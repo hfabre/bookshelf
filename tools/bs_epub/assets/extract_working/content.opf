@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="uuid_id">
+  <metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:publisher>Alexandriz</dc:publisher>
+    <meta name="calibre:series_index" content="1"/>
+    <dc:description>Sur une Terre envahie par les glaces, la survie de l'espèce humaine est assurée par les grandes compagnies ferroviaires qui se partagent le globe. Le rail apporte chaleur, nourriture, mais aussi une dictature impitoyable. Mêlé malgré lui aux intrigues de la Compagnie, le glaciologue Lien Rag va s'intéresser un peu trop à l'origine des Hommes Roux, capables de résister à des températures de moins quarante, et découvrir la dangereuse ivresse de la révolte...</dc:description>
+    <dc:language>fr</dc:language>
+    <dc:title>La Compagnie des glaces</dc:title>
+    <meta name="calibre:timestamp" content="2010-11-20T14:07:33.205000+00:00"/>
+    <dc:creator opf:file-as="Arnaud,G.J." opf:role="aut">Arnaud,G.J.</dc:creator>
+    <meta name="cover" content="cover"/>
+    <dc:date>1980-01-08T23:00:00+00:00</dc:date>
+    <meta name="calibre:series" content="La Compagnie des Glaces"/>
+    <dc:contributor opf:role="bkp">calibre (0.7.29) [http://calibre-ebook.com]</dc:contributor>
+    <dc:identifier opf:scheme="ISBN">2265013188</dc:identifier>
+    <dc:identifier id="uuid_id" opf:scheme="uuid">464ab386-d67f-4fac-8179-a904a9163c4e</dc:identifier>
+    <dc:subject>SF</dc:subject>
+  </metadata>
+  <manifest>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_000.html" id="html19" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_001.html" id="html18" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_002.html" id="html17" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_003.html" id="html16" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_004.html" id="html15" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_005.html" id="html14" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_006.html" id="html13" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_007.html" id="html12" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_008.html" id="html11" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_009.html" id="html10" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_010.html" id="html9" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_011.html" id="html8" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_012.html" id="html7" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_013.html" id="html6" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_014.html" id="html5" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_015.html" id="html4" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_016.html" id="html3" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_017.html" id="html2" media-type="application/xhtml+xml"/>
+    <item href="Arnaud,G.J.-[La Compagnie des Glaces-01]La Compagnie des Glaces(1980).French.ebook.AlexandriZ_split_018.html" id="html1" media-type="application/xhtml+xml"/>
+    <item href="cover.jpeg" id="cover" media-type="image/jpeg"/>
+    <item href="image001.jpg" id="added" media-type="image/jpeg"/>
+    <item href="stylesheet.css" id="css" media-type="text/css"/>
+    <item href="titlepage.xhtml" id="titlepage" media-type="application/xhtml+xml"/>
+    <item href="toc.ncx" media-type="application/x-dtbncx+xml" id="ncx"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="titlepage"/>
+    <itemref idref="html19"/>
+    <itemref idref="html18"/>
+    <itemref idref="html17"/>
+    <itemref idref="html16"/>
+    <itemref idref="html15"/>
+    <itemref idref="html14"/>
+    <itemref idref="html13"/>
+    <itemref idref="html12"/>
+    <itemref idref="html11"/>
+    <itemref idref="html10"/>
+    <itemref idref="html9"/>
+    <itemref idref="html8"/>
+    <itemref idref="html7"/>
+    <itemref idref="html6"/>
+    <itemref idref="html5"/>
+    <itemref idref="html4"/>
+    <itemref idref="html3"/>
+    <itemref idref="html2"/>
+    <itemref idref="html1"/>
+  </spine>
+  <guide>
+    <reference href="titlepage.xhtml" type="cover" title="Cover"/>
+  </guide>
+</package>
