@@ -14,4 +14,42 @@
   <.back navigate={~p"/series"}>Back to series</.back>
 </.header>
 
-<.book_list books={@serie.books} />
+<div class="flow-root mb-16">
+  <dl class="-my-3 divide-y divide-gray-100 text-sm">
+    <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt class="font-medium text-gray-900">Title</dt>
+      <dd class="text-gray-700 sm:col-span-2"><%= @serie.title %></dd>
+    </div>
+
+    <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt class="font-medium text-gray-900">Completion state</dt>
+      <dd class="text-gray-700 sm:col-span-2"><%= @serie.completion_state %></dd>
+    </div>
+
+    <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt class="font-medium text-gray-900">Reading state</dt>
+      <dd class="text-gray-700 sm:col-span-2"><%= @serie.reading_state %></dd>
+    </div>
+
+    <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt class="font-medium text-gray-900">Rating</dt>
+      <dd class="text-gray-700 sm:col-span-2"><%= @serie.rating %></dd>
+    </div>
+
+    <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt class="font-medium text-gray-900">Comment</dt>
+      <dd class="text-gray-700 sm:col-span-2">
+        <%= @serie.comment %>
+      </dd>
+    </div>
+  </dl>
+</div>
+
+<.header>
+  Books
+</.header>
+
+<div>
+  <.book_list books={@serie.books} />
+</div>
+
