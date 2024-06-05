@@ -19,11 +19,11 @@ defmodule BookshelfWeb.Router do
 
     get "/", BookController, :index
 
-    resources "/books", BookController, only: [:index, :edit, :delete] do
+    resources "/books", BookController, only: [:index, :edit, :update, :delete] do
       get "/download", BookController, :download, as: :download
     end
 
-    resources "/series", SerieController, only: [:index, :show, :edit, :delete] do
+    resources "/series", SerieController, only: [:index, :show, :edit, :update, :delete] do
       get "/download", SerieController, :download, as: :download
     end
 

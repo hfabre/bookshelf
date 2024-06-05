@@ -1,8 +1,6 @@
 <.header>
-  Edit Serie <%= @serie.id %>
-  <:subtitle>Use this form to manage serie records in your database.</:subtitle>
+  Edit Serie: <%= @serie.title %>
+  <.back navigate={~p"/series"}>Back to series</.back>
 </.header>
 
 <.serie_form changeset={@changeset} action={~p"/series/#{@serie}"} />
-
-<.back navigate={~p"/series"}>Back to series</.back>

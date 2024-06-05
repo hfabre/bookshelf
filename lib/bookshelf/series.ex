@@ -42,6 +42,24 @@ defmodule Bookshelf.Series do
   end
 
   @doc """
+  Updates a serie.
+
+  ## Examples
+
+      iex> update_serie(serie, %{field: new_value})
+      {:ok, %Serie{}}
+
+      iex> update_serie(serie, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_serie(%Serie{} = serie, attrs) do
+    chgset = Serie.changeset(serie, attrs)
+    IO.inspect(chgset)
+    Repo.update(chgset)
+  end
+
+  @doc """
   Deletes a serie.
 
   ## Examples

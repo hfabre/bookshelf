@@ -18,7 +18,7 @@ defmodule Bookshelf.Series.Serie do
   @doc false
   def changeset(serie, attrs) do
     serie
-    |> cast(attrs, [])
+    |> cast(attrs, [:title, :comment, :completion_state, :reading_state, :rating])
     |> validate_required([:title])
     |> unique_constraint(:title, name: :index_uniq_series_title)
   end

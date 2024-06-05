@@ -431,7 +431,7 @@ defmodule BookshelfWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8 text-zinc-800">
+        <h1 class="text-2xl font-semibold leading-8 text-zinc-800 mb-10">
           <%= render_slot(@inner_block) %>
         </h1>
         <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
@@ -560,7 +560,7 @@ defmodule BookshelfWeb.CoreComponents do
 
   def back(assigns) do
     ~H"""
-    <div class="mt-16">
+    <div>
       <.link
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
@@ -683,26 +683,32 @@ defmodule BookshelfWeb.CoreComponents do
   attr :books, :list, required: true
   def book_list(assigns) do
     ~H"""
-    <div id="books" class="grid grid-cols-4 gap-8">
-      <div :for={book <- @books}>
-        <img src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
-        <span><%= book.title %></span>
-        <br />
-        <.link class="mt-2 line-clamp-3 text-sm/relaxed text-gray-500" href={~p"/series/#{book.serie}"}><%= book.serie.title %> - <%= book.serie_index %></.link>
-        <br />
+    <div id="books" class="grid grid-cols-5 gap-8">
+      <article class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm" :for={book <- @books}>
+        <img class="min-h-56" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
 
-        <.link href={~p"/books/#{book.id}/download"}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-          </svg>
-        </.link>
+        <div class="p-4 sm:p-6">
+          <h3 class="text-sm font-medium text-gray-900">
+            <%= book.title %>
+          </h3>
 
-        <.link href={~p"/books/#{book.id}/edit"}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-          </svg>
-        </.link>
-      </div>
+          <p class="mt-2 line-clamp-3 text-xs/relaxed text-gray-500">
+            <.link href={~p"/series/#{book.serie}"}><%= book.serie.title %> - <%= Decimal.round(book.serie_index) %></.link>
+          </p>
+
+          <%!-- <.link href={~p"/books/#{book.id}/download"}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+          </.link>
+
+          <.link href={~p"/books/#{book.id}/edit"}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+            </svg>
+          </.link> --%>
+        </div>
+      </article>
     </div>
     """
   end
