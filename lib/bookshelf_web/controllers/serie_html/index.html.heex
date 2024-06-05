@@ -10,15 +10,21 @@
 
       <div class="p-4 sm:p-6">
         <h3 class="text-sm font-medium text-gray-900">
-          <%= serie.title %>
+          <%= "#{serie.title} (#{Enum.count(serie.books)})" %>
         </h3>
-      </div>
-    </.link>
 
-    <.link href={~p"/series/#{serie.id}/download"}>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-      </svg>
+        <p class="mt-2 line-clamp-3 text-xs/relaxed text-gray-500">
+          Completion state: <%= serie.completion_state || "unknown" %>
+          <br />
+          Reading state: <%= serie.reading_state || "unknown" %>
+
+          <div class="flex justify-center p-6" :if={serie.rating}>
+            <%= for x <- 1..5 do %>
+              <.star filled={Ecto.Enum.mappings(Bookshelf.Series.Serie, :rating)[serie.rating] >= x} />
+            <% end %>
+          </div>
+        </p>
+      </div>
     </.link>
   </article>
 </div>

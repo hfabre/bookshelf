@@ -18,7 +18,8 @@ defmodule Bookshelf.Series do
 
   """
   def list_series do
-    Repo.all(Serie)
+    query = from Serie, order_by: fragment("rating DESC NULLS LAST")
+    Repo.all(query)
     |> Repo.preload(:books)
   end
 

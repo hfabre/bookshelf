@@ -5,7 +5,7 @@ defmodule BookshelfWeb.BookController do
   alias Bookshelf.Books.Book
 
   def index(conn, _params) do
-    books = Books.list_books()
+    books = Books.random_list()
     render(conn, :index, books: books)
   end
 

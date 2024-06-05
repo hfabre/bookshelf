@@ -22,6 +22,13 @@ defmodule Bookshelf.Books do
     |> Repo.preload(:serie)
   end
 
+  def random_list do
+    query = from Book, order_by: fragment("RANDOM()")
+
+    Repo.all(query)
+    |> Repo.preload(:serie)
+  end
+
   @doc """
   Gets a single book.
 
