@@ -22,6 +22,14 @@ defmodule Bookshelf.Authors do
     |> Repo.preload(:books)
   end
 
+  def search(query) do
+    ilike = "%#{query}%"
+    q = from b in Author, where: ilike(b.name, ^ilike)
+
+    Repo.all(q)
+    |> Repo.preload(:books)
+  end
+
   @doc """
   Gets a single author.
 

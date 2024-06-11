@@ -22,6 +22,14 @@ defmodule Bookshelf.Books do
     |> Repo.preload(:serie)
   end
 
+  def search(query) do
+    ilike = "%#{query}%"
+    q = from b in Book, where: ilike(b.title, ^ilike)
+
+    Repo.all(q)
+    |> Repo.preload(:serie)
+  end
+
   def random_list do
     query = from Book, order_by: fragment("RANDOM()")
 

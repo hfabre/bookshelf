@@ -23,6 +23,14 @@ defmodule Bookshelf.Series do
     |> Repo.preload(:books)
   end
 
+  def search(query) do
+    ilike = "%#{query}%"
+    q = from b in Serie, where: ilike(b.title, ^ilike), order_by: fragment("rating DESC NULLS LAST")
+
+    Repo.all(q)
+    |> Repo.preload(:books)
+  end
+
   @doc """
   Gets a single serie.
 
