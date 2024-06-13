@@ -1,6 +1,7 @@
 defmodule BookshelfWeb.UploadLive do
   use BookshelfWeb, :live_view
 
+  @impl true
   def mount(_params, _session, socket) do
       {:ok,
         socket
@@ -9,12 +10,12 @@ defmodule BookshelfWeb.UploadLive do
       layout: false}
   end
 
-  @impl Phoenix.LiveView
+  @impl true
   def handle_event("validate", _params, socket) do
     {:noreply, socket}
   end
 
-  @impl Phoenix.LiveView
+  @impl true
   def handle_event("save", _params, socket) do
     uploaded_files =
       consume_uploaded_entries(socket, :book_files, fn %{path: path}, entry ->
@@ -53,11 +54,12 @@ defmodule BookshelfWeb.UploadLive do
     {:noreply, update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
   end
 
-  @impl Phoenix.LiveView
+  @impl true
   def handle_event("cancel-upload", %{"ref" => ref}, socket) do
     {:noreply, cancel_upload(socket, :book_files, ref)}
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div>

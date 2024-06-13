@@ -685,13 +685,67 @@ defmodule BookshelfWeb.CoreComponents do
     ~H"""
     <div id="books" class="grid grid-cols-5 gap-8">
       <article class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm" :for={book <- @books}>
-        <img class="min-h-56" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
 
-        <div class="p-4 sm:p-6">
-          <h3 class="text-sm font-medium text-gray-900">
-            <%= book.title %>
-          </h3>
+        <.modal id={"modal-#{book.id}"}>
+          <div class="flex flex-row">
+            <img class="basis-1/4 shrink" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+            <div class="basis-3/4 flow-root mb-16">
+              <dl class="-my-3 divide-y divide-gray-100 text-sm">
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Title</dt>
+                  <dd class="text-gray-700 sm:col-span-2"><%= book.title %></dd>
+                </div>
 
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Description</dt>
+                  <dd class="text-gray-700 sm:col-span-2"><%= book.description %></dd>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Authors</dt>
+                  <%!-- <dd class="text-gray-700 sm:col-span-2"><%= Enum.map_join(" / ", fn %{name: name} -> name end) %></dd> --%>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Language</dt>
+                  <dd class="text-gray-700 sm:col-span-2"><%= book.language %></dd>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Publisher</dt>
+                  <dd class="text-gray-700 sm:col-span-2"> <%= book.publisher %></dd>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Date</dt>
+                  <dd class="text-gray-700 sm:col-span-2"> <%= book.date %></dd>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Serie</dt>
+                  <dd class="text-gray-700 sm:col-span-2"> <%= "#{book.serie.title} (#{book.serie_index})" %></dd>
+                </div>
+
+                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                  <dt class="font-medium text-gray-900">Filename</dt>
+                  <dd class="text-gray-700 sm:col-span-2"> <%= book.filename %></dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </.modal>
+
+        <div phx-click={BookshelfWeb.CoreComponents.show_modal("modal-#{book.id}")} class="hover:cursor-pointer">
+          <img class="w-full" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+
+          <div class="pt-4 pl-4">
+            <h3 class="text-sm font-medium text-gray-900">
+              <%= book.title %>
+            </h3>
+          </div>
+        </div>
+
+        <div class="pl-4 pb-4">
           <p class="mt-2 line-clamp-3 text-xs/relaxed text-gray-500">
             <.link href={~p"/series/#{book.serie}"}><%= book.serie.title %> - <%= Decimal.round(book.serie_index) %></.link>
           </p>
