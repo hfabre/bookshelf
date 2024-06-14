@@ -1,6 +1,5 @@
 <.header>
-  Edit Book <%= @book.id %>
-  <:subtitle>Use this form to manage book records in your database.</:subtitle>
+  Edit Book <%= @book.title %>
 </.header>
 
 <.book_form changeset={@changeset} action={~p"/books/#{@book}"} />

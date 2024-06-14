@@ -7,13 +7,13 @@ defmodule Bookshelf.Authors.Author do
 
     timestamps(type: :utc_datetime)
 
-    many_to_many :books, Bookshelf.Books.Book, join_through: "books_authors"
+    has_many :books, Bookshelf.Books.Book
   end
 
   @doc false
   def changeset(author, attrs) do
     author
-    |> cast(attrs, [])
+    |> cast(attrs, [:name])
     |> validate_required([:name])
     |> unique_constraint(:name, name: :index_uniq_authors_name)
   end

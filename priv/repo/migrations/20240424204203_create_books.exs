@@ -19,6 +19,8 @@ defmodule Bookshelf.Repo.Migrations.CreateBooks do
       add :serie_id, references(:series)
       add :serie_index, :decimal
 
+      add :author_id, references(:authors)
+
       timestamps(type: :utc_datetime)
     end
   end

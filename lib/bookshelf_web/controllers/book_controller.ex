@@ -2,7 +2,6 @@ defmodule BookshelfWeb.BookController do
   use BookshelfWeb, :controller
 
   alias Bookshelf.Books
-  alias Bookshelf.Books.Book
 
   def index(conn, _params) do
     books = Books.random_list()
@@ -19,10 +18,10 @@ defmodule BookshelfWeb.BookController do
     book = Books.get_book!(id)
 
     case Books.update_book(book, book_params) do
-      {:ok, book} ->
+      {:ok, _} ->
         conn
         |> put_flash(:info, "Book updated successfully.")
-        |> redirect(to: ~p"/books/#{book}")
+        |> redirect(to: ~p"/books")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :edit, book: book, changeset: changeset)

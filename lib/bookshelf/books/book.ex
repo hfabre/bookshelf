@@ -18,14 +18,13 @@ defmodule Bookshelf.Books.Book do
     timestamps(type: :utc_datetime)
 
     belongs_to :serie, Bookshelf.Series.Serie
-
-    many_to_many :authors, Bookshelf.Authors.Author, join_through: "books_authors"
+    belongs_to :author, Bookshelf.Authors.Author
   end
 
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [])
+    |> cast(attrs, [:title, :language, :description, :publisher, :date])
     |> validate_required([:title, :file])
   end
 end

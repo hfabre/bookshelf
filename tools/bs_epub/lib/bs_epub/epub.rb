@@ -35,7 +35,7 @@ module BsEpub
 
     NODE_ACCESS = {
       title: lambda { |metadata_node| metadata_node.nodes.find { _1.value == "dc:title" } },
-      author: lambda { |metadata_node| metadata_node.nodes.find { _1.value == "dc:creator" } },
+      author: lambda { |metadata_node| metadata_node.nodes.select { _1.value == "dc:creator" } },
       language: lambda { |metadata_node| metadata_node.nodes.find { _1.value == "dc:language" } },
       date: lambda { |metadata_node| metadata_node.nodes.find { _1.value == "dc:date" } },
       description: lambda { |metadata_node| metadata_node.nodes.find { _1.value == "dc:description" } },
@@ -205,7 +205,13 @@ module BsEpub
       mt = {}
 
       NODE_ACCESS.each do |k, access|
-        mt[k] = access.call(metadata_node)&.text
+        node = access.call(metadata_node)
+        mt[k] =
+          if node.is_a?(Array)
+            node.map { _1.text }.join(" / ")
+          else
+            node&.text
+          end
       end
 
       CUSTOM_NODE_ACCESS.each do |k, access|

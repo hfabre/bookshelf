@@ -2,7 +2,6 @@ defmodule BookshelfWeb.AuthorController do
   use BookshelfWeb, :controller
 
   alias Bookshelf.Authors
-  alias Bookshelf.Authors.Author
 
   def index(conn, _params) do
     authors = Authors.list_authors()

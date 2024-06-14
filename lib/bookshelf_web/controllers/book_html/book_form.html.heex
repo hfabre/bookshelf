@@ -3,6 +3,13 @@
     Oops, something went wrong! Please check the errors below.
   </.error>
 
+  <.input field={f[:title]} label="Title"/>
+  <%!-- <.input field={f[:author]} label="Author"/> --%>
+  <.input field={f[:description]} label="Description" type="textarea"/>
+  <.input field={f[:language]} label="Language"/>
+  <.input field={f[:publisher]} label="Publisher"/>
+  <.input type="date" field={f[:date]} label="Date"/>
+
   <:actions>
     <.button>Save Book</.button>
   </:actions>

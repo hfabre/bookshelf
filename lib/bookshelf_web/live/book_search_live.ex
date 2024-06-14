@@ -11,7 +11,7 @@ defmodule BookshelfWeb.BookSearchLive do
   @impl true
   def handle_event("search", %{"query" => query}, socket) do
     current_page = Map.get(socket.assigns, :current_page)
-    {:noreply, assign(socket, query: query, authors: Bookshelf.Books.search(query, limit: @item_per_page, offset: offset(current_page)))}
+    {:noreply, assign(socket, query: query, books: Bookshelf.Books.search(query, limit: @item_per_page, offset: offset(current_page)))}
   end
 
   def handle_event("incr_page", _, socket) do

@@ -74,9 +74,9 @@ defmodule Bookshelf.Series do
 
   """
   def update_serie(%Serie{} = serie, attrs) do
-    chgset = Serie.changeset(serie, attrs)
-    IO.inspect(chgset)
-    Repo.update(chgset)
+    serie
+    |> Serie.changeset(attrs)
+    |> Repo.update
   end
 
   @doc """

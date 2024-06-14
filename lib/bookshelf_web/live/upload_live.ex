@@ -44,7 +44,7 @@ defmodule BookshelfWeb.UploadLive do
           file: zip_content,
           cover: Base.encode64(elem(List.first(files), 1)),
           serie: serie,
-          authors: [author]
+          author: author
         }
 
         Bookshelf.Repo.insert(book)

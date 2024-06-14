@@ -2,7 +2,6 @@ defmodule BookshelfWeb.SerieController do
   use BookshelfWeb, :controller
 
   alias Bookshelf.Series
-  alias Bookshelf.Series.Serie
 
   def index(conn, _params) do
     series = Series.list_series()
