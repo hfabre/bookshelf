@@ -17,20 +17,31 @@ defmodule Bookshelf.Series do
       [%Serie{}, ...]
 
   """
-  def list_series do
-    query = from Serie, order_by: fragment("rating DESC NULLS LAST")
+  def list_series(options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
+    query = from Serie, order_by: fragment("rating DESC NULLS LAST"), limit: ^options[:limit], offset: ^options[:offset]
+
     Repo.all(query)
     |> Repo.preload(:books)
   end
 
-  def search(query) do
+  def search(query, options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
     ilike = "%#{query}%"
-    q = from b in Serie, where: ilike(b.title, ^ilike), order_by: fragment("rating DESC NULLS LAST")
+    q = from s in Serie, where: ilike(s.title, ^ilike), order_by: fragment("rating DESC NULLS LAST"), limit: ^options[:limit], offset: ^options[:offset]
 
     Repo.all(q)
     |> Repo.preload(:books)
   end
 
+  def count(query) do
+    ilike = "%#{query}%"
+    q = from s in Serie, select: count(s.id), where: ilike(s.title, ^ilike)
+
+    Repo.one(q)
+  end
   @doc """
   Gets a single serie.
 

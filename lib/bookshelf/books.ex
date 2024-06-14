@@ -17,21 +17,36 @@ defmodule Bookshelf.Books do
       [%Book{}, ...]
 
   """
-  def list_books do
-    Repo.all(Book)
-    |> Repo.preload(:serie)
-  end
-
-  def search(query) do
-    ilike = "%#{query}%"
-    q = from b in Book, where: ilike(b.title, ^ilike)
+  def list_books(options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
+    q = from b in Book, limit: ^options[:limit], offset: ^options[:offset]
 
     Repo.all(q)
     |> Repo.preload(:serie)
   end
 
-  def random_list do
-    query = from Book, order_by: fragment("RANDOM()")
+  def search(query, options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
+    ilike = "%#{query}%"
+    q = from b in Book, where: ilike(b.title, ^ilike), limit: ^options[:limit], offset: ^options[:offset]
+
+    Repo.all(q)
+    |> Repo.preload(:serie)
+  end
+
+  def count(query) do
+    ilike = "%#{query}%"
+    q = from b in Book, select: count(b.id), where: ilike(b.title, ^ilike)
+
+    Repo.one(q)
+  end
+
+  def random_list(options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
+    query = from Book, order_by: fragment("RANDOM()"), limit: ^options[:limit], offset: ^options[:offset]
 
     Repo.all(query)
     |> Repo.preload(:serie)

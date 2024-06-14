@@ -17,17 +17,30 @@ defmodule Bookshelf.Authors do
       [%Author{}, ...]
 
   """
-  def list_authors do
-    Repo.all(Author)
-    |> Repo.preload(:books)
-  end
-
-  def search(query) do
-    ilike = "%#{query}%"
-    q = from b in Author, where: ilike(b.name, ^ilike)
+  def list_authors(options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
+    q = from a in Author, limit: ^options[:limit], offset: ^options[:offset]
 
     Repo.all(q)
     |> Repo.preload(:books)
+  end
+
+  def search(query, options \\ []) do
+    default = [limit: 1_000_000, offset: 0]
+    options = Keyword.merge(default, options)
+    ilike = "%#{query}%"
+    q = from a in Author, where: ilike(a.name, ^ilike), limit: ^options[:limit], offset: ^options[:offset]
+
+    Repo.all(q)
+    |> Repo.preload(:books)
+  end
+
+  def count(query) do
+    ilike = "%#{query}%"
+    q = from a in Author, select: count(a.id), where: ilike(a.name, ^ilike)
+
+    Repo.one(q)
   end
 
   @doc """
