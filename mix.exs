@@ -59,7 +59,8 @@ defmodule Bookshelf.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:date_time_parser, "~> 1.2.0"}, # Can't really be sure of date format so better use an extensiv lib
-      {:html_sanitize_ex, "~> 1.4"} # Some description use html i just want to strip it on render
+      {:html_sanitize_ex, "~> 1.4"}, # Some description use html i just want to strip it on render
+      {:briefly, "~> 0.5.0"} # Used for file upload because file are discarded before async processes
     ]
   end
 

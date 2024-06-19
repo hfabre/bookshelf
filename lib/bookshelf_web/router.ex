@@ -30,6 +30,8 @@ defmodule BookshelfWeb.Router do
     resources "/authors", AuthorController, only: [:index, :show, :delete] do
       get "/download", AuthorController, :download, as: :download
     end
+
+    resources "/import_errors", ImportErrorController, only: [:index, :delete]
   end
 
   # Other scopes may use custom stacks.

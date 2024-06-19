@@ -1,0 +1,15 @@
+<.header>
+  Import errors
+</.header>
+
+<.table id="import_errors" rows={@import_errors}>
+  <:col :let={import_error} label="Title"><%= import_error.book_title %></:col>
+  <:col :let={import_error} label="Log"><%= import_error.log %></:col>
+  <:col :let={import_error} label="Stacktrace"><%= import_error.stacktrace %></:col>
+
+  <:action :let={import_error}>
+    <.link href={~p"/import_errors/#{import_error}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

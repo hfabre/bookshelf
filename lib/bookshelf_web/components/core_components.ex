@@ -774,11 +774,12 @@ defmodule BookshelfWeb.CoreComponents do
                   <dd class="text-gray-700 sm:col-span-2"> <%= book.date %></dd>
                 </div>
 
-                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                  <dt class="font-medium text-gray-900">Serie</dt>
-                  <dd class="text-gray-700 sm:col-span-2"> <%= "#{book.serie.title} (#{book.serie_index})" %></dd>
-                </div>
-
+                <%= if book.serie do %>
+                  <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                    <dt class="font-medium text-gray-900">Serie</dt>
+                    <dd class="text-gray-700 sm:col-span-2"> <%= "#{book.serie.title} (#{book.serie_index})" %></dd>
+                  </div>
+                <% end %>
                 <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                   <dt class="font-medium text-gray-900">Filename</dt>
                   <dd class="text-gray-700 sm:col-span-2"> <%= book.filename %></dd>
@@ -800,7 +801,9 @@ defmodule BookshelfWeb.CoreComponents do
 
         <div class="pl-4 pb-4">
           <p class="mt-2 line-clamp-3 text-xs/relaxed text-gray-500">
-            <.link href={~p"/series/#{book.serie}"}><%= book.serie.title %> - <%= Decimal.round(book.serie_index) %></.link>
+            <%= if book.serie do %>
+              <.link href={~p"/series/#{book.serie}"}><%= book.serie.title %> - <%= Decimal.round(book.serie_index) %></.link>
+            <% end %>
           </p>
         </div>
       </article>
