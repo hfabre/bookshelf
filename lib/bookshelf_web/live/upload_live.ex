@@ -109,7 +109,7 @@ defmodule BookshelfWeb.UploadLive do
 
     try do
       zip_content = File.read!(path)
-      {result, _} = System.cmd("sh", ["-c", "bin/get_metadata '#{path}'"], cd: "tools/bs_epub")
+      {result, _} = System.cmd(Application.app_dir(:bookshelf, ["priv", "bs_epub", "bin", "get_metadata"]), [path])
       metadata = Jason.decode!(result)
       IO.inspect(result)
 

@@ -2,6 +2,6 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "bs_epub"
+require_relative "../lib/bs_epub"
 
 puts(BsEpub::Epub.new(ARGV.first).mt_json)
