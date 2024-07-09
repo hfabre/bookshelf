@@ -728,19 +728,8 @@ defmodule BookshelfWeb.CoreComponents do
       <article class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm" :for={book <- @books}>
 
         <.modal id={"modal-#{book.id}"}>
-          <div class="flex flex-row">
-            <img class="basis-1/4 shrink" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
-            <.link href={~p"/books/#{book.id}/download"}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            </.link>
-
-            <.link href={~p"/books/#{book.id}/edit"}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-              </svg>
-            </.link>
+          <div class="flex flex-row items-start mb-4">
+            <img class="basis-1/4 shrink mr-4" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
 
             <div class="basis-3/4 flow-root mb-16">
               <dl class="-my-3 divide-y divide-gray-100 text-sm">
@@ -750,13 +739,8 @@ defmodule BookshelfWeb.CoreComponents do
                 </div>
 
                 <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                  <dt class="font-medium text-gray-900">Description</dt>
-                  <dd class="text-gray-700 sm:col-span-2"><%= HtmlSanitizeEx.strip_tags(book.description) %></dd>
-                </div>
-
-                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                   <dt class="font-medium text-gray-900">Authors</dt>
-                  <%!-- <dd class="text-gray-700 sm:col-span-2"><%= Enum.map_join(" / ", fn %{name: name} -> name end) %></dd> --%>
+                  <dd class="text-gray-700 sm:col-span-2"><%= book.author.name %></dd>
                 </div>
 
                 <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
@@ -780,17 +764,32 @@ defmodule BookshelfWeb.CoreComponents do
                     <dd class="text-gray-700 sm:col-span-2"> <%= "#{book.serie.title} (#{book.serie_index})" %></dd>
                   </div>
                 <% end %>
-                <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                  <dt class="font-medium text-gray-900">Filename</dt>
-                  <dd class="text-gray-700 sm:col-span-2"> <%= book.filename %></dd>
-                </div>
               </dl>
             </div>
           </div>
+
+          <div class="flex gap-4 mb-5">
+            <.link href={~p"/books/#{book.id}/download"}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            </.link>
+
+            <.link href={~p"/books/#{book.id}/edit"}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+              </svg>
+            </.link>
+            </div>
+
+          <%= HtmlSanitizeEx.strip_tags(book.description) %>
         </.modal>
 
         <div phx-click={BookshelfWeb.CoreComponents.show_modal("modal-#{book.id}")} class="hover:cursor-pointer">
-          <img class="w-full" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+          <div class="aspect-[2.8/4] w-full relative overflow-hidden">
+            <img class="object-cover w-full h-full absolute scale-110 blur" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+            <img class="object-contain w-full h-full absolute" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+          </div>
 
           <div class="pt-4 pl-4">
             <h3 class="text-sm font-medium text-gray-900">

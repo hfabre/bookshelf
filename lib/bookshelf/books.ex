@@ -23,6 +23,7 @@ defmodule Bookshelf.Books do
     q = from b in Book, limit: ^options[:limit], offset: ^options[:offset]
 
     Repo.all(q)
+    |> Repo.preload(:author)
     |> Repo.preload(:serie)
   end
 
@@ -33,6 +34,7 @@ defmodule Bookshelf.Books do
     q = from b in Book, where: ilike(b.title, ^ilike), limit: ^options[:limit], offset: ^options[:offset]
 
     Repo.all(q)
+    |> Repo.preload(:author)
     |> Repo.preload(:serie)
   end
 
