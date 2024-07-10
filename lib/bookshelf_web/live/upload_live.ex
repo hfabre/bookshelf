@@ -6,58 +6,13 @@ defmodule BookshelfWeb.UploadLive do
       {:ok,
         socket
         |> assign(:running_tasks, 0)
-        |> allow_upload(:book_files, accept: ~w(.epub), max_entries: 100),
+        |> allow_upload(:book_files, accept: ~w(.epub), progress: &handle_progress/3, max_entries: 1000, auto_upload: true),
       layout: false}
   end
 
   @impl true
   def handle_event("validate", _params, socket) do
     {:noreply, socket}
-  end
-
-  @impl true
-  def handle_event("save", _params, socket) do
-    results =
-      consume_uploaded_entries(socket, :book_files, fn %{path: path}, entry ->
-        IO.puts("Processing #{entry.client_name}")
-        temp_dir = Briefly.create!(type: :directory)
-        new_path = Path.join(temp_dir, entry.client_name)
-
-        # Attempt to create a new hard link to the file
-        case File.ln(path, new_path) do
-          :ok ->
-            {:ok, new_path}
-
-          {:error, reason} ->
-            IO.puts("Failed to create hard link: #{inspect(reason)}, attempting cp instead")
-            File.cp!(path, new_path)
-            {:ok, new_path}
-        end
-      end)
-
-      lv_pid = self()
-
-      push_task = fn ->
-        send(lv_pid, {:push_task})
-      end
-
-      pop_task = fn ->
-        send(lv_pid, {:pop_task})
-      end
-
-      case results do
-        [path] ->
-          {:noreply,
-           socket
-           |> start_async(:import, fn -> import_file(path, push_task: push_task, pop_task: pop_task) end)}
-
-        results ->
-          for path <- results do
-            start_async(socket, :import, fn -> import_file(path, push_task: push_task, pop_task: pop_task) end)
-          end
-
-          {:noreply, socket}
-      end
   end
 
   @impl true
@@ -88,9 +43,11 @@ defmodule BookshelfWeb.UploadLive do
   def render(assigns) do
     ~H"""
     <div>
-      <form id="upload-form" phx-submit="save" phx-change="validate">
-        <.live_file_input upload={@uploads.book_files} />
-        <button type="submit">Upload</button>
+      <form id="upload-form" phx-change="validate">
+        <label class="inline-block rounded border border-gray-400 bg-gray-400 px-4 py-1 text-sm font-medium text-white hover:bg-transparent hover:text-gray-400 focus:outline-none focus:ring active:text-gray-300">
+          Upload
+          <.live_file_input upload={@uploads.book_files} class="hidden" />
+        </label>
       </form>
     </div>
 
@@ -102,6 +59,45 @@ defmodule BookshelfWeb.UploadLive do
       <% end %>
     </div>
     """
+  end
+
+
+  defp handle_progress(:book_files, entry, socket) do
+    if entry.done? do
+      path =
+        consume_uploaded_entry(socket, entry, fn %{} = meta ->
+          IO.puts("Processing #{entry.client_name}")
+          temp_dir = Briefly.create!(type: :directory)
+          new_path = Path.join(temp_dir, entry.client_name)
+
+          # Attempt to create a new hard link to the file
+          case File.ln(meta.path, new_path) do
+            :ok ->
+              {:ok, new_path}
+
+            {:error, reason} ->
+              IO.puts("Failed to create hard link: #{inspect(reason)}, attempting cp instead")
+              File.cp!(meta.path, new_path)
+              {:ok, new_path}
+          end
+        end)
+
+        lv_pid = self()
+
+        push_task = fn ->
+          send(lv_pid, {:push_task})
+        end
+
+        pop_task = fn ->
+          send(lv_pid, {:pop_task})
+        end
+
+        {:noreply,
+          socket
+          |> start_async(:import, fn -> import_file(path, push_task: push_task, pop_task: pop_task) end)}
+    else
+      {:noreply, socket}
+    end
   end
 
   defp import_file(path, push_task: push_task, pop_task: pop_task) do

@@ -2,8 +2,10 @@
   <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm min-h-16">
     <div class="flex items-center gap-4">
       <a href="/">
-        <img src={~p"/images/logo.svg"} width="36" />
+        <img class="max-w-56" src={~p"/images/logo-no-background.svg"} />
       </a>
+    </div>
+    <div class="flex items-center gap-4">
       <%= live_render(@conn, BookshelfWeb.UploadLive) %>
     </div>
   </div>
