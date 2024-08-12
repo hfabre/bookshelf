@@ -43,7 +43,10 @@ defmodule BookshelfWeb.AuthorSearchLive do
       <article class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm" :for={author <- @authors}>
         <% book = Bookshelf.Authors.get_author!(author.id).books |> Enum.at(0) %>
         <.link href={~p"/authors/#{author}"}>
-          <img class="min-h-56" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+          <div class="aspect-[2.8/4] w-full relative overflow-hidden">
+            <img class="object-cover w-full h-full absolute scale-110 blur" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+            <img class="object-contain w-full h-full absolute" src={"data:#{book.cover_type};base64, #{book.cover}"} alt={"#{book.title} cover"} />
+          </div>
 
           <div class="p-4 sm:p-6">
             <h3 class="text-sm font-medium text-gray-900">

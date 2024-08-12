@@ -59,7 +59,7 @@ defmodule Bookshelf.Authors do
   """
   def get_author!(id) do
     Repo.get!(Author, id)
-    |> Repo.preload(books: :serie)
+    |> Repo.preload(books: [:serie, :author])
   end
 
   @doc """

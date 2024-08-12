@@ -16,6 +16,7 @@ defmodule Bookshelf.Application do
       {Finch, name: Bookshelf.Finch},
       # Start a worker by calling: Bookshelf.Worker.start_link(arg)
       # {Bookshelf.Worker, arg},
+      {Task.Supervisor, name: Bookshelf.ImportBookSupervisor},
       # Start to serve requests, typically the last entry
       BookshelfWeb.Endpoint
     ]
