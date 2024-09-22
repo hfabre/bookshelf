@@ -1,3 +1,6 @@
+The application is currently under a complete rewrite (bump phoenix, automatically extract metadata from epub, ...)
+You can have a look to the new version (still wip) [here](https://github.com/hfabre/bookshelf/tree/chore/v2)
+
 # Bookshelf
 
 Bookshelf is a tiny web app made to manage your collection of readings.
