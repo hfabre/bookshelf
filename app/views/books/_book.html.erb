@@ -1,0 +1,20 @@
+<div data-controller="modal" data-action="click->modal#open" data-modal-dialog-param="modal-<%= book.id %>" class="hover:cursor-pointer">
+    <div class="aspect-[2.8/4] w-full relative overflow-hidden">
+        <%= book_cover(book, class: "object-cover w-full h-full absolute scale-110 blur") %>
+        <%= book_cover(book, class: "object-contain w-full h-full absolute") %>
+    </div>
+
+    <div class="pt-4 pl-4">
+        <h3 class="text-sm font-medium text-gray-900">
+            <%= book.title %>
+        </h3>
+    </div>
+</div>
+
+<div class="pl-4 pb-4">
+    <p class="mt-2 line-clamp-3 text-xs/relaxed text-gray-500">
+        <% if book.serie %>
+            <%= book.serie.name %> - <%= book.serie_index %>
+        <% end %>
+    </p>
+</div>

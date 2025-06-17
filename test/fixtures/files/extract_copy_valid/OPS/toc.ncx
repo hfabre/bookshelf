@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN" "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd">
+
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:EA45EF0C-719D-1014-9657-D29C4E238E33" />
+    <meta name="dtb:depth" content="1" />
+    <meta name="dtb:totalPageCount" content="0" />
+    <meta name="dtb:maxPageNumber" content="0" />
+  </head>
+  <docTitle>
+    <text>Légendes espagnoles</text>
+  </docTitle>
+  <docAuthor>
+    <text>Gustavo-Adolfo Bécquer</text>
+  </docAuthor>
+  <navMap>
+    <navPoint id="AVANT-PROPOS. GUSTAVE-ADOLPHE BECQUER." playOrder="1" class="">
+      <navLabel>
+        <text>AVANT-PROPOS. GUSTAVE-ADOLPHE BECQUER.</text>
+      </navLabel>
+      <content src="book_0001.xhtml#auto-toc0" />
+    </navPoint>
+    <navPoint id="LA PROMESSE" playOrder="2" class="">
+      <navLabel>
+        <text>LA PROMESSE</text>
+      </navLabel>
+      <content src="book_0002.xhtml#auto-toc1" />
+      <navPoint id="I" playOrder="3" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0003.xhtml#auto-toc2" />
+      </navPoint>
+      <navPoint id="II" playOrder="4" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0004.xhtml#auto-toc3" />
+      </navPoint>
+      <navPoint id="III" playOrder="5" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0005.xhtml#auto-toc4" />
+      </navPoint>
+      <navPoint id="IV" playOrder="6" class="">
+        <navLabel>
+          <text>IV</text>
+        </navLabel>
+        <content src="book_0006.xhtml#auto-toc5" />
+        <navPoint id="1" playOrder="7" class="">
+          <navLabel>
+            <text>1</text>
+          </navLabel>
+          <content src="book_0006.xhtml#auto-toc6" />
+        </navPoint>
+        <navPoint id="2" playOrder="8" class="">
+          <navLabel>
+            <text>2</text>
+          </navLabel>
+          <content src="book_0006.xhtml#auto-toc7" />
+        </navPoint>
+        <navPoint id="3" playOrder="9" class="">
+          <navLabel>
+            <text>3</text>
+          </navLabel>
+          <content src="book_0006.xhtml#auto-toc8" />
+        </navPoint>
+        <navPoint id="4" playOrder="10" class="">
+          <navLabel>
+            <text>4</text>
+          </navLabel>
+          <content src="book_0006.xhtml#auto-toc9" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="V" playOrder="11" class="">
+        <navLabel>
+          <text>V</text>
+        </navLabel>
+        <content src="book_0007.xhtml#auto-toc10" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="MAÎTRE PÉREZ, L’ORGANISTE." playOrder="12" class="">
+      <navLabel>
+        <text>MAÎTRE PÉREZ, L’ORGANISTE.</text>
+      </navLabel>
+      <content src="book_0008.xhtml#auto-toc11" />
+      <navPoint id="I" playOrder="13" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0009.xhtml#auto-toc12" />
+      </navPoint>
+      <navPoint id="II" playOrder="14" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0010.xhtml#auto-toc13" />
+      </navPoint>
+      <navPoint id="III" playOrder="15" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0011.xhtml#auto-toc14" />
+      </navPoint>
+      <navPoint id="IV" playOrder="16" class="">
+        <navLabel>
+          <text>IV</text>
+        </navLabel>
+        <content src="book_0012.xhtml#auto-toc15" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LE CHRIST À LA TÊTE DE MORT." playOrder="17" class="">
+      <navLabel>
+        <text>LE CHRIST À LA TÊTE DE MORT.</text>
+      </navLabel>
+      <content src="book_0013.xhtml#auto-toc16" />
+      <navPoint id="I" playOrder="18" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0014.xhtml#auto-toc17" />
+      </navPoint>
+      <navPoint id="II" playOrder="19" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0015.xhtml#auto-toc18" />
+      </navPoint>
+      <navPoint id="III" playOrder="20" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0016.xhtml#auto-toc19" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LE GNOME." playOrder="21" class="">
+      <navLabel>
+        <text>LE GNOME.</text>
+      </navLabel>
+      <content src="book_0017.xhtml#auto-toc20" />
+      <navPoint id="I" playOrder="22" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0018.xhtml#auto-toc21" />
+      </navPoint>
+      <navPoint id="II" playOrder="23" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0019.xhtml#auto-toc22" />
+      </navPoint>
+      <navPoint id="III" playOrder="24" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0020.xhtml#auto-toc23" />
+      </navPoint>
+      <navPoint id="IV" playOrder="25" class="">
+        <navLabel>
+          <text>IV</text>
+        </navLabel>
+        <content src="book_0021.xhtml#auto-toc24" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LA MONTAGNE DES REVENANTS." playOrder="26" class="">
+      <navLabel>
+        <text>LA MONTAGNE DES REVENANTS.</text>
+      </navLabel>
+      <content src="book_0022.xhtml#auto-toc25" />
+      <navPoint id="I" playOrder="27" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0023.xhtml#auto-toc26" />
+      </navPoint>
+      <navPoint id="II" playOrder="28" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0024.xhtml#auto-toc27" />
+      </navPoint>
+      <navPoint id="III" playOrder="29" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0025.xhtml#auto-toc28" />
+      </navPoint>
+      <navPoint id="IV" playOrder="30" class="">
+        <navLabel>
+          <text>IV</text>
+        </navLabel>
+        <content src="book_0026.xhtml#auto-toc29" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LA ROSE DE LA PASSION" playOrder="31" class="">
+      <navLabel>
+        <text>LA ROSE DE LA PASSION</text>
+      </navLabel>
+      <content src="book_0027.xhtml#auto-toc30" />
+      <navPoint id="I" playOrder="32" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0028.xhtml#auto-toc31" />
+      </navPoint>
+      <navPoint id="II" playOrder="33" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0029.xhtml#auto-toc32" />
+      </navPoint>
+      <navPoint id="III" playOrder="34" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0030.xhtml#auto-toc33" />
+      </navPoint>
+      <navPoint id="IV" playOrder="35" class="">
+        <navLabel>
+          <text>IV</text>
+        </navLabel>
+        <content src="book_0031.xhtml#auto-toc34" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LE BRACELET D’OR." playOrder="36" class="">
+      <navLabel>
+        <text>LE BRACELET D’OR.</text>
+      </navLabel>
+      <content src="book_0032.xhtml#auto-toc35" />
+      <navPoint id="I" playOrder="37" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0033.xhtml#auto-toc36" />
+      </navPoint>
+      <navPoint id="II" playOrder="38" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0034.xhtml#auto-toc37" />
+      </navPoint>
+      <navPoint id="III" playOrder="39" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0035.xhtml#auto-toc38" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LES FEUILLES SÈCHES" playOrder="40" class="">
+      <navLabel>
+        <text>LES FEUILLES SÈCHES</text>
+      </navLabel>
+      <content src="book_0036.xhtml#auto-toc39" />
+    </navPoint>
+    <navPoint id="UN RAYON DE LUNE." playOrder="41" class="">
+      <navLabel>
+        <text>UN RAYON DE LUNE.</text>
+      </navLabel>
+      <content src="book_0037.xhtml#auto-toc40" />
+      <navPoint id="I" playOrder="42" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0038.xhtml#auto-toc41" />
+      </navPoint>
+      <navPoint id="II" playOrder="43" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0039.xhtml#auto-toc42" />
+      </navPoint>
+      <navPoint id="III" playOrder="44" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0040.xhtml#auto-toc43" />
+      </navPoint>
+      <navPoint id="IV" playOrder="45" class="">
+        <navLabel>
+          <text>IV</text>
+        </navLabel>
+        <content src="book_0041.xhtml#auto-toc44" />
+      </navPoint>
+      <navPoint id="V" playOrder="46" class="">
+        <navLabel>
+          <text>V</text>
+        </navLabel>
+        <content src="book_0042.xhtml#auto-toc45" />
+      </navPoint>
+      <navPoint id="VI" playOrder="47" class="">
+        <navLabel>
+          <text>VI</text>
+        </navLabel>
+        <content src="book_0043.xhtml#auto-toc46" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LES YEUX VERTS." playOrder="48" class="">
+      <navLabel>
+        <text>LES YEUX VERTS.</text>
+      </navLabel>
+      <content src="book_0044.xhtml#auto-toc47" />
+      <navPoint id="I" playOrder="49" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0045.xhtml#auto-toc48" />
+      </navPoint>
+      <navPoint id="II" playOrder="50" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0046.xhtml#auto-toc49" />
+      </navPoint>
+      <navPoint id="III" playOrder="51" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0047.xhtml#auto-toc50" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LA PARURE D’ÉMERAUDES." playOrder="52" class="">
+      <navLabel>
+        <text>LA PARURE D’ÉMERAUDES.</text>
+      </navLabel>
+      <content src="book_0048.xhtml#auto-toc51" />
+    </navPoint>
+    <navPoint id="LE MISERERE" playOrder="53" class="">
+      <navLabel>
+        <text>LE MISERERE</text>
+      </navLabel>
+      <content src="book_0049.xhtml#auto-toc52" />
+      <navPoint id="I" playOrder="54" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0050.xhtml#auto-toc53" />
+      </navPoint>
+      <navPoint id="II" playOrder="55" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0051.xhtml#auto-toc54" />
+      </navPoint>
+      <navPoint id="III" playOrder="56" class="">
+        <navLabel>
+          <text>III</text>
+        </navLabel>
+        <content src="book_0052.xhtml#auto-toc55" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="LA TAVERNE DES CHATS." playOrder="57" class="">
+      <navLabel>
+        <text>LA TAVERNE DES CHATS.</text>
+      </navLabel>
+      <content src="book_0053.xhtml#auto-toc56" />
+      <navPoint id="I" playOrder="58" class="">
+        <navLabel>
+          <text>I</text>
+        </navLabel>
+        <content src="book_0054.xhtml#auto-toc57" />
+      </navPoint>
+      <navPoint id="II" playOrder="59" class="">
+        <navLabel>
+          <text>II</text>
+        </navLabel>
+        <content src="book_0055.xhtml#auto-toc58" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="POÉSIES DÉTACHÉES." playOrder="60" class="">
+      <navLabel>
+        <text>POÉSIES DÉTACHÉES.</text>
+      </navLabel>
+      <content src="book_0056.xhtml#auto-toc59" />
+    </navPoint>
+    <navPoint id="À propos de cette édition électronique" playOrder="61" class="">
+      <navLabel>
+        <text>À propos de cette édition électronique</text>
+      </navLabel>
+      <content src="book_0057.xhtml#auto-toc60" />
+    </navPoint>
+  </navMap>
+</ncx>

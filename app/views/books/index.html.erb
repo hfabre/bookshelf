@@ -1,0 +1,14 @@
+<div class="mb-8 min-w-full">
+    <%= render "search_form" %>
+</div>
+
+<%= turbo_frame_tag "books" do %>
+    <div id="books" class="grid grid-cols-5 gap-8">
+        <% @books.each do |book| %>
+            <article class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm">
+                <%= render "book_modal", book: book %>
+                <%= render "book", book: book %>
+            </article>
+        <% end %>
+    </div>
+<% end %>
