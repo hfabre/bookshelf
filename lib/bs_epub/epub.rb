@@ -212,6 +212,8 @@ module BsEpub
         end
       end
 
+      debugger
+
       override_opf!
     end
 

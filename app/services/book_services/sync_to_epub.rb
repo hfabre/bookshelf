@@ -7,7 +7,7 @@ module BookServices
     def call
       epub = book.epub
       epub.update_mt!(metadata)
-      epub.replace_cover!(cover_file.path)
+      # epub.replace_cover!(cover_file.path)
       book.update!(epub_content: epub.zip.write_buffer)
     end
 
@@ -29,7 +29,7 @@ module BookServices
     end
 
     def cover_file
-      Tempfile.new([ "cover", File.extname(book.cover_filename) ]) do |file|
+      Tempfile.new([ "cover", book.cover_type ]) do |file|
         file.binmode
         file.write(book.cover_bytes)
         file.rewind

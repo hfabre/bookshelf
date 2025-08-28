@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_07_153903) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_25_130912) do
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -51,14 +51,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_153903) do
 
   create_table "series", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id", null: false
     t.string "completion_state"
     t.string "reading_state"
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "name"], name: "index_series_on_user_id_and_name", unique: true
-    t.index ["user_id"], name: "index_series_on_user_id"
+    t.index ["name"], name: "index_series_on_user_id_and_name", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -83,6 +81,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_07_153903) do
   add_foreign_key "authors_books", "books"
   add_foreign_key "books", "series", column: "serie_id"
   add_foreign_key "books", "users"
-  add_foreign_key "series", "users"
   add_foreign_key "sessions", "users"
 end

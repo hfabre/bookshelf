@@ -10,13 +10,16 @@ class BooksController < ApplicationController
   end
 
   def update
-    @book.update(book_params)
-    redirect_to books_path
+    if BookServices::UpdateAndSync.new(@book).call(book_params)
+      redirect_to books_path, notice: "Book was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
     @book.destroy
-    redirect_to books_path
+    redirect_to books_path, notice: "Book was successfully deleted."
   end
 
   def download
@@ -65,6 +68,8 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author_names, :serie_id, :serie_index, :date, :description, :cover, :cover_type)
+    params.require(:book).permit(
+      :title, :description, :language, :date, :publisher, :serie_index, :cover, :serie_name, author_names: []
+    )
   end
 end
