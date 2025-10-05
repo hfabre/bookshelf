@@ -7,8 +7,9 @@ module BookServices
     def call
       epub = book.epub
       epub.update_mt!(metadata)
-      # epub.replace_cover!(cover_file.path)
-      book.update!(epub_content: epub.zip.write_buffer)
+      cover = cover_file # Keep reference to avoid tempfile being collected
+      epub.replace_cover!(cover.path)
+      book.update!(epub_content: epub.current_buffer.string)
     end
 
     private
@@ -22,19 +23,18 @@ module BookServices
         language: book.language,
         date: book.date,
         publisher: book.publisher,
-        serie: book.serie.name,
+        serie: book.serie&.name,
         series_index: book.serie_index,
         authors: book.author_names
       }
     end
 
     def cover_file
-      Tempfile.new([ "cover", book.cover_type ]) do |file|
-        file.binmode
-        file.write(book.cover_bytes)
-        file.rewind
-        file
-      end
+      file = Tempfile.new([ "cover", BsEpub::Epub::COVER_EXT_TYPE[book.cover_type] ])
+      file.binmode
+      file.write(book.cover_bytes)
+      file.rewind
+      file
     end
   end
 end

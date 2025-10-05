@@ -1,7 +1,7 @@
 class Serie < ApplicationRecord
   has_many :books, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { allow_blank: true }
   validates :rating, inclusion: { in: 1..5, allow_nil: true }
 
   # Get user through books (all books in a series belong to same user)

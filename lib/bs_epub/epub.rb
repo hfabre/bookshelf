@@ -22,6 +22,12 @@ module BsEpub
       ".jpg" => "image/jpeg"
     }.freeze
 
+    COVER_EXT_TYPE = {
+      "image/png" => ".png",
+      "image/jpeg" => ".jpeg",
+      "image/jpeg" => ".jpg"
+    }.freeze
+
     NODE_NAME_MAPPING = {
       title: "dc:title",
       authors: "dc:creator",
@@ -47,7 +53,7 @@ module BsEpub
       serie_index: lambda { |custom_metas| custom_metas.find { |n| n.attr("name") == "calibre:series_index" } }
     }.freeze
 
-    attr_reader :path_or_io, :zip, :opf_content, :epub_version, :metadata_node, :custom_metas, :failure_reason, :logger
+    attr_reader :path_or_io, :zip, :opf_content, :epub_version, :metadata_node, :custom_metas, :failure_reason, :logger, :current_buffer
     def_delegator :@zip, :close
 
     def self.container_content(opf_path)
@@ -150,17 +156,18 @@ module BsEpub
       new_ext = File.extname(cover)
       return unless COVER_EXT.include?(new_ext)
 
-      new_conver_content =
+      new_cover_content =
         if cover =~ URI::DEFAULT_PARSER.make_regexp
           open(cover)
         else
           File.open(cover)
         end
 
+      debugger
       filename = File.basename(cover_filename, ".*")
       new_name = filename + new_ext
 
-      zip.replace(cover_path, new_conver_content)
+      zip.replace(cover_path, new_cover_content)
       zip.rename(cover_path, new_name)
       cover_node(cover_manifest_id)["href"] = new_name
       cover_node(cover_manifest_id)["media-type"] = MEDIA_TYPE[new_ext]
@@ -212,9 +219,8 @@ module BsEpub
         end
       end
 
-      debugger
-
       override_opf!
+      @current_buffer
     end
 
     private
@@ -230,7 +236,9 @@ module BsEpub
 
     def save_zip!
       zip.commit
-      @zip = Zip::File.open_buffer(zip.write_buffer)
+      # Save buffer so we can retrieve it as otherwise the new @zip.write_buffer will be enmpty as there is no modification of the zip
+      @current_buffer = zip.write_buffer
+      @zip = Zip::File.open_buffer(@current_buffer)
       reset
     end
 

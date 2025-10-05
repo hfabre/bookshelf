@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :sessions, dependent: :destroy
 
+  has_many :sessions, dependent: :destroy
   has_many :books, dependent: :destroy
-  has_many :series, -> { distinct }, through: :books, class_name: "Serie"
+  has_many :series, -> { distinct }, through: :books, class_name: "Serie", source: :serie
   has_many :authors, through: :books
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
