@@ -70,5 +70,5 @@ gem "mission_control-jobs"
 # Epub management
 gem "ox", "~> 2.14"
 gem "nokogiri"
-gem "rubyzip", "~> 2.3"
+gem "rubyzip", "~> 3.2"
 gem "bigdecimal", "~> 3.1"
