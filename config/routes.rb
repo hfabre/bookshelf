@@ -23,8 +23,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :series, only: [ :index ]
-  resources :authors, only: [ :index ]
+  resources :series, only: [ :index, :show, :edit, :update ] do
+    member do
+      get :download
+    end
+  end
+
+  resources :authors, only: [ :index, :show, :edit, :update ] do
+    member do
+      get :download
+    end
+  end
 
   # Defines the root path route ("/")
   root "books#index"
