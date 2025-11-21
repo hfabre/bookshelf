@@ -59,8 +59,7 @@ module BookServices
     end
 
     def find_or_create_serie
-      serie_name = params[:serie_name]&.strip
-      return nil if serie_name.blank?
+      serie_name = (params[:serie_name].presence || book.title).strip
 
       Serie.find_or_create_by(name: serie_name)
     end

@@ -163,7 +163,6 @@ module BsEpub
           File.open(cover)
         end
 
-      debugger
       filename = File.basename(cover_filename, ".*")
       new_name = filename + new_ext
 

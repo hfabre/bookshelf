@@ -8,7 +8,7 @@ class CreateBooks < ActiveRecord::Migration[8.0]
       t.string :publisher
       t.references :serie, null: true, foreign_key: true
       t.references :user, null: false, foreign_key: true
-      t.integer :serie_index
+      t.integer :serie_index, default: 1
       t.binary :epub_content
       t.string :filename
       t.binary :cover_bytes

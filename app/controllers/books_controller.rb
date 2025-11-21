@@ -43,7 +43,7 @@ class BooksController < ApplicationController
       next unless file.respond_to?(:content_type) && file.respond_to?(:original_filename)
       next unless file.content_type == "application/epub+zip" || file.original_filename.end_with?(".epub")
 
-      book = current_user.books.create!(
+      book = current_user.books.create(
         title: file.original_filename.gsub(".epub", ""),
         filename: file.original_filename,
         epub_content: file.read,

@@ -36,7 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_25_130912) do
     t.string "publisher"
     t.integer "serie_id"
     t.integer "user_id", null: false
-    t.integer "serie_index"
+    t.integer "serie_index", default: 1
     t.binary "epub_content"
     t.string "filename"
     t.binary "cover_bytes"

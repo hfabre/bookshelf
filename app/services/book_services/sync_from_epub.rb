@@ -7,11 +7,11 @@ module BookServices
     def call
       epub = book.epub
       metadata = epub.mt_hash
+      title = metadata[:title].presence || book.filename.gsub(".epub", "")
 
       authors = find_or_initialize_authors(metadata[:authors])
-      serie = book.user.series.find_or_initialize_by(name: metadata[:serie]&.strip)
+      serie = book.user.series.find_or_initialize_by(name: (metadata[:serie].presence || title).strip)
       cover_bytes = epub.cover_bytes
-      title = metadata[:title].presence || book.filename.gsub(".epub", "")
 
       book.update!(
         title: title,

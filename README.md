@@ -1,24 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Web application to manage your epub files. It's mainly focused on books from series.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Upload multiple books in one time
+- Fetch metadata from epub file
+- Update book and their epub file
+- Rate and annotate series
