@@ -1,7 +1,8 @@
 module BookServices
   class SyncFromEpub
-    def initialize(book)
+    def initialize(book, user = nil)
       @book = book
+      @user = user || Current.user
     end
 
     def call
@@ -10,7 +11,7 @@ module BookServices
       title = metadata[:title].presence || book.filename.gsub(".epub", "")
 
       authors = find_or_initialize_authors(metadata[:authors])
-      serie = book.user.series.find_or_initialize_by(name: (metadata[:serie].presence || title).strip)
+      serie = @user.series.find_or_initialize_by(name: (metadata[:serie].presence || title).strip)
       cover_bytes = epub.cover_bytes
 
       book.update!(
@@ -20,7 +21,7 @@ module BookServices
         date: parse_date(metadata[:date]),
         publisher: metadata[:publisher],
         serie: serie,
-        serie_index: metadata[:series_index]&.to_i,
+        serie_index: metadata[:serie_index]&.to_i,
         cover_bytes: cover_bytes,
         cover_type: detect_mime_type(cover_bytes, metadata[:cover_path])
       )
@@ -30,11 +31,11 @@ module BookServices
 
     private
 
-    attr_reader :book
+    attr_reader :book, :user
 
     def find_or_initialize_authors(authors)
       authors.map do |author_name|
-        Author.find_or_initialize_by(name: author_name&.strip)
+        @user.authors.find_or_initialize_by(name: author_name&.strip)
       end
     end
 

@@ -50,7 +50,7 @@ class BooksController < ApplicationController
         processing_status: :pending
       )
 
-      EpubProcessorJob.perform_later(book.id)
+      EpubProcessorJob.perform_later(book.id, current_user.id)
       processed_count += 1
     end
 

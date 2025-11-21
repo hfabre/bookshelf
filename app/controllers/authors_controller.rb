@@ -1,6 +1,6 @@
 class AuthorsController < ApplicationController
   def index
-    @authors = Author.ordered
+    @authors = current_user.authors.ordered
     @authors = @authors.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
 
     respond_to do |format|

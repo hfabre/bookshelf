@@ -1,7 +1,8 @@
 module BookServices
   class UpdateAndSync
-    def initialize(book)
+    def initialize(book, user = nil)
       @book = book
+      @user = user || Current.user
     end
 
     def call(params)
@@ -26,7 +27,7 @@ module BookServices
 
     private
 
-    attr_reader :book, :params
+    attr_reader :book, :params, :user
 
     def book_params
       params.except(:serie_name, :author_names, :cover)
@@ -61,14 +62,14 @@ module BookServices
     def find_or_create_serie
       serie_name = (params[:serie_name].presence || book.title).strip
 
-      Serie.find_or_create_by(name: serie_name)
+      @user.series.find_or_create_by(name: serie_name)
     end
 
     def find_or_create_authors
       author_names = Array(params[:author_names]).map(&:strip).reject(&:blank?)
 
       author_names.map do |name|
-        Author.find_or_create_by(name: name)
+        @user.authors.find_or_create_by(name: name)
       end
     end
   end

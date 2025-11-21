@@ -1,16 +1,12 @@
 class Serie < ApplicationRecord
+  belongs_to :user
   has_many :books, dependent: :destroy
 
-  validates :name, presence: true, uniqueness: { allow_blank: true }
+  validates :name, presence: true, uniqueness: { scope: :user_id, allow_blank: true }
   validates :rating, inclusion: { in: 1..5, allow_nil: true }
 
-  # Get user through books (all books in a series belong to same user)
-  def user
-    books.first&.user
-  end
-
   # Scope to get series for a specific user
-  scope :for_user, ->(user) { joins(:books).where(books: { user: user }).distinct }
+  scope :for_user, ->(user) { where(user: user) }
   scope :ordered, -> { order(:name) }
 
   enum :completion_state, {
