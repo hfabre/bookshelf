@@ -1,0 +1,9 @@
+- Add a favicon
+- Add tests (minitest spec syntaxe / fixtures) should be concise and precise also should avoid testing epub library through service test as it is already tested (i prefere having fewer tests but covering everything than having ton of tests testing nothing or the same thing)
+- Add a feature to merge authors (show a list of author, click on one it opens a page with the most ressembling authors name and checkbox to merge those to the selected one)
+- Same feature for series
+- Add github actions to run tests on every push
+- Add github action to push docker image to github registry when releasing (pushing a tag)
+- Add a button on book to gather metadata from google api (should show an intermediate step to see the data which will be imported)
+- Add a request book page to request book from [annas archive](https://annas-archive.org/) api (needs an api key), the link to the page should be shown only if key is present
+- Make every text use i18n strings

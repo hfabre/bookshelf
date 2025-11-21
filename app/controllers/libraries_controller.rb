@@ -1,6 +1,6 @@
 class LibrariesController < ApplicationController
-  before_action :set_library_user, except: [:index]
-  before_action :ensure_public_library, except: [:index]
+  before_action :set_library_user, except: [ :index ]
+  before_action :ensure_public_library, except: [ :index ]
 
   def index
     @public_users = User.where(public_library: true).order(:email_address)
@@ -14,35 +14,35 @@ class LibrariesController < ApplicationController
     @books = @library_user.books.includes(:authors, :serie).ordered
     @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @library_owner = @library_user
-    render 'books/index'
+    render "books/index"
   end
 
   def series
     @series = @library_user.series.includes(:books).order(rating: :desc, name: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @library_owner = @library_user
-    render 'series/index'
+    render "series/index"
   end
 
   def authors
     @authors = @library_user.authors.includes(books: :serie).ordered
     @authors = @authors.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @library_owner = @library_user
-    render 'authors/index'
+    render "authors/index"
   end
 
   def show_serie
     @serie = @library_user.series.find(params[:serie_id])
     @books = @serie.books.includes(:authors).order(:serie_index, :title)
     @library_owner = @library_user
-    render 'series/show'
+    render "series/show"
   end
 
   def show_author
     @author = @library_user.authors.find(params[:author_id])
     @books = @author.books.includes(:serie, :authors).ordered
     @library_owner = @library_user
-    render 'authors/show'
+    render "authors/show"
   end
 
   private
