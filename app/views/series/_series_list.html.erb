@@ -1,7 +1,7 @@
 <div class="grid grid-cols-5 gap-8">
     <% series.each do |serie| %>
         <% first_book = serie.books.first %>
-        <%= link_to series_path(serie), class: "block h-full", data: { turbo_frame: "_top" } do %>
+        <%= link_to serie_show_path(serie), class: "block h-full", data: { turbo_frame: "_top" } do %>
             <article class="h-full flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
                 <div class="aspect-[2.8/4] w-full relative overflow-hidden bg-gray-100 flex-shrink-0">
                     <% if first_book&.cover? %>

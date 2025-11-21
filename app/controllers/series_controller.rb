@@ -1,5 +1,6 @@
 class SeriesController < ApplicationController
-  before_action :set_serie, only: [:show, :edit, :update, :download]
+  before_action :set_serie, only: [ :show, :edit, :update, :download ]
+  before_action :require_admin, only: [ :edit, :update ]
 
   def index
     @series = Serie.for_user(current_user).includes(:books).order(rating: :desc, name: :asc)
@@ -27,28 +28,17 @@ class SeriesController < ApplicationController
   end
 
   def download
-    require 'zip'
+    books = @serie.books.order(:serie_index, :title)
+    result = ZipGeneratorService.new.call(books, @serie.name)
 
-    books = @serie.books
-
-    if books.empty?
-      redirect_to @serie, alert: "No books found for this series."
-      return
+    if result[:success]
+      send_data result[:zip_data],
+                filename: result[:filename],
+                type: "application/zip",
+                disposition: "attachment"
+    else
+      redirect_to @serie, alert: result[:error]
     end
-
-    zip_data = Zip::OutputStream.write_buffer do |zip|
-      books.order(:serie_index, :title).each do |book|
-        if book.epub_content.present?
-          zip.put_next_entry(book.filename)
-          zip.write(book.epub_content)
-        end
-      end
-    end
-
-    send_data zip_data.string,
-              filename: "#{@serie.name.parameterize}-series.zip",
-              type: "application/zip",
-              disposition: "attachment"
   end
 
   private

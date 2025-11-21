@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_21_194327) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_21_200000) do
   create_table "authors", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -78,6 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_194327) do
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public_library", default: false, null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 

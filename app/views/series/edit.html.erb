@@ -59,26 +59,42 @@
         </div>
 
         <div>
-          <%= form.label :completion_state, "Completion Status", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            <div class="flex items-center">
+              <svg class="w-4 h-4 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Series Completion Status
+            </div>
+            <span class="text-xs text-gray-500 ml-6">Whether the series is still being published</span>
+          </label>
           <%= form.select :completion_state,
               options_for_select([
-                ['Ongoing', 'ongoing'],
-                ['Completed', 'completed'],
-                ['Cancelled', 'cancelled']
+                ['Ongoing - Still being published', 'ongoing'],
+                ['Completed - Series is finished', 'completed'],
+                ['Cancelled - Series was discontinued', 'cancelled']
               ], @serie.completion_state),
-              { include_blank: 'Select status' },
+              { include_blank: 'Select completion status' },
               class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
         </div>
 
         <div>
-          <%= form.label :reading_state, "Reading Status", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            <div class="flex items-center">
+              <svg class="w-4 h-4 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+              Your Reading Progress
+            </div>
+            <span class="text-xs text-gray-500 ml-6">How far you've read in this series</span>
+          </label>
           <%= form.select :reading_state,
               options_for_select([
-                ['Unread', 'unread'],
-                ['Reading', 'reading'],
-                ['Finished', 'finished']
+                ['Unread - Haven\'t started yet', 'unread'],
+                ['Reading - Currently reading', 'reading'],
+                ['Finished - Completed reading', 'finished']
               ], @serie.reading_state),
-              { include_blank: 'Select status' },
+              { include_blank: 'Select reading status' },
               class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
         </div>
 

@@ -1,5 +1,6 @@
 class AuthorsController < ApplicationController
-  before_action :set_author, only: [:show, :edit, :update, :download]
+  before_action :set_author, only: [ :show, :edit, :update, :download ]
+  before_action :require_admin, only: [ :edit, :update ]
 
   def index
     @authors = current_user.authors.includes(books: :serie).ordered
@@ -27,28 +28,17 @@ class AuthorsController < ApplicationController
   end
 
   def download
-    require 'zip'
-
     books = @author.books
+    result = ZipGeneratorService.new.call(books, @author.name)
 
-    if books.empty?
-      redirect_to @author, alert: "No books found for this author."
-      return
+    if result[:success]
+      send_data result[:zip_data],
+                filename: result[:filename],
+                type: "application/zip",
+                disposition: "attachment"
+    else
+      redirect_to @author, alert: result[:error]
     end
-
-    zip_data = Zip::OutputStream.write_buffer do |zip|
-      books.each do |book|
-        if book.epub_content.present?
-          zip.put_next_entry(book.filename)
-          zip.write(book.epub_content)
-        end
-      end
-    end
-
-    send_data zip_data.string,
-              filename: "#{@author.name.parameterize}-books.zip",
-              type: "application/zip",
-              disposition: "attachment"
   end
 
   private
