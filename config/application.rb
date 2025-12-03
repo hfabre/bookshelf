@@ -30,5 +30,8 @@ module Bookshelf
 
     config.mission_control.jobs.base_controller_class = "ApplicationController"
     config.mission_control.jobs.http_basic_auth_enabled = false
+
+    # Use SQL structure dump instead of schema.rb to handle FTS5 virtual tables
+    config.active_record.schema_format = :sql
   end
 end
