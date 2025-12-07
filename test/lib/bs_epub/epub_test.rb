@@ -29,6 +29,14 @@ describe BsEpub::Epub do
       _(result[:cover_filename]).must_equal "cover.png"
       _(subject.cover_node("img1")[:"media-type"]).must_equal "image/png"
     end
+
+    it "handles replacing cover twice without conflict" do
+      subject.replace_cover!(cover_path)
+      subject.replace_cover!(cover_path)
+      subject.reset
+
+      _(subject.mt_hash[:cover_filename]).must_equal "cover.png"
+    end
   end
 
   describe "#update_mt!" do

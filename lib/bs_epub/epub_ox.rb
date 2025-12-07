@@ -157,7 +157,11 @@ module BsEpub
       new_name = filename + new_ext
 
       zip.replace(cover_path, new_conver_content)
-      zip.rename(cover_path, new_name)
+
+      if new_name != File.basename(cover_path)
+        zip.rename(cover_path, new_name)
+      end
+
       cover_node(cover_manifest_id)[:href] = new_name
       cover_node(cover_manifest_id)[:"media-type"] = MEDIA_TYPE[new_ext]
       override_opf!

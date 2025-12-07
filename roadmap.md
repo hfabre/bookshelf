@@ -1,6 +1,5 @@
+- Add a feature to merge series (show a list of serie, click on one it opens a page with the most ressembling series name and checkbox to merge those to the selected one)
 - Add tests (minitest spec syntaxe / fixtures) should be concise and precise also should avoid testing epub library through service test as it is already tested (i prefere having fewer tests but covering everything than having ton of tests testing nothing or the same thing)
-- Add a feature to merge authors (show a list of author, click on one it opens a page with the most ressembling authors name and checkbox to merge those to the selected one)
-- Same feature for series
 - Add github actions to run tests on every push
 - Add github action to push docker image to github registry when releasing (pushing a tag)
 - Do some cleanup
