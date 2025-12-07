@@ -1,5 +1,6 @@
 <div class="grid grid-cols-5 gap-8">
     <% series.each do |serie| %>
+        <div class="relative group">
         <% first_book = serie.books.first %>
         <%= link_to serie_show_path(serie), class: "block h-full", data: { turbo_frame: "_top" } do %>
             <article class="h-full flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
@@ -50,5 +51,15 @@
                 </div>
             </article>
         <% end %>
+
+            <%= link_to merge_series_path(serie),
+                class: "absolute top-2 right-2 bg-blue-600 text-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-700 z-10",
+                title: "Merge series",
+                data: { turbo_frame: "_top" } do %>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                </svg>
+            <% end %>
+        </div>
     <% end %>
 </div>

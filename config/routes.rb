@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   resources :series, only: [ :index, :show, :edit, :update ] do
     member do
       get :download
+      get :merge
+      post :perform_merge, path: :merge
     end
   end
 

@@ -1,0 +1,86 @@
+<div class="max-w-4xl mx-auto">
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Merge Series</h1>
+        <p class="mt-1 text-sm text-gray-600">
+          Merge similar series into: <span class="font-semibold"><%= @serie.name %></span>
+        </p>
+      </div>
+      <%= link_to "← Back to Series", series_path, class: "text-blue-600 hover:text-blue-800" %>
+    </div>
+  </div>
+
+  <% if @similar_series.any? %>
+    <%= form_with url: perform_merge_series_path(@serie), method: :post, local: true, class: "space-y-6", data: { controller: "serie-merge-form" } do |form| %>
+      <div class="bg-white shadow rounded-lg">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-medium text-gray-900">Similar Series Found</h2>
+          <p class="mt-1 text-sm text-gray-600">
+            Select the series you want to merge into <span class="font-semibold"><%= @serie.name %></span>
+          </p>
+        </div>
+
+        <div class="p-6">
+          <div class="space-y-4">
+            <% @similar_series.each do |similar_serie| %>
+              <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                <input type="checkbox"
+                       name="serie_ids[]"
+                       value="<%= similar_serie.id %>"
+                       id="serie_<%= similar_serie.id %>"
+                       class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                       data-serie-merge-form-target="checkbox"
+                       data-action="change->serie-merge-form#toggleSelection">
+
+                <label for="serie_<%= similar_serie.id %>" class="ml-4 flex-1 cursor-pointer">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="font-medium text-gray-900"><%= similar_serie.name %></div>
+                      <div class="text-sm text-gray-500">
+                        <%= pluralize(similar_serie.books.count, 'book') %>
+                        <% if similar_serie.books.any? %>
+                          - <%= similar_serie.books.limit(3).pluck(:title).join(", ") %>
+                          <% if similar_serie.books.count > 3 %>
+                            and <%= similar_serie.books.count - 3 %> more...
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-gray-500">
+          <span data-serie-merge-form-target="selectedCount">0</span> series selected for merging
+        </div>
+
+        <div class="flex space-x-3">
+          <%= link_to "Cancel", series_path, class: "px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50" %>
+          <%= form.submit "Merge Selected Series",
+                          class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed",
+                          data: { serie_merge_form_target: "submitButton" },
+                          disabled: true %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="bg-white shadow rounded-lg p-8 text-center">
+      <div class="text-gray-400 mb-4">
+        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">No Similar Series Found</h3>
+      <p class="text-gray-600 mb-6">
+        We couldn't find any series similar to "<%= @serie.name %>" in your library.
+      </p>
+      <%= link_to "Back to Series", series_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>

@@ -1,5 +1,5 @@
 class SeriesController < ApplicationController
-  before_action :set_serie, only: [ :show, :edit, :update, :download ]
+  before_action :set_serie, only: [ :show, :edit, :update, :download, :merge, :perform_merge ]
   before_action :require_admin, only: [ :edit, :update ]
 
   def index
@@ -38,6 +38,28 @@ class SeriesController < ApplicationController
                 disposition: "attachment"
     else
       redirect_to @serie, alert: result[:error]
+    end
+  end
+
+  def merge
+    @similar_series = @serie.similar_series
+  end
+
+  def perform_merge
+    serie_ids = params[:serie_ids]&.map(&:to_i) || []
+    series_to_merge = current_user.series.where(id: serie_ids)
+
+    if series_to_merge.empty?
+      redirect_to merge_series_path(@serie), alert: "No series selected for merging."
+      return
+    end
+
+    result = SerieServices::MergeService.new(@serie).call(series_to_merge)
+
+    if result[:success]
+      redirect_to series_path, notice: result[:message]
+    else
+      redirect_to merge_series_path(@serie), alert: result[:error]
     end
   end
 
