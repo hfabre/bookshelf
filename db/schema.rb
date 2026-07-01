@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_03_204351) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_07_000000) do
   create_table "authors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -92,3 +92,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_03_204351) do
 
   # Virtual tables defined in this database.
   # Note that virtual tables may not work with other database engines. Be careful if changing database.
+  create_virtual_table "authors_fts", "fts5", ["name", "user_id UNINDEXED"]
+  create_virtual_table "series_fts", "fts5", ["name", "user_id UNINDEXED"]
+end
