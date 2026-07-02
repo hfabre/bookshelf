@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_07_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_02_000000) do
   create_table "authors", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -37,7 +37,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_07_000000) do
     t.date "date"
     t.text "description"
     t.binary "epub_content"
+    t.text "failure_message"
     t.string "filename"
+    t.string "job_id"
     t.string "language"
     t.string "processing_status"
     t.string "publisher"
@@ -85,7 +87,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_07_000000) do
   add_foreign_key "authors", "users"
   add_foreign_key "authors_books", "authors"
   add_foreign_key "authors_books", "books"
-  add_foreign_key "books", "series", column: "serie_id"
+  add_foreign_key "books", "series"
   add_foreign_key "books", "users"
   add_foreign_key "series", "users"
   add_foreign_key "sessions", "users"

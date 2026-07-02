@@ -75,6 +75,7 @@ en:
       edit_profile: "Edit Profile"
       admin: "Admin"
       users: "Users"
+      failed_books: "Failed Uploads"
       jobs: "Jobs"
 
   shared:
@@ -283,6 +284,18 @@ en:
       forgot_password: "Forgot password?"
     create:
       invalid: "Try another email address or password."
+
+  failed_books:
+    index:
+      heading: "Failed Uploads"
+      empty: "No failed uploads."
+      book: "Book"
+      owner: "Owner"
+      error: "Error"
+      failed_at: "Failed At"
+      actions: "Actions"
+      download: "Download original"
+      view_job: "View job"
 
   users:
     access_denied: "Access denied. Admin privileges required."

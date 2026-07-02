@@ -12,6 +12,12 @@ Rails.application.routes.draw do
 
   resources :users, except: [ :show ]
 
+  resources :failed_books, only: [ :index ] do
+    member do
+      get :download
+    end
+  end
+
   # Public libraries
   get "libraries", to: "libraries#index"
   get "libraries/:user_id", to: "libraries#show", as: "library"

@@ -1,11 +1,7 @@
 ## Cleanup
 
-- Double check if we can clean bs_epub
-
-
 ## Missing feature
 
-- Add an admin view listing books with `failed` processing status, each with a link to download the original file and, if possible, a link to the job (Mission Control) or at least the stored backtrace/error. Requires persisting the failure reason/backtrace on the book when `EpubProcessorJob` fails.
 - Add filters to the book index (currently only search-by-title). Most useful: filter for books with no series and/or no author assigned, to clean up after a bulk upload.
 
 ## Release
@@ -18,7 +14,6 @@
 ## Security
 
 _Checked with brakeman (clean) + manual review. Good already: all record lookups are scoped through `current_user` (no IDOR), views escape epub metadata (no stored XSS), downloads are user-scoped, public-library access is gated, login is rate-limited, passwords use bcrypt. Concrete items below:_
-
 - Enable SSL in production. `config.force_ssl` and `config.assume_ssl` (since the godoxy reverse proxy terminates TLS) are commented out in `config/environments/production.rb`. The proxy serves HTTPS but the app doesn't force it or set HSTS, and the session cookie is `httponly`/`same_site: :lax` but NOT `secure`. Enabling both fixes all of that at once (`assume_ssl` so Rails trusts the proxy's forwarded proto). Highest priority.
 - Public library index leaks email addresses. `libraries/index.html.erb` shows each sharing user's `email_address` as the library title, on a page anyone can view. Consider a display name / username instead of the raw email.
 - Harden upload file-type validation. `BooksController#upload` trusts the client-provided `content_type` / `.epub` extension. Low risk with trusted users (a bad file just fails processing), but could validate magic bytes with `marcel` (already a dependency).

@@ -32,7 +32,8 @@ module BookServices
         processing_status: :pending
       )
 
-      EpubProcessorJob.perform_later(book.id, user.id)
+      job = EpubProcessorJob.perform_later(book.id, user.id)
+      book.update!(job_id: job.job_id)
       true
     end
   end

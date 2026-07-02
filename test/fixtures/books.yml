@@ -30,3 +30,11 @@ shared_book:
   epub_content: epub-bytes
   user: one
   authors: merge_source, merge_target
+
+failed_book:
+  filename: broken.epub
+  epub_content: epub-bytes
+  user: two
+  processing_status: failed
+  failure_message: "Nokogiri::XML::SyntaxError: bad opf"
+  job_id: "11111111-2222-3333-4444-555555555555"

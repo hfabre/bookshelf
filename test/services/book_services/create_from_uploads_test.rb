@@ -23,6 +23,7 @@ class BookServices::CreateFromUploadsTest < ActiveSupport::TestCase
     book = user.books.find_by(filename: "valid.epub")
     _(book.title).must_equal "valid"
     _(book.processing_status).must_equal "pending"
+    _(book.job_id).must_equal enqueued_jobs.find { |j| j["arguments"].first == book.id }["job_id"]
   end
 
   it "accepts an epub by extension even when the content type is generic" do
