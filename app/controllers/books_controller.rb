@@ -27,35 +27,15 @@ class BooksController < ApplicationController
   end
 
   def upload
-    uploaded_files = params[:files]
-
-    if uploaded_files.blank?
+    if params[:files].blank?
       redirect_to books_path, alert: "Please select at least one EPUB file."
       return
     end
 
-    processed_count = 0
+    count = BookServices::CreateFromUploads.new(current_user).call(params[:files])
 
-    valid_files = uploaded_files.compact.reject { |file| file.blank? || file.is_a?(String) }
-
-    valid_files.each do |file|
-      # Skip if not a valid uploaded file
-      next unless file.respond_to?(:content_type) && file.respond_to?(:original_filename)
-      next unless file.content_type == "application/epub+zip" || file.original_filename.end_with?(".epub")
-
-      book = current_user.books.create(
-        title: file.original_filename.gsub(".epub", ""),
-        filename: file.original_filename,
-        epub_content: file.read,
-        processing_status: :pending
-      )
-
-      EpubProcessorJob.perform_later(book.id, current_user.id)
-      processed_count += 1
-    end
-
-    if processed_count > 0
-      redirect_to books_path, notice: "#{processed_count} EPUB file(s) uploaded and are being processed."
+    if count > 0
+      redirect_to books_path, notice: "#{count} EPUB file(s) uploaded and are being processed."
     else
       redirect_to books_path, alert: "No valid EPUB files were found."
     end

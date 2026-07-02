@@ -1,6 +1,5 @@
 ## Cleanup
 
-- See if we can cleanup BooksController#upload
 - Translate all texts (i don't mean really translate keep it english but use I18n)
 - Double check if we can clean be_epub
 

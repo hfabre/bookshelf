@@ -83,26 +83,28 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   end
 
   describe "POST #upload" do
-    it "creates a book and enqueues processing for a valid epub" do
-      file = fixture_file_upload("valid.epub", "application/epub+zip")
+    it "calls the service and reports how many books were created" do
+      service = Minitest::Mock.new
+      service.expect(:call, 1) { true }
 
-      assert_difference -> { user.books.count }, 1 do
-        assert_enqueued_with(job: EpubProcessorJob) do
-          post upload_books_url, params: { files: [ file ] }
-        end
+      BookServices::CreateFromUploads.stub(:new, ->(*) { service }) do
+        post upload_books_url, params: { files: [ fixture_file_upload("valid.epub", "application/epub+zip") ] }
       end
 
+      assert_mock service
       assert_redirected_to books_path
       assert_equal "1 EPUB file(s) uploaded and are being processed.", flash[:notice]
     end
 
-    it "rejects files that are not epubs" do
-      file = fixture_file_upload("new_cover.png", "image/png")
+    it "alerts when the service creates no books" do
+      service = Minitest::Mock.new
+      service.expect(:call, 0) { true }
 
-      assert_no_difference -> { user.books.count } do
-        post upload_books_url, params: { files: [ file ] }
+      BookServices::CreateFromUploads.stub(:new, ->(*) { service }) do
+        post upload_books_url, params: { files: [ fixture_file_upload("new_cover.png", "image/png") ] }
       end
 
+      assert_mock service
       assert_redirected_to books_path
       assert_equal "No valid EPUB files were found.", flash[:alert]
     end
