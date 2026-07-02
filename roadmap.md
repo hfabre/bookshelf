@@ -1,7 +1,6 @@
 ## Cleanup
 
-- Translate all texts (i don't mean really translate keep it english but use I18n)
-- Double check if we can clean be_epub
+- Double check if we can clean bs_epub
 
 
 ## Missing feature

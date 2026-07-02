@@ -53,7 +53,7 @@ class LibrariesController < ApplicationController
 
   def ensure_public_library
     unless @library_user.public_library? || @library_user == current_user
-      redirect_to root_path, alert: "This library is not public."
+      redirect_to root_path, alert: t("libraries.not_public")
     end
   end
 end

@@ -11,7 +11,7 @@ class BooksController < ApplicationController
 
   def update
     if BookServices::UpdateAndSync.new(@book).call(book_params)
-      redirect_to books_path, notice: "Book was successfully updated."
+      redirect_to books_path, notice: t(".notice")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -19,7 +19,7 @@ class BooksController < ApplicationController
 
   def destroy
     @book.destroy
-    redirect_to books_path, notice: "Book was successfully deleted."
+    redirect_to books_path, notice: t(".notice")
   end
 
   def download
@@ -28,16 +28,16 @@ class BooksController < ApplicationController
 
   def upload
     if params[:files].blank?
-      redirect_to books_path, alert: "Please select at least one EPUB file."
+      redirect_to books_path, alert: t(".no_files")
       return
     end
 
     count = BookServices::CreateFromUploads.new(current_user).call(params[:files])
 
     if count > 0
-      redirect_to books_path, notice: "#{count} EPUB file(s) uploaded and are being processed."
+      redirect_to books_path, notice: t(".processing", count: count)
     else
-      redirect_to books_path, alert: "No valid EPUB files were found."
+      redirect_to books_path, alert: t(".none_valid")
     end
   end
 

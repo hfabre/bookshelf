@@ -1,5 +1,5 @@
 <div class="mb-8 min-w-full">
-    <%= render "shared/search_form", path: books_search_path, placeholder: "Search books by title or author...", turbo_frame: "books" %>
+    <%= render "shared/search_form", path: books_search_path, placeholder: t(".search_placeholder"), turbo_frame: "books" %>
 </div>
 
 <%= turbo_frame_tag "books" do %>

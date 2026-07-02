@@ -1,5 +1,5 @@
 <div class="mb-8 min-w-full">
-    <%= render "shared/search_form", path: series_search_path, placeholder: "Search series by name...", turbo_frame: "series" %>
+    <%= render "shared/search_form", path: series_search_path, placeholder: t(".search_placeholder"), turbo_frame: "series" %>
 </div>
 
 <%= turbo_frame_tag "series" do %>

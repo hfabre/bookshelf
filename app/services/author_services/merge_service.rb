@@ -5,13 +5,13 @@ module AuthorServices
     end
 
     def call(authors_to_merge)
-      return { success: false, error: "No authors provided for merging" } if authors_to_merge.empty?
+      return { success: false, error: I18n.t("authors.merge_service.no_authors") } if authors_to_merge.empty?
 
       authors_to_merge = Array(authors_to_merge)
 
       # Validate all authors belong to the same user
       unless valid_authors_for_merge?(authors_to_merge)
-        return { success: false, error: "Invalid authors for merging" }
+        return { success: false, error: I18n.t("authors.merge_service.invalid") }
       end
 
       begin
@@ -21,13 +21,13 @@ module AuthorServices
 
         {
           success: true,
-          message: "Successfully merged #{authors_to_merge.count} author(s) into #{@target_author.name}",
+          message: I18n.t("authors.merge_service.success", count: authors_to_merge.count, name: @target_author.name),
           merged_count: authors_to_merge.count
         }
       rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotDestroyed => e
         {
           success: false,
-          error: "Failed to merge authors: #{e.message}"
+          error: I18n.t("authors.merge_service.failure", error: e.message)
         }
       end
     end

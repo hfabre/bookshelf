@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to users_path, notice: "User was successfully created."
+      redirect_to users_path, notice: t(".notice")
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,14 +30,14 @@ class UsersController < ApplicationController
     # Only update password if provided
     if params[:user][:password].present?
       if @user.update(user_params)
-        redirect_to users_path, notice: "User password was successfully updated."
+        redirect_to users_path, notice: t(".password_notice")
       else
         render :edit, status: :unprocessable_entity
       end
     else
       # Update other attributes without password
       if @user.update(user_params.except(:password, :password_confirmation))
-        redirect_to users_path, notice: "User was successfully updated."
+        redirect_to users_path, notice: t(".notice")
       else
         render :edit, status: :unprocessable_entity
       end
@@ -46,12 +46,12 @@ class UsersController < ApplicationController
 
   def destroy
     if @user == current_user
-      redirect_to users_path, alert: "You cannot delete your own account."
+      redirect_to users_path, alert: t(".self")
       return
     end
 
     @user.destroy
-    redirect_to users_path, notice: "User was successfully deleted."
+    redirect_to users_path, notice: t(".notice")
   end
 
   private
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
 
   def require_admin
     unless current_user&.admin?
-      redirect_to root_path, alert: "Access denied. Admin privileges required."
+      redirect_to root_path, alert: t("users.access_denied")
     end
   end
 end

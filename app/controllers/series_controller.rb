@@ -21,7 +21,7 @@ class SeriesController < ApplicationController
 
   def update
     if @serie.update(serie_params)
-      redirect_to @serie, notice: "Series was successfully updated."
+      redirect_to @serie, notice: t(".notice")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,7 +50,7 @@ class SeriesController < ApplicationController
     series_to_merge = current_user.series.where(id: serie_ids)
 
     if series_to_merge.empty?
-      redirect_to merge_serie_path(@serie), alert: "No series selected for merging."
+      redirect_to merge_serie_path(@serie), alert: t(".no_selection")
       return
     end
 

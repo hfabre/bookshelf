@@ -1,7 +1,7 @@
 <div class="max-w-2xl mx-auto">
   <div class="bg-white shadow rounded-lg">
     <div class="px-6 py-8">
-          <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Profile</h1>
+          <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= t(".heading") %></h1>
 
       <%= form_with model: @user, url: profile_path, local: true, class: "space-y-6" do |form| %>
         <% if @user.errors.any? %>
@@ -14,7 +14,7 @@
               </div>
               <div class="ml-3">
                 <h3 class="text-sm font-medium text-red-800">
-                  There were <%= pluralize(@user.errors.count, "error") %> with your submission:
+                  <%= t("common.error_header", count: @user.errors.count) %>
                 </h3>
                 <div class="mt-2 text-sm text-red-700">
                   <ul class="list-disc pl-5 space-y-1">
@@ -29,42 +29,42 @@
         <% end %>
 
         <div>
-          <h3 class="text-lg font-medium text-gray-900 mb-4">Library Sharing</h3>
+          <h3 class="text-lg font-medium text-gray-900 mb-4"><%= t(".sharing_heading") %></h3>
           <div class="flex items-center">
             <%= form.check_box :public_library, class: "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" %>
-            <%= form.label :public_library, "Make my library public", class: "ml-2 block text-sm text-gray-900" %>
+            <%= form.label :public_library, class: "ml-2 block text-sm text-gray-900" %>
           </div>
           <p class="mt-2 text-sm text-gray-500">
-            When enabled, other users can browse your books, series, and authors (read-only).
+            <%= t(".sharing_hint") %>
           </p>
         </div>
 
         <div class="border-t border-gray-200 pt-6">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">Change Password</h3>
-          <p class="text-sm text-gray-500 mb-4">Leave blank to keep current password</p>
+          <h3 class="text-lg font-medium text-gray-900 mb-4"><%= t(".password_heading") %></h3>
+          <p class="text-sm text-gray-500 mb-4"><%= t(".password_hint") %></p>
 
           <div class="space-y-4">
             <div>
-              <%= form.label :password, "New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= form.label :password, t(".password_label"), class: "block text-sm font-medium text-gray-700 mb-2" %>
               <%= form.password_field :password,
                   class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
-                  placeholder: "Enter your new password" %>
+                  placeholder: t(".password_placeholder") %>
             </div>
 
             <div>
-              <%= form.label :password_confirmation, "Confirm New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <%= form.label :password_confirmation, t(".password_confirmation_label"), class: "block text-sm font-medium text-gray-700 mb-2" %>
               <%= form.password_field :password_confirmation,
                   class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
-                  placeholder: "Confirm your new password" %>
+                  placeholder: t(".password_confirmation_placeholder") %>
             </div>
           </div>
         </div>
 
         <div class="flex items-center justify-end space-x-4">
-          <%= link_to "Cancel", root_path,
+          <%= link_to t("common.cancel"), root_path,
               class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
 
-              <%= form.submit "Update Profile",
+              <%= form.submit t(".submit"),
                   class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
         </div>
       <% end %>

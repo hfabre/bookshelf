@@ -4,13 +4,13 @@
       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
-      Back to <%= @serie.name %>
+      <%= t(".back", name: @serie.name) %>
     <% end %>
   </div>
 
   <div class="bg-white shadow rounded-lg">
     <div class="px-6 py-8">
-      <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Series</h1>
+      <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= t(".heading") %></h1>
 
       <%= form_with model: @serie, local: true, class: "space-y-6" do |form| %>
         <% if @serie.errors.any? %>
@@ -23,7 +23,7 @@
               </div>
               <div class="ml-3">
                 <h3 class="text-sm font-medium text-red-800">
-                  There were <%= pluralize(@serie.errors.count, "error") %> with your submission:
+                  <%= t("common.error_header", count: @serie.errors.count) %>
                 </h3>
                 <div class="mt-2 text-sm text-red-700">
                   <ul class="list-disc pl-5 space-y-1">
@@ -47,12 +47,12 @@
           <%= form.label :rating, class: "block text-sm font-medium text-gray-700 mb-2" %>
           <%= form.select :rating,
               options_for_select([
-                ['No rating', ''],
-                ['1 star', 1],
-                ['2 stars', 2],
-                ['3 stars', 3],
-                ['4 stars', 4],
-                ['5 stars', 5]
+                [t('.rating_options.none'), ''],
+                [t('.rating_options.one_star'), 1],
+                [t('.rating_options.two_stars'), 2],
+                [t('.rating_options.three_stars'), 3],
+                [t('.rating_options.four_stars'), 4],
+                [t('.rating_options.five_stars'), 5]
               ], @serie.rating),
               {},
               class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
@@ -64,17 +64,17 @@
               <svg class="w-4 h-4 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
-              Series Completion Status
+              <%= t(".completion_label") %>
             </div>
-            <span class="text-xs text-gray-500 ml-6">Whether the series is still being published</span>
+            <span class="text-xs text-gray-500 ml-6"><%= t(".completion_hint") %></span>
           </label>
           <%= form.select :completion_state,
               options_for_select([
-                ['Ongoing - Still being published', 'ongoing'],
-                ['Completed - Series is finished', 'completed'],
-                ['Cancelled - Series was discontinued', 'cancelled']
+                [t('.completion_options.ongoing'), 'ongoing'],
+                [t('.completion_options.completed'), 'completed'],
+                [t('.completion_options.cancelled'), 'cancelled']
               ], @serie.completion_state),
-              { include_blank: 'Select completion status' },
+              { include_blank: t('.completion_prompt') },
               class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
         </div>
 
@@ -84,26 +84,25 @@
               <svg class="w-4 h-4 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
-              Your Reading Progress
+              <%= t(".reading_label") %>
             </div>
-            <span class="text-xs text-gray-500 ml-6">How far you've read in this series</span>
+            <span class="text-xs text-gray-500 ml-6"><%= t(".reading_hint") %></span>
           </label>
           <%= form.select :reading_state,
               options_for_select([
-                ['Unread - Haven\'t started yet', 'unread'],
-                ['Reading - Currently reading', 'reading'],
-                ['Finished - Completed reading', 'finished']
+                [t('.reading_options.unread'), 'unread'],
+                [t('.reading_options.reading'), 'reading'],
+                [t('.reading_options.finished'), 'finished']
               ], @serie.reading_state),
-              { include_blank: 'Select reading status' },
+              { include_blank: t('.reading_prompt') },
               class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %>
         </div>
 
         <div class="flex items-center justify-end space-x-4">
-          <%= link_to "Cancel", @serie,
+          <%= link_to t("common.cancel"), @serie,
               class: "inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
 
-          <%= form.submit "Update Series",
-              class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+          <%= form.submit class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
         </div>
       <% end %>
     </div>

@@ -2,7 +2,7 @@ require "zip"
 
 class ZipGeneratorService
   def call(books, filename_prefix)
-    return { success: false, error: "No books found" } if books.empty?
+    return { success: false, error: I18n.t("zip_generator.no_books") } if books.empty?
 
     zip_data = generate_zip(books)
     filename = "#{filename_prefix.parameterize}-books.zip"

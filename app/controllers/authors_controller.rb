@@ -21,7 +21,7 @@ class AuthorsController < ApplicationController
 
   def update
     if @author.update(author_params)
-      redirect_to @author, notice: "Author was successfully updated."
+      redirect_to @author, notice: t(".notice")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,7 +50,7 @@ class AuthorsController < ApplicationController
     authors_to_merge = current_user.authors.where(id: author_ids)
 
     if authors_to_merge.empty?
-      redirect_to merge_author_path(@author), alert: "No authors selected for merging."
+      redirect_to merge_author_path(@author), alert: t(".no_selection")
       return
     end
 

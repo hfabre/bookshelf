@@ -11,7 +11,7 @@
         <div>
             <%= form.text_field :q,
                 value: params[:q],
-                placeholder: local_assigns[:placeholder] || "Search...",
+                placeholder: local_assigns[:placeholder] || t(".default_placeholder"),
                 autocomplete: "off",
                 class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
                 data: {
@@ -22,7 +22,7 @@
 
         <div class="hidden" data-search-target="loading">
             <div class="text-sm text-gray-500">
-                <span>Searching...</span>
+                <span><%= t(".searching") %></span>
             </div>
         </div>
         <% end %>

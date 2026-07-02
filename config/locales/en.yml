@@ -1,31 +1,324 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      serie:
+        one: "Series"
+        other: "Series"
+    attributes:
+      book:
+        title: "Title"
+        date: "Publication Date"
+        language: "Language"
+        publisher: "Publisher"
+        description: "Description"
+        cover: "Book Cover"
+        serie_index: "Book Number"
+      serie:
+        name: "Name"
+        rating: "Rating"
+      author:
+        name: "Name"
+      user:
+        email_address: "Email"
+        password: "Password"
+        password_confirmation: "Confirm Password"
+        admin: "Admin privileges"
+        public_library: "Make my library public"
+
+  helpers:
+    submit:
+      book:
+        update: "Update Book"
+      serie:
+        update: "Update Series"
+      author:
+        update: "Update Author"
+      user:
+        create: "Create User"
+        update: "Update User"
+
+  common:
+    access_denied: "Access denied."
+    cancel: "Cancel"
+    no_cover: "No cover"
+    no_books_found: "No books found"
+    book_count:
+      one: "%{count} book"
+      other: "%{count} books"
+    error_header:
+      one: "There were %{count} error with your submission:"
+      other: "There were %{count} errors with your submission:"
+
+  zip_generator:
+    no_books: "No books found"
+
+  passwords_mailer:
+    reset:
+      subject: "Reset your password"
+      intro: "You can reset your password within the next 15 minutes on"
+      link: "this password reset page"
+      text: "You can reset your password within the next 15 minutes on this password reset page:"
+
+  layouts:
+    application:
+      default_title: "Bookshelf"
+      upload_books: "Upload books"
+      sign_out: "Sign Out"
+      browsing_library: "Browsing Library"
+      my_library: "My Library"
+      books: "Books"
+      series: "Series"
+      authors: "Authors"
+      me: "Me"
+      back_to_my_library: "Back to My Library"
+      public_libraries: "Public Libraries"
+      edit_profile: "Edit Profile"
+      admin: "Admin"
+      users: "Users"
+      jobs: "Jobs"
+
+  shared:
+    search_form:
+      default_placeholder: "Search..."
+      searching: "Searching..."
+
+  books:
+    index:
+      search_placeholder: "Search books by title or author..."
+    edit:
+      page_title: "Edit %{title}"
+      heading: "Edit Book"
+      subtitle: "Update book information, cover, series, and authors"
+      errors_heading: "Please fix the following errors:"
+      cover_hint: "PNG, JPG, GIF up to 10MB"
+      series_label: "Series"
+      serie_name_label: "Series Name"
+      serie_name_placeholder: "Search or create series..."
+      authors_label: "Authors"
+      author_search_placeholder: "Search or add authors... (Press Enter to add)"
+      authors_hint: "Type a name and press Enter to add, or select from existing authors"
+    book_modal:
+      close: "Close"
+      title: "Title"
+      authors: "Authors"
+      language: "Language"
+      publisher: "Publisher"
+      date: "Date"
+      serie: "Serie"
+      delete_confirm: "Are you sure ?"
+    update:
+      notice: "Book was successfully updated."
+    destroy:
+      notice: "Book was successfully deleted."
+    upload:
+      no_files: "Please select at least one EPUB file."
+      processing: "%{count} EPUB file(s) uploaded and are being processed."
+      none_valid: "No valid EPUB files were found."
+
+  series:
+    index:
+      search_placeholder: "Search series by name..."
+    series_list:
+      no_rating: "No rating"
+      rating: "%{rating}/5"
+      merge_title: "Merge series"
+    show:
+      back: "Back to Series"
+      books_in_series:
+        one: "%{count} book in this series"
+        other: "%{count} books in this series"
+      rating_label: "Rating:"
+      rating_value: "(%{rating}/5)"
+      series_status: "Series Status:"
+      reading_status: "Reading Status:"
+      edit: "Edit Series"
+      merge: "Merge Series"
+      download_all: "Download All Books"
+      books_heading: "Books in %{name}"
+      empty_heading: "No books found"
+      empty_body: "This series doesn't have any books yet."
+    edit:
+      back: "Back to %{name}"
+      heading: "Edit Series"
+      completion_label: "Series Completion Status"
+      completion_hint: "Whether the series is still being published"
+      completion_prompt: "Select completion status"
+      reading_label: "Your Reading Progress"
+      reading_hint: "How far you've read in this series"
+      reading_prompt: "Select reading status"
+      rating_options:
+        none: "No rating"
+        one_star: "1 star"
+        two_stars: "2 stars"
+        three_stars: "3 stars"
+        four_stars: "4 stars"
+        five_stars: "5 stars"
+      completion_options:
+        ongoing: "Ongoing - Still being published"
+        completed: "Completed - Series is finished"
+        cancelled: "Cancelled - Series was discontinued"
+      reading_options:
+        unread: "Unread - Haven't started yet"
+        reading: "Reading - Currently reading"
+        finished: "Finished - Completed reading"
+    merge:
+      heading: "Merge Series"
+      subtitle_html: "Merge similar series into: <span class=\"font-semibold\">%{name}</span>"
+      back: "← Back to Series"
+      found_heading: "Similar Series Found"
+      found_subtitle_html: "Select the series you want to merge into <span class=\"font-semibold\">%{name}</span>"
+      more:
+        one: "and %{count} more..."
+        other: "and %{count} more..."
+      selected_suffix: "series selected for merging"
+      submit: "Merge Selected Series"
+      empty_heading: "No Similar Series Found"
+      empty_body: "We couldn't find any series similar to \"%{name}\" in your library."
+      empty_back: "Back to Series"
+    update:
+      notice: "Series was successfully updated."
+    perform_merge:
+      no_selection: "No series selected for merging."
+
+  authors:
+    index:
+      search_placeholder: "Search authors by name..."
+    authors_list:
+      merge_title: "Merge author"
+    show:
+      back: "Back to Authors"
+      books_by_author:
+        one: "%{count} book by this author"
+        other: "%{count} books by this author"
+      edit: "Edit Author"
+      download_all: "Download All Books"
+      books_heading: "Books by %{name}"
+      empty_heading: "No books found"
+      empty_body: "This author doesn't have any books yet."
+    edit:
+      back: "Back to %{name}"
+      heading: "Edit Author"
+    merge:
+      heading: "Merge Author"
+      subtitle_html: "Merge similar authors into: <span class=\"font-semibold\">%{name}</span>"
+      back: "← Back to Authors"
+      found_heading: "Similar Authors Found"
+      found_subtitle_html: "Select the authors you want to merge into <span class=\"font-semibold\">%{name}</span>"
+      more:
+        one: "and %{count} more..."
+        other: "and %{count} more..."
+      match: "Match: %{score}"
+      selected_suffix: "author(s) selected for merging"
+      submit: "Merge Selected Authors"
+      empty_heading: "No Similar Authors Found"
+      empty_body: "We couldn't find any authors similar to \"%{name}\" in your library."
+      empty_back: "Back to Authors"
+    update:
+      notice: "Author was successfully updated."
+    perform_merge:
+      no_selection: "No authors selected for merging."
+    merge_service:
+      no_authors: "No authors provided for merging"
+      invalid: "Invalid authors for merging"
+      success: "Successfully merged %{count} author(s) into %{name}"
+      failure: "Failed to merge authors: %{error}"
+
+  serie_merge_service:
+    no_series: "No series provided for merging"
+    invalid: "Invalid series for merging"
+    success: "Successfully merged %{count} series into %{name}"
+    failure: "Failed to merge series: %{error}"
+
+  libraries:
+    not_public: "This library is not public."
+    index:
+      heading: "Public Libraries"
+      your_library: "Your Library"
+      books: "Books:"
+      series: "Series:"
+      authors: "Authors:"
+      shared_since: "Library shared since %{date}"
+      empty_heading: "No public libraries"
+      empty_body: "No users have made their libraries public yet."
+
+  passwords:
+    invalid_token: "Password reset link is invalid or has expired."
+    new:
+      heading: "Forgot your password?"
+      email_placeholder: "Enter your email address"
+      submit: "Email reset instructions"
+    edit:
+      heading: "Update your password"
+      password_placeholder: "Enter new password"
+      password_confirmation_placeholder: "Repeat new password"
+      submit: "Save"
+    create:
+      notice: "Password reset instructions sent (if user with that email address exists)."
+    update:
+      notice: "Password has been reset."
+      mismatch: "Passwords did not match."
+
+  profiles:
+    edit:
+      heading: "Edit Profile"
+      sharing_heading: "Library Sharing"
+      sharing_hint: "When enabled, other users can browse your books, series, and authors (read-only)."
+      password_heading: "Change Password"
+      password_hint: "Leave blank to keep current password"
+      password_label: "New Password"
+      password_placeholder: "Enter your new password"
+      password_confirmation_label: "Confirm New Password"
+      password_confirmation_placeholder: "Confirm your new password"
+      submit: "Update Profile"
+    update:
+      notice: "Profile updated successfully."
+
+  sessions:
+    rate_limited: "Try again later."
+    new:
+      heading: "Sign in"
+      email_placeholder: "Enter your email address"
+      password_placeholder: "Enter your password"
+      submit: "Sign in"
+      forgot_password: "Forgot password?"
+    create:
+      invalid: "Try another email address or password."
+
+  users:
+    access_denied: "Access denied. Admin privileges required."
+    index:
+      heading: "User Management"
+      new_user: "New User"
+      email: "Email"
+      role: "Role"
+      books_count: "Books Count"
+      created: "Created"
+      actions: "Actions"
+      you: "You"
+      role_admin: "Admin"
+      role_user: "User"
+      delete_confirm: "Are you sure you want to delete %{email}? This will also delete all their books, series, and authors."
+    new:
+      back: "Back to Users"
+      heading: "Create New User"
+      email_placeholder: "Enter email address"
+      password_placeholder: "Enter password"
+      password_confirmation_placeholder: "Confirm password"
+    edit:
+      back: "Back to Users"
+      heading: "Edit User: %{email}"
+      password_heading: "Change Password"
+      password_hint: "Leave blank to keep current password"
+      password_label: "New Password"
+      password_placeholder: "Enter new password (optional)"
+      password_confirmation_label: "Confirm New Password"
+      password_confirmation_placeholder: "Confirm new password"
+      admin_self_note: "Note: You cannot remove your own admin privileges."
+    create:
+      notice: "User was successfully created."
+    update:
+      notice: "User was successfully updated."
+      password_notice: "User password was successfully updated."
+    destroy:
+      notice: "User was successfully deleted."
+      self: "You cannot delete your own account."

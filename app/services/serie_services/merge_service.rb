@@ -5,12 +5,12 @@ module SerieServices
     end
 
     def call(series_to_merge)
-      return { success: false, error: "No series provided for merging" } if series_to_merge.empty?
+      return { success: false, error: I18n.t("serie_merge_service.no_series") } if series_to_merge.empty?
 
       series_to_merge = Array(series_to_merge)
 
       unless valid_series_for_merge?(series_to_merge)
-        return { success: false, error: "Invalid series for merging" }
+        return { success: false, error: I18n.t("serie_merge_service.invalid") }
       end
 
       begin
@@ -20,13 +20,13 @@ module SerieServices
 
         {
           success: true,
-          message: "Successfully merged #{series_to_merge.count} series into #{@target_serie.name}",
+          message: I18n.t("serie_merge_service.success", count: series_to_merge.count, name: @target_serie.name),
           merged_count: series_to_merge.count
         }
       rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotDestroyed => e
         {
           success: false,
-          error: "Failed to merge series: #{e.message}"
+          error: I18n.t("serie_merge_service.failure", error: e.message)
         }
       end
     end

@@ -17,6 +17,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def require_admin
-    redirect_to root_path, alert: "Access denied." unless current_user&.admin?
+    redirect_to root_path, alert: t("common.access_denied") unless current_user&.admin?
   end
 end
