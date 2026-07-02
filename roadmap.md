@@ -1,7 +1,6 @@
 ## Cleanup
 
 - See if we can cleanup BooksController#upload
-- Clean up the `application.html.erb` layout structure. The `<body>` tag sits mid-document (after the header/sidebar) and the sidebar's outer `<div class="flex">` is intentionally left unclosed to wrap the content column. It works but is invalid/confusing HTML; restructure so `<body>` wraps everything and the sidebar + content column are proper, explicitly-closed flex children.
 - Translate all texts (i don't mean really translate keep it english but use I18n)
 - Double check if we can clean be_epub
 
