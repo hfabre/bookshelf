@@ -50,7 +50,7 @@ class SeriesController < ApplicationController
     series_to_merge = current_user.series.where(id: serie_ids)
 
     if series_to_merge.empty?
-      redirect_to merge_series_path(@serie), alert: "No series selected for merging."
+      redirect_to merge_serie_path(@serie), alert: "No series selected for merging."
       return
     end
 
@@ -59,7 +59,7 @@ class SeriesController < ApplicationController
     if result[:success]
       redirect_to series_path, notice: result[:message]
     else
-      redirect_to merge_series_path(@serie), alert: result[:error]
+      redirect_to merge_serie_path(@serie), alert: result[:error]
     end
   end
 

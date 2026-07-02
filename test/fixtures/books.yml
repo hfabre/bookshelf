@@ -1,0 +1,32 @@
+merged_book_one:
+  filename: merged_one.epub
+  epub_content: epub-bytes
+  user: one
+  serie: to_merge
+  serie_index: 1
+
+merged_book_two:
+  filename: merged_two.epub
+  epub_content: epub-bytes
+  user: one
+  serie: to_merge
+  serie_index: 2
+
+with_authors:
+  filename: with_authors.epub
+  epub_content: epub-bytes
+  user: one
+  authors: tolkien, lewis
+
+# For AuthorServices::MergeService test
+source_book:
+  filename: source_book.epub
+  epub_content: epub-bytes
+  user: one
+  authors: merge_source
+
+shared_book:
+  filename: shared_book.epub
+  epub_content: epub-bytes
+  user: one
+  authors: merge_source, merge_target

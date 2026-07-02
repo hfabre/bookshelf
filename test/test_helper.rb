@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= "test"
 # ENV["MT_NO_EXPECTATIONS"] = "true"
 require_relative "../config/environment"
 require "rails/test_help"
+require_relative "test_helpers/session_test_helper"
 require "minitest/rails"
 
 module ActiveSupport
@@ -12,6 +13,9 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
+
+    # Makes fixture_file_upload available outside of integration tests too.
+    include ActionDispatch::TestProcess::FixtureFile
 
     # Add more helper methods to be used by all tests here...
   end

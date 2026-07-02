@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def current_series_path
-    browsing_other_library? ? library_series_path(current_library_owner) : series_index_path
+    browsing_other_library? ? library_series_path(current_library_owner) : series_path
   end
 
   def current_authors_path
@@ -53,7 +53,7 @@ module ApplicationHelper
 
   # Show page link helpers
   def serie_show_path(serie)
-    browsing_other_library? ? library_serie_path(current_library_owner, serie) : series_path(serie)
+    browsing_other_library? ? library_serie_path(current_library_owner, serie) : serie_path(serie)
   end
 
   def author_show_path(author)

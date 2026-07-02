@@ -2,7 +2,6 @@
 
 - See if we can cleanup BooksController#upload
 - Clean up the `application.html.erb` layout structure. The `<body>` tag sits mid-document (after the header/sidebar) and the sidebar's outer `<div class="flex">` is intentionally left unclosed to wrap the content column. It works but is invalid/confusing HTML; restructure so `<body>` wraps everything and the sidebar + content column are proper, explicitly-closed flex children.
-- Add tests (minitest spec syntaxe / fixtures) should be concise and precise also should avoid testing epub library through service test as it is already tested (i prefere having fewer tests but covering everything than having ton of tests testing nothing or the same thing). Controller test should test we call the service and test redirect or error but let the logic test to the service called, unless controller implement logic, in this case propose to extract the logic to a service)
 - Translate all texts (i don't mean really translate keep it english but use I18n)
 - Double check if we can clean be_epub
 
@@ -16,12 +15,14 @@
 
 - Add github actions to run tests on every push
 - Add github action to push docker image to github registry when releasing (pushing a tag)
+- Run DB migrations on deploy: add a migration step to container startup (e.g. `bin/rails db:prepare` in the Dockerfile entrypoint / compose command) so the schema is up to date before the app boots.
+- Configure my ovh smtp server so resetting password works
 
 ## Security
 
 _Checked with brakeman (clean) + manual review. Good already: all record lookups are scoped through `current_user` (no IDOR), views escape epub metadata (no stored XSS), downloads are user-scoped, public-library access is gated, login is rate-limited, passwords use bcrypt. Concrete items below:_
 
-- Enable SSL in production. `config.force_ssl` (and likely `config.assume_ssl`, since the Kamal/Thruster proxy terminates TLS) are commented out in `config/environments/production.rb`. The proxy serves HTTPS (`deploy.yml` `ssl: true`) but the app doesn't force it or set HSTS, and the session cookie is `httponly`/`same_site: :lax` but NOT `secure`. Enabling `force_ssl` fixes all of that at once. Highest priority.
+- Enable SSL in production. `config.force_ssl` and `config.assume_ssl` (since the godoxy reverse proxy terminates TLS) are commented out in `config/environments/production.rb`. The proxy serves HTTPS but the app doesn't force it or set HSTS, and the session cookie is `httponly`/`same_site: :lax` but NOT `secure`. Enabling both fixes all of that at once (`assume_ssl` so Rails trusts the proxy's forwarded proto). Highest priority.
 - Public library index leaks email addresses. `libraries/index.html.erb` shows each sharing user's `email_address` as the library title, on a page anyone can view. Consider a display name / username instead of the raw email.
 - Harden upload file-type validation. `BooksController#upload` trusts the client-provided `content_type` / `.epub` extension. Low risk with trusted users (a bad file just fails processing), but could validate magic bytes with `marcel` (already a dependency).
 - `config.action_mailer.default_url_options` is still `host: "example.com"`. Set the real host before relying on any mailer link (tied to the boilerplate password-reset flow).

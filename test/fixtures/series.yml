@@ -1,0 +1,28 @@
+target:
+  name: Target Serie
+  user: one
+
+to_merge:
+  name: To Merge Serie
+  user: one
+
+other_user:
+  name: Other User Serie
+  user: two
+
+# Distinctive names for similarity search (avoid the shared "Serie" token)
+naruto:
+  name: Naruto
+  user: one
+
+naruto_shippuden:
+  name: Naruto Shippuden
+  user: one
+
+naruto_other_user:
+  name: Naruto Gaiden
+  user: two
+
+admin_serie:
+  name: Admin Owned Serie
+  user: admin

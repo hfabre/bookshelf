@@ -48,13 +48,15 @@ module BookServices
     end
 
     def detect_mime_type(file_content, filename)
+      return nil if file_content.blank?
+
       mime_type = Marcel::MimeType.for(file_content, name: filename)
       return mime_type if mime_type && mime_type != "application/octet-stream"
 
       mime_type = Marcel::MimeType.for(name: filename)
       return mime_type if mime_type && mime_type != "application/octet-stream"
 
-      case File.extname(filename).downcase
+      case File.extname(filename.to_s).downcase
       when ".jpg", ".jpeg" then "image/jpeg"
       when ".png" then "image/png"
       when ".gif" then "image/gif"

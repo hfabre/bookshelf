@@ -14,3 +14,10 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+# "series" ships in Rails' uncountable list, so it singularizes to itself
+# ("series".classify => "Series") which clashes with our singular `Serie` model.
+# Teach the inflector the irregular pair so serie <-> series resolves cleanly.
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.irregular "serie", "series"
+end

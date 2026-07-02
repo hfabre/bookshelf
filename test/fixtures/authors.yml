@@ -1,0 +1,33 @@
+tolkien:
+  name: J.R.R. Tolkien
+  user: one
+
+lewis:
+  name: C.S. Lewis
+  user: one
+
+# Shared "Brandon" token for similarity search
+sanderson:
+  name: Brandon Sanderson
+  user: one
+
+brandon_mull:
+  name: Brandon Mull
+  user: one
+
+brandon_other_user:
+  name: Brandon Lee
+  user: two
+
+# Merge target/source (see AuthorServices::MergeService test)
+merge_target:
+  name: Merge Target Author
+  user: one
+
+merge_source:
+  name: Merge Source Author
+  user: one
+
+admin_author:
+  name: Admin Owned Author
+  user: admin

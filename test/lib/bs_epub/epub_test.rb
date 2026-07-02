@@ -5,18 +5,9 @@ require "test_helper"
 describe BsEpub::Epub do
   describe "#replace_cover!" do
     let(:path) { "test/fixtures/files/valid.epub" }
-    let(:copy_path) { "test/fixtures/files/copy_valid.epub" }
     let(:cover_path) { "test/fixtures/files/new_cover.png" }
 
-    subject { BsEpub::Epub.new(File.read(copy_path)) }
-
-    before do
-      FileUtils.cp(path, copy_path)
-    end
-
-    after do
-      FileUtils.rm(copy_path)
-    end
+    subject { BsEpub::Epub.new(File.read(path)) }
 
     it "replace the cover" do
       _(subject.cover_node("img1")[:"media-type"]).wont_equal "images/png"
@@ -40,18 +31,8 @@ describe BsEpub::Epub do
   end
 
   describe "#update_mt!" do
-    # Use a copy to avoid altering original file
     let(:path) { "test/fixtures/files/valid.epub" }
-    let(:copy_path) { "test/fixtures/files/copy_valid.epub" }
-    subject { BsEpub::Epub.new(File.read(copy_path)) }
-
-    before do
-      FileUtils.cp(path, copy_path)
-    end
-
-    after do
-      FileUtils.rm(copy_path)
-    end
+    subject { BsEpub::Epub.new(File.read(path)) }
 
     let(:new_metadata) do
       {
@@ -82,7 +63,6 @@ describe BsEpub::Epub do
 
     describe "with existing calibre serie" do
       let(:path) { "test/fixtures/files/calibre_serie.epub" }
-      let(:copy_path) { "test/fixtures/files/copy_calibre_serie.epub" }
       let(:new_metadata) do
         {
           serie: "new serie",
@@ -104,7 +84,6 @@ describe BsEpub::Epub do
 
     describe "with missing mandatory metadata (title)" do
       let(:path) { "test/fixtures/files/missing_title.epub" }
-      let(:copy_path) { "test/fixtures/files/copy_missing_title.epub" }
       let(:new_metadata) do
         {
           title: "new title"
@@ -124,18 +103,8 @@ describe BsEpub::Epub do
   end
 
   describe "#create_container!" do
-    # Use a copy to avoid altering original file
     let(:path) { "test/fixtures/files/missing_container.epub" }
-    let(:copy_path) { "test/fixtures/files/copy_missing_container.epub" }
-    subject { BsEpub::Epub.new(File.read(copy_path)) }
-
-    before do
-      FileUtils.cp(path, copy_path)
-    end
-
-    after do
-      FileUtils.rm(copy_path)
-    end
+    subject { BsEpub::Epub.new(File.read(path)) }
 
     it "build the missing container file" do
       _(subject.files).wont_include BsEpub::Epub::CONTAINER_PATH
