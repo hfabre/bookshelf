@@ -1,7 +1,21 @@
-## Bug fix
+## Cleanup
 
-- After book upload the flash message make the "book list" take the half left on the page and the flash message take the other half right. It should simply be right on the book list instead of changing it
-- Same for successfull flash message after merge (i think this is a global problem with our flash message)
+- See if we can cleanup BooksController#upload
+- Clean up the `application.html.erb` layout structure. The `<body>` tag sits mid-document (after the header/sidebar) and the sidebar's outer `<div class="flex">` is intentionally left unclosed to wrap the content column. It works but is invalid/confusing HTML; restructure so `<body>` wraps everything and the sidebar + content column are proper, explicitly-closed flex children.
+- Add tests (minitest spec syntaxe / fixtures) should be concise and precise also should avoid testing epub library through service test as it is already tested (i prefere having fewer tests but covering everything than having ton of tests testing nothing or the same thing). Controller test should test we call the service and test redirect or error but let the logic test to the service called, unless controller implement logic, in this case propose to extract the logic to a service)
+- Translate all texts (i don't mean really translate keep it english but use I18n)
+- Double check if we can clean be_epub
+
+
+## Missing feature
+
+- Add an admin view listing books with `failed` processing status, each with a link to download the original file and, if possible, a link to the job (Mission Control) or at least the stored backtrace/error. Requires persisting the failure reason/backtrace on the book when `EpubProcessorJob` fails.
+- Add filters to the book index (currently only search-by-title). Most useful: filter for books with no series and/or no author assigned, to clean up after a bulk upload.
+
+## Release
+
+- Add github actions to run tests on every push
+- Add github action to push docker image to github registry when releasing (pushing a tag)
 
 ## Security
 
@@ -11,23 +25,6 @@ _Checked with brakeman (clean) + manual review. Good already: all record lookups
 - Public library index leaks email addresses. `libraries/index.html.erb` shows each sharing user's `email_address` as the library title, on a page anyone can view. Consider a display name / username instead of the raw email.
 - Harden upload file-type validation. `BooksController#upload` trusts the client-provided `content_type` / `.epub` extension. Low risk with trusted users (a bad file just fails processing), but could validate magic bytes with `marcel` (already a dependency).
 - `config.action_mailer.default_url_options` is still `host: "example.com"`. Set the real host before relying on any mailer link (tied to the boilerplate password-reset flow).
-
-## Cleanup
-
-- Sy if we can cleanup BooksController#upload
-- Add tests (minitest spec syntaxe / fixtures) should be concise and precise also should avoid testing epub library through service test as it is already tested (i prefere having fewer tests but covering everything than having ton of tests testing nothing or the same thing). Controller test should test we call the service and test redirect or error but let the logic test to the service called, unless controller implement logic, in this case propose to extract the logic to a service)
-- Translate all texts (i don't mean really translate keep it english but use I18n)
-- Double check if we can clean be_epub
-
-## Release
-
-- Add github actions to run tests on every push
-- Add github action to push docker image to github registry when releasing (pushing a tag)
-
-## Missing feature
-
-- Add an admin view listing books with `failed` processing status, each with a link to download the original file and, if possible, a link to the job (Mission Control) or at least the stored backtrace/error. Requires persisting the failure reason/backtrace on the book when `EpubProcessorJob` fails.
-- Add filters to the book index (currently only search-by-title). Most useful: filter for books with no series and/or no author assigned, to clean up after a bulk upload.
 
 ## Maybe
 
