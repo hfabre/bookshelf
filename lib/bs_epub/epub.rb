@@ -24,7 +24,6 @@ module BsEpub
 
     COVER_EXT_TYPE = {
       "image/png" => ".png",
-      "image/jpeg" => ".jpeg",
       "image/jpeg" => ".jpg"
     }.freeze
 
@@ -196,13 +195,9 @@ module BsEpub
           node = node_access.call(metadata_node)
 
           if node && k == :authors
-            node = node.is_a?(Array) ? node.first : node
-            if node  # Add nil check here
-              node.remove
-              metadata_node.add_child(new_element(NODE_NAME_MAPPING[k], v))
-            else
-              metadata_node.add_child(new_element(NODE_NAME_MAPPING[k], v))
-            end
+            node = node.first if node.is_a?(Array)
+            node&.remove
+            metadata_node.add_child(new_element(NODE_NAME_MAPPING[k], v))
           elsif node
             node.content = v
           else
