@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+#
+# Snapshot Solid Queue + Puma while the queue appears hung, to find out who is
+# holding the SQLite write lock. Run this WHILE a mass upload is stuck:
+#
+#   bin/diagnose-queue-hang
+#
+# Everything is written to log/queue-diagnosis-<timestamp>.txt. Sampling all
+# processes at once is deliberate: the one actively running SQL while the others
+# sit in a lock wait is the writer holding everyone else up.
+
+set -u
+cd "$(dirname "$0")/.."
+
+STAMP="$(date +%Y%m%d-%H%M%S)"
+OUT="log/queue-diagnosis-${STAMP}.txt"
+QUEUE_DB="storage/development_queue.sqlite3"
+PRIMARY_DB="storage/development.sqlite3"
+SAMPLE_SECS=3
+
+exec > >(tee "$OUT") 2>&1
+
+echo "=== Solid Queue hang diagnosis @ ${STAMP} ==="
+echo
+
+echo "== queue state =="
+sqlite3 "$QUEUE_DB" "
+  SELECT 'ready',     count(*) FROM solid_queue_ready_executions
+  UNION ALL SELECT 'claimed',   count(*) FROM solid_queue_claimed_executions
+  UNION ALL SELECT 'failed',    count(*) FROM solid_queue_failed_executions
+  UNION ALL SELECT 'blocked',   count(*) FROM solid_queue_blocked_executions
+  UNION ALL SELECT 'processes', count(*) FROM solid_queue_processes;" 2>&1
+echo
+
+READY="$(sqlite3 "$QUEUE_DB" 'SELECT count(*) FROM solid_queue_ready_executions;' 2>/dev/null)"
+CLAIMED="$(sqlite3 "$QUEUE_DB" 'SELECT count(*) FROM solid_queue_claimed_executions;' 2>/dev/null)"
+echo "== hang assessment (the hard signal) =="
+if [ "${READY:-0}" -gt 0 ] && [ "${CLAIMED:-0}" -eq 0 ]; then
+  echo "  HANG LIKELY: ${READY} job(s) ready but 0 claimed — a live worker should drain these."
+else
+  echo "  NOT backed up right now (ready=${READY:-0}, claimed=${CLAIMED:-0}) — worker idle or flowing."
+  echo "  NOTE: a worker sitting in a SQLite call with an empty queue is just POLLING, not stuck."
+fi
+echo
+
+echo "== live processes (worker heartbeats) =="
+sqlite3 "$QUEUE_DB" "SELECT kind, pid, last_heartbeat_at FROM solid_queue_processes ORDER BY kind;" 2>&1
+echo
+
+echo "== WAL sizes (a large -wal = stalled checkpoint / long-held write) =="
+ls -lah "${PRIMARY_DB}"* "${QUEUE_DB}"* 2>/dev/null | awk '{print $5, $9}'
+echo
+
+echo "== processes with the DB files open (lsof) =="
+lsof "${PRIMARY_DB}" "${QUEUE_DB}" 2>/dev/null | awk '{print $1, $2, $9}' | sort -u
+echo
+
+# Discover the relevant PIDs (space-separated string — bash 3.2 has no mapfile
+# and mishandles empty arrays under `set -u`).
+PIDS="$(pgrep -f 'solid-queue|bin/rails solid_queue|puma|bin/rails server' 2>/dev/null | sort -u | tr '\n' ' ')"
+if [ -z "$(echo "$PIDS" | tr -d ' ')" ]; then
+  echo "!! no solid_queue / puma processes found — is bin/dev running?"
+else
+  echo "== sampling PIDs simultaneously for ${SAMPLE_SECS}s: ${PIDS} =="
+  echo
+  TMPDIR_S="$(mktemp -d)"
+  for pid in $PIDS; do
+    { sample "$pid" "$SAMPLE_SECS" -mayDie > "${TMPDIR_S}/${pid}.txt" 2>&1; } &
+  done
+  wait
+
+  for pid in $PIDS; do
+    label="$(ps -o command= -p "$pid" 2>/dev/null | cut -c1-70)"
+    echo "---- PID ${pid}: ${label} ----"
+    # Only a WRITE-path frame reliably marks the lock holder. Being merely "inside
+    # sqlite3_step" is ambiguous (a normal poll looks identical to a lock wait in
+    # one sample), so we don't claim a lock wait from the stack alone.
+    if grep -qE "sqlite3BtreeInsert|sqlite3BtreeDelete|sqlite3PagerWrite|pagerWrite|walFrames|walOverwrite" "${TMPDIR_S}/${pid}.txt"; then
+      echo "  VERDICT: thread in a SQLite WRITE — candidate lock HOLDER"
+    elif grep -qE "sqlite3_step|sqlite3LockAndPrepare" "${TMPDIR_S}/${pid}.txt"; then
+      echo "  VERDICT: thread inside SQLite (normal poll OR lock wait — disambiguate via the hang assessment + logs above)"
+    else
+      echo "  VERDICT: no active SQL at sample time (idle)"
+    fi
+    # Show the interesting frames only.
+    grep -iE "sqlite3|solid_queue|sync_from_epub|epub_processor|nokogiri|marcel|pthread_cond_wait|mutex_sleep|fd_select" \
+      "${TMPDIR_S}/${pid}.txt" | sed 's/^ *//' | head -25
+    echo "  (full stack: ${TMPDIR_S}/${pid}.txt)"
+    echo
+  done
+fi
+
+echo "== recent busy/lock/error signals in logs =="
+grep -niE "BusyException|database is locked|SQLITE_BUSY|LockWaitTimeout|thread died|Error in thread" \
+  log/development.log log/solid_queue.log 2>/dev/null | tail -20
+echo
+
+echo "Report saved to ${OUT}"

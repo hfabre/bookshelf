@@ -4,7 +4,6 @@
 
 ## Release
 
-- Add github actions to run tests on every push
 - Add github action to push docker image to github registry when releasing (pushing a tag)
 - Run DB migrations on deploy: add a migration step to container startup (e.g. `bin/rails db:prepare` in the Dockerfile entrypoint / compose command) so the schema is up to date before the app boots. IF THIS IS THE RIGHT THING TO DO
 - Configure my ovh smtp server so resetting password works

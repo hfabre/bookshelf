@@ -1,3 +1,13 @@
 #!/usr/bin/env sh
 
 rails db:drop db:create db:migrate db:seed
+
+# db:drop recreates the queue DB, which orphans the Solid Queue worker/dispatcher
+# started by a running bin/dev: their solid_queue_processes rows are gone, so they
+# silently stop claiming jobs until restarted. Kill just the children — the still
+# -running supervisor re-forks them against the fresh DB. No-op if bin/dev is down.
+if pgrep -f solid-queue-worker >/dev/null 2>&1; then
+  pkill -f solid-queue-worker
+  pkill -f solid-queue-dispatcher
+  echo "Restarted Solid Queue worker/dispatcher (orphaned by the DB reset)."
+fi

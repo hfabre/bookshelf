@@ -10,8 +10,8 @@ module BookServices
       metadata = epub.mt_hash
       title = metadata[:title].presence || book.filename.gsub(".epub", "")
 
-      authors = find_or_initialize_authors(metadata[:authors])
-      serie = @user.series.find_or_initialize_by(name: (metadata[:serie].presence || title).strip)
+      authors = find_or_create_authors(metadata[:authors])
+      serie = find_or_create_by_name(@user.series, (metadata[:serie].presence || title).strip)
       cover_bytes = epub.cover_bytes
 
       book.update!(
@@ -33,10 +33,19 @@ module BookServices
 
     attr_reader :book, :user
 
-    def find_or_initialize_authors(authors)
+    def find_or_create_authors(authors)
       authors.map do |author_name|
-        @user.authors.find_or_initialize_by(name: author_name&.strip)
+        find_or_create_by_name(@user.authors, author_name&.strip)
       end
+    end
+
+    # Concurrent jobs can race to create the same author/serie: two find nothing,
+    # both insert, and the loser fails the uniqueness validation (or the DB index).
+    # Recover by fetching the record the winner just created.
+    def find_or_create_by_name(relation, name)
+      relation.find_or_create_by!(name: name)
+    rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
+      relation.find_by!(name: name)
     end
 
     def parse_date(date_string)
