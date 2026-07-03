@@ -1,0 +1,28 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "7a9dcd751f828b58c9743999c106e744a77cb073a045a9a9cba2dbf56594cc62",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/users_controller.rb",
+      "line": 64,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:user).permit(:email_address, :password, :password_confirmation, :admin)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UsersController",
+        "method": "user_params"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        915
+      ],
+      "note": "Intentional: UsersController is admin-only (before_action :require_admin), so permitting :admin here is the admin user-management panel granting/revoking admin, not a privilege-escalation vector."
+    }
+  ],
+  "brakeman_version": "8.0.5"
+}
