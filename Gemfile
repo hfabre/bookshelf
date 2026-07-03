@@ -16,9 +16,6 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-rails"
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
-
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 
@@ -65,7 +62,5 @@ end
 gem "mission_control-jobs"
 
 # Epub management
-gem "ox", "~> 2.14"
 gem "nokogiri"
 gem "rubyzip", "~> 2.3"
-gem "bigdecimal", "~> 3.1"

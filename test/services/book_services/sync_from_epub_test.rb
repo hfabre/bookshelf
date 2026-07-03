@@ -46,6 +46,24 @@ class BookServices::SyncFromEpubTest < ActiveSupport::TestCase
     _(users(:one).authors.where(name: "J.R.R. Tolkien").count).must_equal 1
   end
 
+  it "recovers when a concurrent job already created the author" do
+    raised = false
+    original = users(:one).authors.method(:find_or_create_by!)
+    users(:one).authors.stub(:find_or_create_by!, ->(attrs) {
+      unless raised
+        raised = true
+        users(:one).authors.create!(name: "Race Author")
+        raise ActiveRecord::RecordInvalid
+      end
+      original.call(attrs)
+    }) do
+      sync book, metadata: { title: "T", authors: [ "Race Author" ], serie: "S", cover_path: "cover.jpg" }
+    end
+
+    _(book.reload.author_names).must_equal "Race Author"
+    _(users(:one).authors.where(name: "Race Author").count).must_equal 1
+  end
+
   it "leaves the date nil when the epub date is unparseable" do
     sync book, metadata: { title: "T", authors: [], serie: "S", date: "not-a-date", cover_path: "cover.jpg" }
 
