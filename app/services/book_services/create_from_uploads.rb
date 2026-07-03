@@ -1,6 +1,8 @@
 module BookServices
   class CreateFromUploads
-    EPUB_CONTENT_TYPE = "application/epub+zip"
+    # EPUBs are zip containers; marcel reports either the specific epub type or the
+    # generic zip type depending on how the archive was produced.
+    EPUB_MIME_TYPES = [ "application/epub+zip", "application/zip" ].freeze
 
     def initialize(user)
       @user = user
@@ -19,12 +21,15 @@ module BookServices
     end
 
     def epub?(file)
-      return false unless file.respond_to?(:content_type) && file.respond_to?(:original_filename)
+      return false unless file.respond_to?(:read) && file.respond_to?(:original_filename)
+      return false unless file.original_filename.to_s.downcase.end_with?(".epub")
 
-      file.content_type == EPUB_CONTENT_TYPE || file.original_filename.end_with?(".epub")
+      EPUB_MIME_TYPES.include?(Marcel::MimeType.for(file))
     end
 
     def create_book(file)
+      file.rewind
+
       book = user.books.create(
         title: file.original_filename.gsub(".epub", ""),
         filename: file.original_filename,

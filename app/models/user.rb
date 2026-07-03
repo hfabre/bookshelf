@@ -7,4 +7,9 @@ class User < ApplicationRecord
   has_many :authors, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  # Public-facing label for shared libraries; avoids exposing the full email.
+  def display_name
+    email_address.split("@").first
+  end
 end

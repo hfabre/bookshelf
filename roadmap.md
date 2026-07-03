@@ -5,16 +5,6 @@
 ## Release
 
 - Add github action to push docker image to github registry when releasing (pushing a tag)
-- Run DB migrations on deploy: add a migration step to container startup (e.g. `bin/rails db:prepare` in the Dockerfile entrypoint / compose command) so the schema is up to date before the app boots. IF THIS IS THE RIGHT THING TO DO (double check but i think this is done in bin/docker-entrypoint)
-- Configure my ovh smtp server so resetting password works
-
-## Security
-
-_Checked with brakeman (clean) + manual review. Good already: all record lookups are scoped through `current_user` (no IDOR), views escape epub metadata (no stored XSS), downloads are user-scoped, public-library access is gated, login is rate-limited, passwords use bcrypt. Concrete items below:_
-- Enable SSL in production. `config.force_ssl` and `config.assume_ssl` (since the godoxy reverse proxy terminates TLS) are commented out in `config/environments/production.rb`. The proxy serves HTTPS but the app doesn't force it or set HSTS, and the session cookie is `httponly`/`same_site: :lax` but NOT `secure`. Enabling both fixes all of that at once (`assume_ssl` so Rails trusts the proxy's forwarded proto). Highest priority.
-- Public library index leaks email addresses. `libraries/index.html.erb` shows each sharing user's `email_address` as the library title, on a page anyone can view. Consider a display name / username instead of the raw email.
-- Harden upload file-type validation. `BooksController#upload` trusts the client-provided `content_type` / `.epub` extension. Low risk with trusted users (a bad file just fails processing), but could validate magic bytes with `marcel` (already a dependency).
-- `config.action_mailer.default_url_options` is still `host: "example.com"`. Set the real host before relying on any mailer link (tied to the boilerplate password-reset flow).
 
 ## Maybe
 

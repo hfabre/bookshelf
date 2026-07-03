@@ -34,6 +34,16 @@ class BookServices::CreateFromUploadsTest < ActiveSupport::TestCase
     end
   end
 
+  it "rejects a file whose content isn't a zip, even with an .epub name and spoofed content type" do
+    file = fixture_file_upload("fake.epub", "application/epub+zip")
+
+    assert_no_difference -> { user.books.count } do
+      assert_no_enqueued_jobs do
+        _(BookServices::CreateFromUploads.new(user).call([ file ])).must_equal 0
+      end
+    end
+  end
+
   it "ignores non-epub files, blanks and stray strings" do
     file = fixture_file_upload("new_cover.png", "image/png")
 

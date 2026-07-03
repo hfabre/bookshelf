@@ -54,6 +54,6 @@ Minitest **spec syntax** (`describe`/`it`/`let`/`subject`, `_(x).must_equal`) wi
 
 ## Deploy
 
-Self-hosted on a single server via **Docker Compose** (same pattern as the owner's other self-hosted apps — deliberately not Kamal). The server sits behind the **godoxy** reverse proxy, which terminates TLS and manages certificates; the app trusts the forwarded proto (so `config.assume_ssl`/`force_ssl` should be enabled — roadmap Security item). In-container, **Thruster** (`bin/thrust`) adds compression + X-Sendfile in front of Puma. Persistence is **SQLite** with **Solid Queue/Cache/Cable** (jobs via `bin/jobs`).
+Designed to be self-hosted via **Docker Compose** (deliberately not Kamal); see `compose.example.yml`. The app is meant to run behind a **TLS-terminating reverse proxy** and trusts the forwarded proto, so `config.assume_ssl`/`config.force_ssl` are enabled in production. In-container, **Thruster** (`bin/thrust`) adds compression + X-Sendfile in front of Puma. Persistence is **SQLite** with **Solid Queue/Cache/Cable** (jobs via `bin/jobs`; can also run inside Puma with `SOLID_QUEUE_IN_PUMA`).
 
 Release flow: pushing a git tag builds the image from the `Dockerfile` and pushes it to GHCR (`:<tag>`, plus `:nightly` on `master`); deploy is bumping the image tag in the compose file and `docker compose pull && up -d --wait`. (The image-build GitHub Action is still a roadmap item.)
