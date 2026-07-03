@@ -281,7 +281,7 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
-    rubyzip (2.4.1)
+    rubyzip (3.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.45.0)
       base64 (~> 0.2)
@@ -382,7 +382,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.1)
   rubocop-rails-omakase
-  rubyzip (~> 2.3)
+  rubyzip (~> 3.0)
   selenium-webdriver
   solid_cable
   solid_cache
@@ -396,4 +396,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.5.16
+  4.0.10

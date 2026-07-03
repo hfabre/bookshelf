@@ -63,4 +63,4 @@ gem "mission_control-jobs"
 
 # Epub management
 gem "nokogiri"
-gem "rubyzip", "~> 2.3"
+gem "rubyzip", "~> 3.0"
