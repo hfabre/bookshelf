@@ -1,0 +1,51 @@
+# Example Docker Compose for self-hosting Bookshelf.
+#
+# Quick start:
+#   1. cp compose.example.yml compose.yml
+#   2. cp .env.example .env   &&   edit .env (set RAILS_MASTER_KEY, APP_HOST, ...)
+#   3. docker compose up -d --build --wait
+#
+# This runs Bookshelf as a SINGLE container. Background jobs (EPUB processing on
+# upload) run *inside* Puma via Solid Queue's Puma plugin (SOLID_QUEUE_IN_PUMA=1
+# in .env), which config/puma.rb already wires up. This is the simplest setup and
+# is fine for a personal / low-traffic instance.
+#
+# ----------------------------------------------------------------------------
+# Prefer a dedicated worker? (recommended once you have real job volume)
+#
+# EPUB processing loads the whole file into memory and rewrites the zip, so a
+# large upload competes with web requests when jobs run inside Puma. To isolate
+# them, remove SOLID_QUEUE_IN_PUMA from .env and add a second container:
+#
+#   services:
+#     jobs:
+#       build: .                      # or: image: <the same image as web>
+#       restart: unless-stopped
+#       command: ["./bin/jobs"]       # runs Solid Queue standalone
+#       env_file: .env
+#       volumes:
+#         - storage:/rails/storage    # MUST share the same volume as web
+#       depends_on:
+#         - web                       # let web run db:prepare first
+#
+# Every SQLite database (primary, cache, queue, cable) lives under storage/, so
+# both containers MUST mount the same `storage` volume or the worker can't see
+# enqueued jobs.
+# ----------------------------------------------------------------------------
+
+services:
+  web:
+    build: .
+    # Once a published image is available you can swap `build: .` for e.g.:
+    #   image: ghcr.io/hfabre/bookshelf:latest
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      # Container listens on 80 (Thruster + Puma). Map to whatever host port you
+      # want, or drop this and attach it to your reverse proxy's network instead.
+      - "80:80"
+    volumes:
+      - storage:/rails/storage
+
+volumes:
+  storage:
