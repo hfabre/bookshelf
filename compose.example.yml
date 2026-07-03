@@ -2,7 +2,7 @@
 #
 # Quick start:
 #   1. cp compose.example.yml compose.yml
-#   2. cp .env.example .env   &&   edit .env (set RAILS_MASTER_KEY, APP_HOST, ...)
+#   2. cp .env.example .env   &&   edit .env (set SECRET_KEY_BASE, APP_HOST, ...)
 #   3. docker compose up -d --build --wait
 #
 # This runs Bookshelf as a SINGLE container. Background jobs (EPUB processing on

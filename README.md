@@ -12,15 +12,24 @@ A self-hosted library for your EPUB collection, built around the way books actua
 
 ## Self-hosting
 
-See [`compose.example.yml`](compose.example.yml) for a Docker Compose setup and [`.env.example`](.env.example) for the available environment variables (master key, hostname, SMTP, tuning). Copy both, fill in `.env`, and `docker compose up -d --build`.
+See [`compose.example.yml`](compose.example.yml) for a Docker Compose setup and [`.env.example`](.env.example) for the available environment variables (secret key base, hostname, SMTP, tuning). Copy both, fill in `.env`, and `docker compose up -d --build`.
 
 Bookshelf processes uploaded EPUBs in a background job (Solid Queue), so **something has to run the worker** — just serving the web image is not enough. The example keeps it simple and runs the worker inside the web process via Solid Queue's Puma plugin (`SOLID_QUEUE_IN_PUMA=1`), which is fine for a personal instance.
 
 If you expect heavier usage, run the worker as a dedicated container instead so large uploads don't compete with web requests. The example file documents that alternative in a comment block; both containers just need to share the same `storage/` volume, since all SQLite databases (including the job queue) live there.
+
+### First login
+
+On first boot an admin account is seeded with `test@example.org` / `password`. Log in with it, create your own admin account, then log in as yourself and delete the seeded one.
 
 ## Development
 
 ```sh
 bin/reset
 bin/dev
+```
+
+```sh
+bin/rails test    # run the test suite
+bin/rubocop       # lint
 ```
