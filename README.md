@@ -1,13 +1,14 @@
-# README
+# Bookshelf
 
-Web application to manage your epub files. It's mainly focused on books from series.
+A self-hosted library for your EPUB collection, built around the way books actually come — in series. Drop in your files, and Bookshelf reads the metadata out of them, groups the books by series and author, and lets you tidy up the details from a web UI. Edits are written back into the EPUB itself, so the files stay correct wherever you read them.
 
 ## Features
 
-- Upload multiple books in one time
-- Fetch metadata from epub file
-- Update book and their epub file
-- Rate and annotate series
+- **Bulk upload** — add a whole folder of EPUBs at once; metadata is pulled from each file in the background.
+- **Edit that sticks** — fix titles, authors, covers and more; changes are saved back into the EPUB, not just the database.
+- **Organised by series** — books are grouped into series and by author, with ratings and notes.
+- **Search** — full-text search across your series and authors.
+- **Share a shelf** — expose your library as a read-only public page for others to browse.
 
 ## Self-hosting
 
