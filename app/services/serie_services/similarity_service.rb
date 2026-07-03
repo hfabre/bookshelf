@@ -7,7 +7,8 @@ module SerieServices
     def call(limit = 10)
       return Serie.none if @serie.name.blank?
 
-      query = @serie.name.split(/[\s,]+/).reject(&:blank?).join(" OR ")
+      query = @serie.name.split(/[\s,]+/).reject(&:blank?)
+                    .map { |token| %("#{token.gsub('"', '""')}") }.join(" OR ")
 
       Serie.joins("JOIN series_fts ON series.id = series_fts.rowid")
            .where("series_fts MATCH ? AND series.user_id = ? AND series.id != ?",
