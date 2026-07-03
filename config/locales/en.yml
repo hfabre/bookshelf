@@ -86,6 +86,11 @@ en:
   books:
     index:
       search_placeholder: "Search books by title or author..."
+    filters:
+      all: "All books"
+      no_serie: "Without series"
+      no_author: "Without author"
+      incomplete: "Missing series or author"
     edit:
       page_title: "Edit %{title}"
       heading: "Edit Book"

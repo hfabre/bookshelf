@@ -10,6 +10,9 @@ class Book < ApplicationRecord
   validates :epub_content, presence: true
 
   scope :ordered, -> { order(:title) }
+  scope :without_serie, -> { where(serie_id: nil) }
+  scope :without_authors, -> { where.missing(:authors) }
+  scope :incomplete, -> { left_joins(:authors).where("books.serie_id IS NULL OR authors.id IS NULL").distinct }
 
   enum :processing_status, {
     pending: "pending",

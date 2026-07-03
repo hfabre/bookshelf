@@ -4,6 +4,7 @@ class BooksController < ApplicationController
   def index
     @books = current_user.books.includes(:authors, :serie).ordered
     @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
+    @books = filter_books(@books)
   end
 
   def edit
@@ -42,6 +43,15 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def filter_books(books)
+    case params[:filter]
+    when "no_serie" then books.without_serie
+    when "no_author" then books.without_authors
+    when "incomplete" then books.incomplete
+    else books
+    end
+  end
 
   def set_book
     @book = current_user.books.find(params[:id])

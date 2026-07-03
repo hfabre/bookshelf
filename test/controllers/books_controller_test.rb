@@ -23,6 +23,41 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
       assert_includes response.body, "Findable Title"
       assert_not_includes response.body, "Hidden Title"
     end
+
+    it "filters books without a series" do
+      books(:with_authors).update_column(:title, "No Serie Book")
+      books(:merged_book_one).update_column(:title, "Has Serie Book")
+
+      get books_url(filter: "no_serie")
+
+      assert_includes response.body, "No Serie Book"
+      assert_not_includes response.body, "Has Serie Book"
+    end
+
+    it "filters books without an author" do
+      books(:merged_book_one).update_column(:title, "No Author Book")
+      books(:with_authors).update_column(:title, "Has Author Book")
+
+      get books_url(filter: "no_author")
+
+      assert_includes response.body, "No Author Book"
+      assert_not_includes response.body, "Has Author Book"
+    end
+
+    it "filters books missing a series or an author" do
+      books(:with_authors).update_column(:title, "Missing Serie Book")
+      books(:merged_book_one).update_column(:title, "Missing Author Book")
+      user.books.create!(
+        filename: "complete.epub", epub_content: "bytes",
+        serie: series(:to_merge), serie_index: 99, authors: [ authors(:tolkien) ], title: "Complete Book"
+      )
+
+      get books_url(filter: "incomplete")
+
+      assert_includes response.body, "Missing Serie Book"
+      assert_includes response.body, "Missing Author Book"
+      assert_not_includes response.body, "Complete Book"
+    end
   end
 
   describe "GET #edit" do

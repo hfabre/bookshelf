@@ -1,0 +1,11 @@
+<div>
+    <%= select_tag :filter,
+        options_for_select([
+            [ t(".all"), "" ],
+            [ t(".no_serie"), "no_serie" ],
+            [ t(".no_author"), "no_author" ],
+            [ t(".incomplete"), "incomplete" ]
+        ], params[:filter]),
+        class: "block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
+        data: { action: "change->search#performSearch" } %>
+</div>
