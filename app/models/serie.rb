@@ -9,6 +9,8 @@ class Serie < ApplicationRecord
   scope :for_user, ->(user) { where(user: user) }
   scope :ordered, -> { order(:name) }
   scope :without_books, -> { where.missing(:books) }
+  scope :to_read, -> { where(reading_state: [ nil, "unread", "reading" ]) }
+  scope :to_reread, -> { where(reading_state: "finished", rating: nil) }
 
   after_create_commit :create_in_search_index
   after_update_commit :update_in_search_index

@@ -7,6 +7,7 @@ class SeriesController < ApplicationController
   def index
     @series = Serie.for_user(current_user).includes(:books).order(rating: :desc, name: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
+    @series = filter_series(@series)
 
     respond_to do |format|
       format.html
@@ -80,6 +81,14 @@ class SeriesController < ApplicationController
   end
 
   private
+
+  def filter_series(series)
+    case params[:filter]
+    when "to_read" then series.to_read
+    when "to_reread" then series.to_reread
+    else series
+    end
+  end
 
   def set_serie
     @serie = Serie.for_user(current_user).find(params[:id])

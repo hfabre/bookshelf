@@ -40,6 +40,34 @@ describe Serie do
     end
   end
 
+  describe "reading filters" do
+    let(:user) { users(:two) }
+
+    it ".to_read returns series that are unset, unread or reading, never finished" do
+      unset = user.series.create!(name: "Unset")
+      unread = user.series.create!(name: "Unread", reading_state: "unread")
+      reading = user.series.create!(name: "Reading", reading_state: "reading")
+      finished = user.series.create!(name: "Finished", reading_state: "finished")
+
+      result = user.series.to_read
+      _(result).must_include unset
+      _(result).must_include unread
+      _(result).must_include reading
+      _(result).wont_include finished
+    end
+
+    it ".to_reread returns finished series that are not rated" do
+      unrated = user.series.create!(name: "Finished Unrated", reading_state: "finished")
+      rated = user.series.create!(name: "Finished Rated", reading_state: "finished", rating: 4)
+      reading = user.series.create!(name: "Reading", reading_state: "reading")
+
+      result = user.series.to_reread
+      _(result).must_include unrated
+      _(result).wont_include rated
+      _(result).wont_include reading
+    end
+  end
+
   describe "#merge_with!" do
     let(:serie) { series(:target) }
 

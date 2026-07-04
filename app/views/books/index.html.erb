@@ -1,7 +1,17 @@
-<div class="mb-8 min-w-full">
-    <%= render "shared/search_form", path: books_search_path, placeholder: t(".search_placeholder"), turbo_frame: "books", extra_fields: "books/filters" %>
+<div class="mb-8 min-w-full flex items-start gap-4">
+    <div class="flex-grow">
+        <%= render "shared/search_form", path: books_search_path, placeholder: t(".search_placeholder"), turbo_frame: "books", extra_fields: "books/filters" %>
+    </div>
+
+    <div class="shrink-0 py-5 sm:py-6">
+        <%= render "shared/view_toggle" %>
+    </div>
 </div>
 
 <%= turbo_frame_tag "books" do %>
-    <%= render "books/books_list", books: @books %>
+    <% if @view_mode == "list" %>
+        <%= render "books/books_rows", books: @books %>
+    <% else %>
+        <%= render "books/books_list", books: @books %>
+    <% end %>
 <% end %>

@@ -1,0 +1,10 @@
+<div>
+    <%= select_tag :filter,
+        options_for_select([
+            [ t(".all"), "" ],
+            [ t(".to_read"), "to_read" ],
+            [ t(".to_reread"), "to_reread" ]
+        ], params[:filter]),
+        class: "form-input",
+        data: { action: "change->search#performSearch" } %>
+</div>

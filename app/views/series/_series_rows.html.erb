@@ -1,0 +1,38 @@
+<div class="flex flex-col divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white shadow-sm">
+    <% series.each do |serie| %>
+        <% first_book = serie.books.first %>
+        <div class="relative group flex items-center gap-4 p-3 hover:bg-gray-50">
+            <%= link_to serie_show_path(serie), class: "flex items-center gap-4 flex-grow min-w-0", data: { turbo_frame: "_top" } do %>
+                <div class="w-10 h-14 flex-shrink-0 bg-gray-100 rounded overflow-hidden relative">
+                    <% if first_book&.cover? %>
+                        <%= book_cover(first_book, class: "object-cover w-full h-full absolute") %>
+                    <% end %>
+                </div>
+
+                <div class="min-w-0 flex-grow">
+                    <h3 class="font-medium text-gray-900 text-sm truncate"><%= serie.name %></h3>
+                    <p class="text-xs text-gray-500"><%= t("common.book_count", count: serie.books.count) %></p>
+                </div>
+
+                <% if serie.rating.present? %>
+                    <div class="hidden sm:flex items-center flex-shrink-0 mr-8">
+                        <% serie.rating.times do %>
+                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+
+            <%= link_to merge_serie_path(serie),
+                class: "flex-shrink-0 bg-blue-600 text-white p-2 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-700",
+                title: t("series.series_list.merge_title"),
+                data: { turbo_frame: "_top" } do %>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                </svg>
+            <% end %>
+        </div>
+    <% end %>
+</div>

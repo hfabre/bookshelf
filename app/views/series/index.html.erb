@@ -1,10 +1,12 @@
 <div class="mb-8 min-w-full flex items-start gap-4">
     <div class="flex-grow">
-        <%= render "shared/search_form", path: series_search_path, placeholder: t(".search_placeholder"), turbo_frame: "series" %>
+        <%= render "shared/search_form", path: series_search_path, placeholder: t(".search_placeholder"), turbo_frame: "series", extra_fields: "series/filters" %>
     </div>
 
-    <% unless browsing_other_library? %>
-        <div class="shrink-0 py-5 sm:py-6">
+    <div class="shrink-0 py-5 sm:py-6 flex items-center gap-3">
+        <%= render "shared/view_toggle" %>
+
+        <% unless browsing_other_library? %>
             <%= link_to download_all_series_path, data: { turbo: false },
                 class: "inline-flex items-center gap-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -12,10 +14,14 @@
                 </svg>
                 <%= t(".download_all") %>
             <% end %>
-        </div>
-    <% end %>
+        <% end %>
+    </div>
 </div>
 
 <%= turbo_frame_tag "series" do %>
-    <%= render "series/series_list", series: @series %>
+    <% if @view_mode == "list" %>
+        <%= render "series/series_rows", series: @series %>
+    <% else %>
+        <%= render "series/series_list", series: @series %>
+    <% end %>
 <% end %>

@@ -20,6 +20,8 @@ class LibrariesController < ApplicationController
   def series
     @series = @library_user.series.includes(:books).order(rating: :desc, name: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
+    @series = @series.to_read if params[:filter] == "to_read"
+    @series = @series.to_reread if params[:filter] == "to_reread"
     @library_owner = @library_user
     render "series/index"
   end

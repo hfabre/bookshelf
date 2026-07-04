@@ -41,6 +41,8 @@ en:
     access_denied: "Access denied."
     cancel: "Cancel"
     no_cover: "No cover"
+    view_cards: "Card view"
+    view_list: "List view"
     no_books_found: "No books found"
     book_count:
       one: "%{count} book"
@@ -126,6 +128,10 @@ en:
     index:
       search_placeholder: "Search series by name..."
       download_all: "Download All Books"
+    filters:
+      all: "All series"
+      to_read: "To read"
+      to_reread: "To re-read"
     download_all:
       no_books: "You don't have any books to download yet."
     series_list:

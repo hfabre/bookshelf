@@ -1,7 +1,17 @@
-<div class="mb-8 min-w-full">
-    <%= render "shared/search_form", path: authors_search_path, placeholder: t(".search_placeholder"), turbo_frame: "authors" %>
+<div class="mb-8 min-w-full flex items-start gap-4">
+    <div class="flex-grow">
+        <%= render "shared/search_form", path: authors_search_path, placeholder: t(".search_placeholder"), turbo_frame: "authors" %>
+    </div>
+
+    <div class="shrink-0 py-5 sm:py-6">
+        <%= render "shared/view_toggle" %>
+    </div>
 </div>
 
 <%= turbo_frame_tag "authors" do %>
-    <%= render "authors/authors_list", authors: @authors %>
+    <% if @view_mode == "list" %>
+        <%= render "authors/authors_rows", authors: @authors %>
+    <% else %>
+        <%= render "authors/authors_list", authors: @authors %>
+    <% end %>
 <% end %>

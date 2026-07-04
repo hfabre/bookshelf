@@ -19,6 +19,46 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
       names = JSON.parse(response.body).map { |s| s["name"] }
       _(names).must_equal [ "Naruto Shippuden" ]
     end
+
+    it "renders the card grid by default and the list rows when view=list" do
+      get series_url
+      _(response.body).must_include "grid grid-cols-5"
+
+      get series_url(view: "list")
+      _(response.body).must_include "divide-y"
+    end
+
+    it "remembers the chosen view in a cookie" do
+      get series_url(view: "list")
+      _(cookies[:view_mode]).must_equal "list"
+
+      get series_url # no param: falls back to the cookie
+      _(response.body).must_include "divide-y"
+    end
+
+    it "ignores an invalid view value" do
+      get series_url(view: "bogus")
+
+      _(response.body).must_include "grid grid-cols-5"
+    end
+
+    it "filters to unfinished series with filter=to_read" do
+      finished = user.series.create!(name: "Zzz Finished Only", reading_state: "finished")
+
+      get series_url(filter: "to_read")
+
+      _(response.body).wont_include finished.name
+      _(response.body).must_include series(:naruto).name # unset reading_state
+    end
+
+    it "filters to finished-but-unrated series with filter=to_reread" do
+      to_reread = user.series.create!(name: "Zzz Reread Me", reading_state: "finished")
+
+      get series_url(filter: "to_reread")
+
+      _(response.body).must_include to_reread.name
+      _(response.body).wont_include series(:naruto).name # not finished
+    end
   end
 
   describe "GET #show" do

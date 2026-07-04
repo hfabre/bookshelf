@@ -38,6 +38,11 @@ module ApplicationHelper
     browsing_other_library? ? library_authors_path(current_library_owner) : authors_path
   end
 
+  # URL for the current page with the view mode swapped, preserving search/filter params.
+  def view_toggle_url(mode)
+    "#{request.path}?#{request.query_parameters.merge(view: mode).to_query}"
+  end
+
   # Search path helpers
   def books_search_path
     current_books_path

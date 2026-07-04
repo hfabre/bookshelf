@@ -1,0 +1,23 @@
+<div class="flex flex-col divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white shadow-sm">
+    <% books.each do |book| %>
+        <%= render "books/book_modal", book: book %>
+
+        <div data-controller="modal" data-action="click->modal#open" data-modal-dialog-param="modal-<%= book.id %>"
+             class="flex items-center gap-4 p-3 hover:bg-gray-50 hover:cursor-pointer">
+            <div class="w-10 h-14 flex-shrink-0 bg-gray-100 rounded overflow-hidden relative">
+                <%= book_cover(book, class: "object-cover w-full h-full absolute") %>
+            </div>
+
+            <div class="min-w-0 flex-grow">
+                <h3 class="text-sm font-medium text-gray-900 truncate"><%= book.title %></h3>
+                <p class="text-xs text-gray-500 truncate">
+                    <% if book.serie %>
+                        <%= book.serie.name %><% if book.serie_index %> - #<%= book.serie_index %><% end %>
+                    <% else %>
+                        <%= book.author_names %>
+                    <% end %>
+                </p>
+            </div>
+        </div>
+    <% end %>
+</div>

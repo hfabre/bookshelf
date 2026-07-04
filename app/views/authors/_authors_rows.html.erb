@@ -1,0 +1,28 @@
+<div class="flex flex-col divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white shadow-sm">
+    <% authors.each do |author| %>
+        <% first_book = author.books.first %>
+        <div class="relative group flex items-center gap-4 p-3 hover:bg-gray-50">
+            <%= link_to author_show_path(author), class: "flex items-center gap-4 flex-grow min-w-0", data: { turbo_frame: "_top" } do %>
+                <div class="w-10 h-14 flex-shrink-0 bg-gray-100 rounded overflow-hidden relative">
+                    <% if first_book&.cover? %>
+                        <%= book_cover(first_book, class: "object-cover w-full h-full absolute") %>
+                    <% end %>
+                </div>
+
+                <div class="min-w-0 flex-grow">
+                    <h3 class="font-medium text-gray-900 text-sm truncate"><%= author.name %></h3>
+                    <p class="text-xs text-gray-500"><%= t("common.book_count", count: author.books.count) %></p>
+                </div>
+            <% end %>
+
+            <%= link_to merge_author_path(author),
+                class: "flex-shrink-0 bg-blue-600 text-white p-2 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-700",
+                title: t("authors.authors_list.merge_title"),
+                data: { turbo_frame: "_top" } do %>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                </svg>
+            <% end %>
+        </div>
+    <% end %>
+</div>
