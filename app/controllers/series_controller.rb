@@ -1,4 +1,6 @@
 class SeriesController < ApplicationController
+  include ZipKit::RailsStreaming
+
   before_action :set_serie, only: [ :show, :edit, :update, :download, :merge, :perform_merge ]
   before_action :require_admin, only: [ :edit, :update ]
 
@@ -24,6 +26,20 @@ class SeriesController < ApplicationController
       redirect_to @serie, notice: t(".notice")
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def download_all
+    bundle = BookServices::LibraryBundle.new(current_user)
+
+    if bundle.any?
+      zip_kit_stream(filename: "#{current_user.display_name.parameterize}-library.zip") do |zip|
+        bundle.each_entry do |path, content|
+          zip.write_file(path) { |sink| sink << content }
+        end
+      end
+    else
+      redirect_to series_path, alert: t(".no_books")
     end
   end
 

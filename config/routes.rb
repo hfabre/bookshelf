@@ -38,6 +38,10 @@ Rails.application.routes.draw do
   end
 
   resources :series, only: [ :index, :show, :edit, :update ] do
+    collection do
+      get :download_all
+    end
+
     member do
       get :download
       get :merge

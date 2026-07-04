@@ -99,6 +99,29 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  describe "GET #download_all" do
+    it "streams a zip of every book grouped into per-serie folders" do
+      get download_all_series_url
+
+      assert_response :success
+      assert_equal "application/zip", response.media_type
+
+      names = []
+      Zip::File.open_buffer(StringIO.new(response.body)) { |zip| names = zip.map(&:name) }
+      _(names).must_include "To Merge Serie/merged_one.epub"
+      _(names.any? { |n| n.start_with?("No Series/") }).must_equal true
+    end
+
+    it "redirects with an alert when the user has no books" do
+      sign_in_as(users(:admin))
+
+      get download_all_series_url
+
+      assert_redirected_to series_path
+      assert_equal "You don't have any books to download yet.", flash[:alert]
+    end
+  end
+
   describe "POST #perform_merge" do
     it "hands the selected series to the merge service and redirects on success" do
       to_merge = series(:to_merge)

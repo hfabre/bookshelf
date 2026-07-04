@@ -125,6 +125,9 @@ en:
   series:
     index:
       search_placeholder: "Search series by name..."
+      download_all: "Download All Books"
+    download_all:
+      no_books: "You don't have any books to download yet."
     series_list:
       no_rating: "No rating"
       rating: "%{rating}/5"

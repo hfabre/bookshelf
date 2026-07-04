@@ -355,6 +355,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.8.2)
+    zip_kit (6.3.4)
 
 PLATFORMS
   aarch64-linux
@@ -394,6 +395,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+  zip_kit (~> 6.3)
 
 BUNDLED WITH
   4.0.10
