@@ -19,7 +19,9 @@ class BooksController < ApplicationController
   end
 
   def destroy
+    orphan_candidates = [ @book.serie, *@book.authors ]
     @book.destroy
+    BookServices::CleanupOrphans.call(orphan_candidates)
     redirect_to books_path, notice: t(".notice")
   end
 
@@ -33,13 +35,17 @@ class BooksController < ApplicationController
       return
     end
 
-    count = BookServices::CreateFromUploads.new(current_user).call(params[:files])
+    result = BookServices::CreateFromUploads.new(current_user).call(params[:files])
 
-    if count > 0
-      redirect_to books_path, notice: t(".processing", count: count)
-    else
-      redirect_to books_path, alert: t(".none_valid")
-    end
+    notice = t(".processing", count: result[:created]) if result[:created].positive?
+    alert =
+      if result[:skipped].any?
+        t(".skipped", filenames: result[:skipped].join(", "))
+      elsif result[:created].zero?
+        t(".none_valid")
+      end
+
+    redirect_to books_path, notice: notice, alert: alert
   end
 
   private

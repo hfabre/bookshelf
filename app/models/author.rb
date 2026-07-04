@@ -6,6 +6,7 @@ class Author < ApplicationRecord
 
   scope :for_user, ->(user) { where(user: user) }
   scope :ordered, -> { order(:name) }
+  scope :without_books, -> { where.missing(:books) }
 
   # Keep FTS5 search index in sync
   after_create_commit :create_in_search_index

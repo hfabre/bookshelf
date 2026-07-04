@@ -9,7 +9,13 @@ module BookServices
     end
 
     def call(files)
-      epub_files(files).count { |file| create_book(file) }
+      epub_files(files).each_with_object({ created: 0, skipped: [] }) do |file, result|
+        if create_book(file)
+          result[:created] += 1
+        else
+          result[:skipped] << file.original_filename
+        end
+      end
     end
 
     private
@@ -36,6 +42,8 @@ module BookServices
         epub_content: file.read,
         processing_status: :pending
       )
+
+      return false unless book.persisted?
 
       job = EpubProcessorJob.perform_later(book.id, user.id)
       book.update!(job_id: job.job_id)

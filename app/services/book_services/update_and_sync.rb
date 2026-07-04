@@ -10,6 +10,8 @@ module BookServices
 
       # TODO: avoid multiple save (one there and others in sync service)
       ActiveRecord::Base.transaction do
+        previous_associations = [ book.serie, *book.authors ]
+
         book.assign_attributes(book_params)
         handle_cover_upload
         book.serie = find_or_create_serie
@@ -17,6 +19,7 @@ module BookServices
         book.save!
 
         SyncToEpub.new(book).call
+        CleanupOrphans.call(previous_associations)
       end
 
       true

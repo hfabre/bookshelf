@@ -53,6 +53,27 @@ class BookServices::UpdateAndSyncTest < ActiveSupport::TestCase
     _(book.cover_type).must_equal "image/png"
   end
 
+  it "deletes the previous serie and authors when they are left without books" do
+    sync = Minitest::Mock.new
+    sync.expect(:call, nil)
+
+    lonely_serie = users(:one).series.create!(name: "Lonely Serie")
+    lonely_author = users(:one).authors.create!(name: "Lonely Author")
+    lonely_book = users(:one).books.create!(
+      filename: "lonely.epub", epub_content: "x", title: "Lonely", serie: lonely_serie
+    )
+    lonely_book.authors << lonely_author
+
+    BookServices::SyncToEpub.stub(:new, ->(*) { sync }) do
+      BookServices::UpdateAndSync.new(lonely_book, users(:one)).call(
+        title: "Lonely", serie_name: "Somewhere Else", author_names: [ "Someone Else" ]
+      )
+    end
+
+    _(Serie.exists?(lonely_serie.id)).must_equal false
+    _(Author.exists?(lonely_author.id)).must_equal false
+  end
+
   it "returns false and does not sync when the book is invalid" do
     result = BookServices::SyncToEpub.stub(:new, ->(*) { flunk "should not sync an invalid book" }) do
       BookServices::UpdateAndSync.new(book, users(:one)).call(title: "T", filename: "")

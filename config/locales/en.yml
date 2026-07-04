@@ -120,6 +120,7 @@ en:
       no_files: "Please select at least one EPUB file."
       processing: "%{count} EPUB file(s) uploaded and are being processed."
       none_valid: "No valid EPUB files were found."
+      skipped: "Some files were skipped (already in your library): %{filenames}"
 
   series:
     index:

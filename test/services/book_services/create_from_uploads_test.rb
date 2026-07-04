@@ -11,14 +11,15 @@ class BookServices::CreateFromUploadsTest < ActiveSupport::TestCase
       fixture_file_upload("calibre_serie.epub", "application/epub+zip")
     ]
 
-    count = nil
+    result = nil
     assert_difference -> { user.books.count }, 2 do
       assert_enqueued_jobs 2, only: EpubProcessorJob do
-        count = BookServices::CreateFromUploads.new(user).call(files)
+        result = BookServices::CreateFromUploads.new(user).call(files)
       end
     end
 
-    _(count).must_equal 2
+    _(result[:created]).must_equal 2
+    _(result[:skipped]).must_be_empty
 
     book = user.books.find_by(filename: "valid.epub")
     _(book.title).must_equal "valid"
@@ -30,7 +31,7 @@ class BookServices::CreateFromUploadsTest < ActiveSupport::TestCase
     file = fixture_file_upload("valid.epub", "application/octet-stream")
 
     assert_difference -> { user.books.count }, 1 do
-      _(BookServices::CreateFromUploads.new(user).call([ file ])).must_equal 1
+      _(BookServices::CreateFromUploads.new(user).call([ file ])[:created]).must_equal 1
     end
   end
 
@@ -39,7 +40,7 @@ class BookServices::CreateFromUploadsTest < ActiveSupport::TestCase
 
     assert_no_difference -> { user.books.count } do
       assert_no_enqueued_jobs do
-        _(BookServices::CreateFromUploads.new(user).call([ file ])).must_equal 0
+        _(BookServices::CreateFromUploads.new(user).call([ file ])[:created]).must_equal 0
       end
     end
   end
@@ -49,8 +50,23 @@ class BookServices::CreateFromUploadsTest < ActiveSupport::TestCase
 
     assert_no_difference -> { user.books.count } do
       assert_no_enqueued_jobs do
-        _(BookServices::CreateFromUploads.new(user).call([ file, nil, "", "not-a-file" ])).must_equal 0
+        _(BookServices::CreateFromUploads.new(user).call([ file, nil, "", "not-a-file" ])[:created]).must_equal 0
       end
     end
+  end
+
+  it "skips a file whose filename is already in the library without crashing" do
+    user.books.create!(filename: "valid.epub", epub_content: "x", title: "existing")
+    file = fixture_file_upload("valid.epub", "application/epub+zip")
+
+    result = nil
+    assert_no_difference -> { user.books.count } do
+      assert_no_enqueued_jobs do
+        result = BookServices::CreateFromUploads.new(user).call([ file ])
+      end
+    end
+
+    _(result[:created]).must_equal 0
+    _(result[:skipped]).must_equal [ "valid.epub" ]
   end
 end

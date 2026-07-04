@@ -129,6 +129,18 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
       assert_equal "Book was successfully deleted.", flash[:notice]
       _(Book.exists?(book.id)).must_equal false
     end
+
+    it "deletes the serie and authors left without books" do
+      serie = user.series.create!(name: "Sole Serie")
+      author = user.authors.create!(name: "Sole Author")
+      book = user.books.create!(filename: "sole.epub", epub_content: "x", title: "Sole", serie: serie)
+      book.authors << author
+
+      delete book_url(book)
+
+      _(Serie.exists?(serie.id)).must_equal false
+      _(Author.exists?(author.id)).must_equal false
+    end
   end
 
   describe "GET #download" do
@@ -144,7 +156,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
   describe "POST #upload" do
     it "calls the service and reports how many books were created" do
       service = Minitest::Mock.new
-      service.expect(:call, 1) { true }
+      service.expect(:call, { created: 1, skipped: [] }) { true }
 
       BookServices::CreateFromUploads.stub(:new, ->(*) { service }) do
         post upload_books_url, params: { files: [ fixture_file_upload("valid.epub", "application/epub+zip") ] }
@@ -157,7 +169,7 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
     it "alerts when the service creates no books" do
       service = Minitest::Mock.new
-      service.expect(:call, 0) { true }
+      service.expect(:call, { created: 0, skipped: [] }) { true }
 
       BookServices::CreateFromUploads.stub(:new, ->(*) { service }) do
         post upload_books_url, params: { files: [ fixture_file_upload("new_cover.png", "image/png") ] }
@@ -166,6 +178,19 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
       assert_mock service
       assert_redirected_to books_path
       assert_equal "No valid EPUB files were found.", flash[:alert]
+    end
+
+    it "alerts about files skipped because they already exist" do
+      service = Minitest::Mock.new
+      service.expect(:call, { created: 1, skipped: [ "dup.epub" ] }) { true }
+
+      BookServices::CreateFromUploads.stub(:new, ->(*) { service }) do
+        post upload_books_url, params: { files: [ fixture_file_upload("valid.epub", "application/epub+zip") ] }
+      end
+
+      assert_redirected_to books_path
+      assert_equal "1 EPUB file(s) uploaded and are being processed.", flash[:notice]
+      assert_equal "Some files were skipped (already in your library): dup.epub", flash[:alert]
     end
 
     it "redirects with an alert when no files are given" do

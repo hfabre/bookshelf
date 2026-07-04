@@ -8,6 +8,7 @@ class Serie < ApplicationRecord
   # Scope to get series for a specific user
   scope :for_user, ->(user) { where(user: user) }
   scope :ordered, -> { order(:name) }
+  scope :without_books, -> { where.missing(:books) }
 
   after_create_commit :create_in_search_index
   after_update_commit :update_in_search_index
