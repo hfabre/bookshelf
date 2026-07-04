@@ -11,5 +11,10 @@ module BookServices
         record.destroy if record.books.reload.empty?
       end
     end
+
+    # Sweep the whole library for series/authors left without any books.
+    def self.sweep
+      { series: Serie.without_books.destroy_all.size, authors: Author.without_books.destroy_all.size }
+    end
   end
 end
