@@ -13,6 +13,7 @@ module SerieServices
       Serie.joins("JOIN series_fts ON series.id = series_fts.rowid")
            .where("series_fts MATCH ? AND series.user_id = ? AND series.id != ?",
                   query, @serie.user_id, @serie.id)
+           .order(Arel.sql("bm25(series_fts)"))
            .limit(limit)
     end
   end

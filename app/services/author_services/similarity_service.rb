@@ -13,6 +13,7 @@ module AuthorServices
       Author.joins("JOIN authors_fts ON authors.id = authors_fts.rowid")
             .where("authors_fts MATCH ? AND authors.user_id = ? AND authors.id != ?",
                    query, @author.user_id, @author.id)
+            .order(Arel.sql("bm25(authors_fts)"))
             .limit(limit)
     end
   end
