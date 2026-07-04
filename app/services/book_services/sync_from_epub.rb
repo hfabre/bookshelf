@@ -7,6 +7,7 @@ module BookServices
 
     def call
       epub = book.epub
+      repair_container!(epub)
       metadata = epub.mt_hash
       title = metadata[:title].presence || book.filename.gsub(".epub", "")
 
@@ -32,6 +33,17 @@ module BookServices
     private
 
     attr_reader :book, :user
+
+    # Some archives are zipped from the book's folder instead of its contents, so
+    # the container/opf live under a wrapper directory and no container sits at
+    # the zip root. Rebuild a root container pointing at the discovered opf and
+    # persist the repaired archive so later reads work normally.
+    def repair_container!(epub)
+      return unless epub.failure_reason == "BsEpub::ContainerMissing"
+
+      epub.create_container!
+      book.update!(epub_content: epub.current_buffer.string) if epub.failure_reason.nil?
+    end
 
     def find_or_create_authors(authors)
       authors.map do |author_name|

@@ -78,10 +78,37 @@ class BookServices::SyncFromEpubTest < ActiveSupport::TestCase
     _(book.cover_type).must_be_nil
   end
 
+  it "repairs and persists an archive wrapped in a top-level directory" do
+    wrapped = wrap_epub(file_fixture("valid.epub").to_s, "Some Book Dir/")
+    book = users(:one).books.create!(filename: "wrapped.epub", epub_content: wrapped, title: "tmp")
+
+    BookServices::SyncFromEpub.new(book, users(:one)).call
+
+    book.reload
+    _(book.title).must_equal "Légendes espagnoles"
+    _(book.cover_bytes).wont_be_nil
+    # the stored archive now loads without needing further repair
+    _(BsEpub::Epub.new(book.epub_content).failure_reason).must_be_nil
+  end
+
   private
+
+  def wrap_epub(source_path, prefix)
+    Zip::OutputStream.write_buffer do |out|
+      Zip::File.open(source_path) do |zip|
+        zip.each do |entry|
+          next if entry.directory?
+
+          out.put_next_entry(prefix + entry.name)
+          out.write(entry.get_input_stream.read)
+        end
+      end
+    end.string
+  end
 
   def sync(book, metadata:, cover_bytes: "COVER")
     epub = Minitest::Mock.new
+    epub.expect(:failure_reason, nil)
     epub.expect(:mt_hash, metadata)
     epub.expect(:cover_bytes, cover_bytes)
 
