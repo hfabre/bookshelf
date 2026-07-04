@@ -39,4 +39,32 @@ class FailedBooksControllerTest < ActionDispatch::IntegrationTest
       _(response.body).must_equal "epub-bytes"
     end
   end
+
+  describe "DELETE #destroy" do
+    it "clears a single failed book" do
+      book = books(:failed_book)
+
+      delete failed_book_url(book)
+
+      assert_redirected_to failed_books_path
+      _(Book.exists?(book.id)).must_equal false
+    end
+
+    it "does not clear a book that has not failed" do
+      delete failed_book_url(books(:shared_book))
+
+      assert_response :not_found
+      _(Book.exists?(books(:shared_book).id)).must_equal true
+    end
+  end
+
+  describe "DELETE #clear_all" do
+    it "clears every failed book but leaves processed ones" do
+      delete clear_all_failed_books_url
+
+      assert_redirected_to failed_books_path
+      _(Book.failed.count).must_equal 0
+      _(Book.exists?(books(:shared_book).id)).must_equal true
+    end
+  end
 end

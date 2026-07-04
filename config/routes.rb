@@ -12,9 +12,13 @@ Rails.application.routes.draw do
 
   resources :users, except: [ :show ]
 
-  resources :failed_books, only: [ :index ] do
+  resources :failed_books, only: [ :index, :destroy ] do
     member do
       get :download
+    end
+
+    collection do
+      delete :clear_all
     end
   end
 

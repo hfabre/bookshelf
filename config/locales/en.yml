@@ -311,6 +311,14 @@ en:
       actions: "Actions"
       download: "Download original"
       view_job: "View job"
+      clear: "Clear"
+      clear_confirm: "Remove this failed upload?"
+      clear_all: "Clear all"
+      clear_all_confirm: "Remove all failed uploads?"
+    destroy:
+      notice: "Failed upload cleared."
+    clear_all:
+      notice: "All failed uploads cleared."
 
   users:
     access_denied: "Access denied. Admin privileges required."

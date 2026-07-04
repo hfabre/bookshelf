@@ -1,6 +1,12 @@
 <div class="max-w-7xl mx-auto">
   <div class="flex items-center justify-between mb-8">
     <h1 class="text-3xl font-bold text-gray-900"><%= t(".heading") %></h1>
+
+    <% if @books.any? %>
+      <%= button_to t(".clear_all"), clear_all_failed_books_path, method: :delete,
+          form: { data: { turbo_confirm: t(".clear_all_confirm") } },
+          class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+    <% end %>
   </div>
 
   <% if @books.empty? %>
@@ -55,6 +61,9 @@
                   <% if book.job_id.present? %>
                     <%= link_to t(".view_job"), mission_control_jobs.application_job_path("bookshelf", book.job_id), class: "text-indigo-600 hover:text-indigo-900" %>
                   <% end %>
+                  <%= link_to t(".clear"), failed_book_path(book),
+                      data: { turbo_method: :delete, turbo_confirm: t(".clear_confirm") },
+                      class: "text-red-600 hover:text-red-900" %>
                 </div>
               </td>
             </tr>
