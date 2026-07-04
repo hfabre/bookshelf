@@ -7,8 +7,10 @@ module BookServices
     def call
       epub = book.epub
       epub.update_mt!(metadata)
-      cover = cover_file # Keep reference to avoid tempfile being collected
-      epub.replace_cover!(cover.path)
+      if book.saved_change_to_cover_bytes?
+        cover = cover_file # Keep reference to avoid tempfile being collected
+        epub.replace_cover!(cover.path)
+      end
       book.update!(epub_content: epub.current_buffer.string)
     end
 

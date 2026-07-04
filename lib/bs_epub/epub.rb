@@ -138,6 +138,22 @@ module BsEpub
       opf_content.xpath("//opf:manifest/*[@id='#{cover_manifest_id}']", ns).first
     end
 
+    # The manifest <item> for the cover. Falls back to matching by href when the
+    # epub has no <meta name="cover"> pointing at a manifest id.
+    def cover_item_node
+      cover_node(cover_manifest_id) || cover_item_node_by_href
+    end
+
+    def cover_item_node_by_href
+      return nil unless cover_filename
+
+      manifest_node = opf_content.root.elements.find { |n| n.name == "manifest" }
+      manifest_node&.elements&.find do |n|
+        href = n.attr("href")
+        href && File.basename(href.to_s) == File.basename(cover_filename)
+      end
+    end
+
     def cover_path
       if cover_filename
         files.find { _1.match?(/.*#{cover_filename}/) }
@@ -162,14 +178,19 @@ module BsEpub
           File.open(cover)
         end
 
-      filename = File.basename(cover_filename, ".*")
+      path = cover_path
+      return unless path
+
+      filename = File.basename(cover_filename || path, ".*")
       new_name = filename + new_ext
 
-      zip.replace(cover_path, new_cover_content)
-      zip.rename(cover_path, new_name) if new_name != File.basename(cover_path)
+      zip.replace(path, new_cover_content)
+      zip.rename(path, new_name) if new_name != File.basename(path)
 
-      cover_node(cover_manifest_id)["href"] = new_name
-      cover_node(cover_manifest_id)["media-type"] = MEDIA_TYPE[new_ext]
+      if (item = cover_item_node)
+        item["href"] = new_name
+        item["media-type"] = MEDIA_TYPE[new_ext]
+      end
 
       override_opf!
     end

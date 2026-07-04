@@ -28,6 +28,16 @@ describe BsEpub::Epub do
 
       _(subject.mt_hash[:cover_filename]).must_equal "cover.png"
     end
+
+    it "updates the manifest item by href when there is no cover meta" do
+      subject.stub(:cover_manifest_id, nil) do
+        subject.replace_cover!(cover_path)
+      end
+      subject.reset
+
+      _(subject.mt_hash[:cover_filename]).must_equal "cover.png"
+      _(subject.cover_item_node["media-type"]).must_equal "image/png"
+    end
   end
 
   describe "#update_mt!" do
