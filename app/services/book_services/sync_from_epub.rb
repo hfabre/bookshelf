@@ -15,7 +15,7 @@ module BookServices
       serie = find_or_create_by_name(@user.series, (metadata[:serie].presence || title).strip)
       cover_bytes = epub.cover_bytes
 
-      book.update!(
+      save_book!(
         title: title,
         description: metadata[:description],
         language: metadata[:language],
@@ -45,9 +45,28 @@ module BookServices
       book.update!(epub_content: epub.current_buffer.string) if epub.failure_reason.nil?
     end
 
+    # An imported serie_index that collides with another book in the same serie
+    # must not fail the whole import (split volumes sharing a number, bad metadata,
+    # or two concurrent imports racing for the same index). Only that specific
+    # conflict is recovered from — anything else propagates.
+    def save_book!(attributes)
+      book.update!(attributes)
+    rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
+      raise unless serie_index_conflict?(e)
+
+      book.update!(attributes.merge(serie_index: nil))
+    end
+
+    def serie_index_conflict?(error)
+      case error
+      when ActiveRecord::RecordInvalid then error.record.errors.of_kind?(:serie_index, :taken)
+      when ActiveRecord::RecordNotUnique then error.message.include?("serie_index")
+      end
+    end
+
     def find_or_create_authors(authors)
-      authors.map do |author_name|
-        find_or_create_by_name(@user.authors, author_name&.strip)
+      Array(authors).filter_map { |name| name&.strip.presence }.uniq.map do |name|
+        find_or_create_by_name(@user.authors, name)
       end
     end
 
