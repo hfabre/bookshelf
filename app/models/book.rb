@@ -8,6 +8,8 @@ class Book < ApplicationRecord
 
   validates :filename, presence: true, uniqueness: { scope: :user_id }
   validates :epub_content, presence: true
+  validates :serie_index, uniqueness: { scope: [ :user_id, :serie_id ] },
+                          allow_nil: true, if: -> { serie_id.present? }
 
   scope :ordered, -> { order(:title) }
   scope :without_serie, -> { where(serie_id: nil) }

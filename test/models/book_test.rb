@@ -30,6 +30,25 @@ describe Book do
       other_user = Book.new(filename: existing.filename, epub_content: "bytes", user: users(:two))
       _(other_user).must_be :valid?
     end
+
+    it "rejects a duplicate serie_index within the same serie" do
+      existing = books(:merged_book_one) # serie to_merge, index 1
+
+      duplicate = books(:merged_book_two) # serie to_merge, index 2
+      duplicate.serie_index = existing.serie_index
+      _(duplicate).wont_be :valid?
+      _(duplicate.errors[:serie_index]).must_include "has already been taken"
+    end
+
+    it "allows a duplicate serie_index across different series and blank indexes" do
+      other_serie = Book.new(filename: "z.epub", epub_content: "bytes", user: users(:one),
+                             serie: series(:target), serie_index: 1)
+      _(other_serie).must_be :valid?
+
+      no_index = Book.new(filename: "w.epub", epub_content: "bytes", user: users(:one),
+                          serie: series(:to_merge), serie_index: nil)
+      _(no_index).must_be :valid?
+    end
   end
 
   describe "#cover?" do
