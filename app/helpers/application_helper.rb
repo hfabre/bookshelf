@@ -1,4 +1,13 @@
 module ApplicationHelper
+  # Local path (path + query) of the page the current request came from, if any.
+  def referer_path
+    return nil if request.referer.blank?
+
+    URI(request.referer).request_uri
+  rescue URI::InvalidURIError
+    nil
+  end
+
   def book_cover(book, options = {})
     if book.cover_data_url.present?
       image_tag book.cover_data_url, options

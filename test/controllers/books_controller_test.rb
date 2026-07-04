@@ -82,6 +82,30 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
       assert_equal "Book was successfully updated.", flash[:notice]
     end
 
+    it "redirects back to a local return_to on success" do
+      service = Minitest::Mock.new
+      service.expect(:call, true) { true }
+
+      BookServices::UpdateAndSync.stub(:new, ->(*) { service }) do
+        patch book_url(books(:with_authors)),
+              params: { book: { title: "New" }, return_to: "/series/42" }
+      end
+
+      assert_redirected_to "/series/42"
+    end
+
+    it "ignores a non-local return_to to prevent open redirects" do
+      service = Minitest::Mock.new
+      service.expect(:call, true) { true }
+
+      BookServices::UpdateAndSync.stub(:new, ->(*) { service }) do
+        patch book_url(books(:with_authors)),
+              params: { book: { title: "New" }, return_to: "//evil.example.com" }
+      end
+
+      assert_redirected_to books_path
+    end
+
     it "re-renders edit when the sync fails" do
       service = Minitest::Mock.new
       service.expect(:call, false) { true }

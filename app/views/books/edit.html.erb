@@ -10,6 +10,8 @@
       data: { controller: "book-form" },
       class: "space-y-6" do |form| %>
 
+    <%= hidden_field_tag :return_to, params[:return_to].presence || referer_path %>
+
     <% if @book.errors.any? %>
       <div class="bg-red-50 border border-red-200 rounded-md p-4">
         <h3 class="text-sm font-medium text-red-800"><%= t(".errors_heading") %></h3>

@@ -12,7 +12,7 @@ class BooksController < ApplicationController
 
   def update
     if BookServices::UpdateAndSync.new(@book).call(book_params)
-      redirect_to books_path, notice: t(".notice")
+      redirect_to safe_return_to, notice: t(".notice")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -55,6 +55,12 @@ class BooksController < ApplicationController
 
   def set_book
     @book = current_user.books.find(params[:id])
+  end
+
+  # Only accept local paths to avoid open redirects.
+  def safe_return_to
+    to = params[:return_to].to_s
+    to.start_with?("/") && !to.start_with?("//") ? to : books_path
   end
 
   def book_params
