@@ -4,8 +4,6 @@
 
 ## Release
 
-- Add github action to push docker image to github registry when releasing (pushing a tag)
-
 ## Maybe
 
 - Add an OPDS catalog feed so e-reader apps (KOReader, Moon+ Reader, etc.) can browse the library and download books directly, instead of manual download + transfer. Maps onto existing models and the public-library/sharing plumbing.
