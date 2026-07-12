@@ -1,4 +1,9 @@
 en:
+  epub_processing_mailer:
+    failed:
+      subject: 'Your upload "%{title}" could not be processed'
+      intro: 'We were unable to process your uploaded book "%{title}".'
+      reported: "The problem has been reported to the administrator."
   activerecord:
     models:
       serie:

@@ -15,8 +15,7 @@ class EpubProcessorJob < ApplicationJob
       book.update!(processing_status: :completed)
       Rails.logger.info "Successfully processed EPUB: #{book.title}"
     rescue => e
-      Rails.logger.error "Failed to process EPUB for book #{book.id}: #{e.message}"
-      book.update!(processing_status: :failed, failure_message: e.message)
+      BookServices::HandleProcessingFailure.new(book).call(e)
       raise e
     end
   end
