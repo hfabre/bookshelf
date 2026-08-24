@@ -3,7 +3,8 @@ class AuthorsController < ApplicationController
   include LibraryScoped
 
   before_action :set_library_owner, only: [ :index, :show ]
-  before_action :set_author, only: [ :edit, :update, :download, :merge, :perform_merge ]
+  before_action :set_author, only: [ :edit, :update, :merge, :perform_merge ]
+  before_action :set_readable_author, only: :download
   before_action :require_admin, only: [ :edit, :update ]
 
   def index
@@ -75,6 +76,11 @@ class AuthorsController < ApplicationController
 
   def set_author
     @author = current_user.authors.find(params[:id])
+  end
+
+  # Downloading follows browsing: any author in a library you may read.
+  def set_readable_author
+    @author = Author.where(user: User.with_readable_library(current_user)).find(params[:id])
   end
 
   def author_params

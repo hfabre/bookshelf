@@ -3,7 +3,8 @@ class BooksController < ApplicationController
   include LibraryScoped
 
   before_action :set_library_owner, only: :index
-  before_action :set_book, only: [ :edit, :update, :download, :destroy ]
+  before_action :set_book, only: [ :edit, :update, :destroy ]
+  before_action :set_readable_book, only: :download
 
   def index
     @books = library_owner.books.without_blobs.includes(:authors, :serie).ordered
@@ -81,11 +82,16 @@ class BooksController < ApplicationController
 
   # Covers are also shown while browsing someone else's public library.
   def cover_book
-    readable_users = User.where(public_library: true).or(User.where(id: current_user.id))
+    readable_books.select(:id, :updated_at, :cover_bytes, :cover_type).find_by(id: params[:id])
+  end
 
-    Book.where(user: readable_users)
-        .select(:id, :updated_at, :cover_bytes, :cover_type)
-        .find_by(id: params[:id])
+  # Downloading follows browsing: anything in a library you may read.
+  def set_readable_book
+    @book = readable_books.find(params[:id])
+  end
+
+  def readable_books
+    Book.where(user: User.with_readable_library(current_user))
   end
 
   # Only accept local paths to avoid open redirects.

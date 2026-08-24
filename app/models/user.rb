@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
+  # Libraries the given user may read: their own, plus every public one.
+  scope :with_readable_library, ->(viewer) { where(public_library: true).or(where(id: viewer.id)) }
+
   # Public-facing label for shared libraries; avoids exposing the full email.
   def display_name
     email_address.split("@").first

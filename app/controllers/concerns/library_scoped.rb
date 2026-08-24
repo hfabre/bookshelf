@@ -1,7 +1,7 @@
 # The browse pages double as someone else's public library: same views, same
-# queries, pointed at whoever owns the records. Only routes carrying a :user_id
-# can point elsewhere, and only while that library is public, so adding the
-# param to any other action has no effect.
+# queries, pointed at whoever owns the records. Only reading is scoped this way,
+# and only to a public library, so the worst a hand-written :user_id can do is
+# reach a page the library routes already serve.
 module LibraryScoped
   extend ActiveSupport::Concern
 
