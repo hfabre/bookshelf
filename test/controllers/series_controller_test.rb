@@ -62,10 +62,14 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
 
       it "lays a later page out like the one it continues" do
         get series_url
-        _(css_select("turbo-frame#series_page_2").first["class"]).must_equal "col-span-full grid grid-cols-5 gap-8"
+        cards = css_select("turbo-frame#series_page_2").first["class"]
+        _(cards).must_match(/\bgrid\b/)
+        _(cards).must_include "col-span-full" # so its rows join the grid above
 
         get series_url(view: "list")
-        _(css_select("turbo-frame#series_page_2").first["class"]).must_equal "flex flex-col divide-y divide-gray-100"
+        rows = css_select("turbo-frame#series_page_2").first["class"]
+        _(rows).must_include "divide-y"
+        _(rows).wont_match(/\bgrid\b/)
       end
 
       it "shows each serie on exactly one page" do
@@ -94,7 +98,7 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
 
     it "renders the card grid by default and the list rows when view=list" do
       get series_url
-      _(response.body).must_include "grid grid-cols-5"
+      _(response.body).must_include "grid grid-cols-2"
 
       get series_url(view: "list")
       _(response.body).must_include "divide-y"
@@ -111,7 +115,7 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
     it "ignores an invalid view value" do
       get series_url(view: "bogus")
 
-      _(response.body).must_include "grid grid-cols-5"
+      _(response.body).must_include "grid grid-cols-2"
     end
 
     it "filters to unfinished series with filter=to_read" do

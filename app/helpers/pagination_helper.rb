@@ -1,13 +1,13 @@
 module PaginationHelper
   CONTAINER_CLASSES = {
-    "cards" => "grid grid-cols-5 gap-8",
+    "cards" => "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8",
     "list" => "flex flex-col divide-y divide-gray-100 rounded-lg border border-gray-100 bg-white shadow-sm"
   }.freeze
 
   # A page after the first sits inside the container above it, so it repeats the
   # layout but not the frame around it.
   PAGE_CLASSES = {
-    "cards" => "col-span-full grid grid-cols-5 gap-8",
+    "cards" => "col-span-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8",
     "list" => "flex flex-col divide-y divide-gray-100"
   }.freeze
 
