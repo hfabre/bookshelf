@@ -63,7 +63,7 @@ gem "mission_control-jobs"
 
 # Epub management
 gem "nokogiri"
-gem "rubyzip", "~> 3.0"
+gem "rubyzip", "~> 3.5"
 
 # Streaming zip downloads (constant memory)
 gem "zip_kit", "~> 6.3"
