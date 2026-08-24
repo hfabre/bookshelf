@@ -47,7 +47,7 @@ class AuthorsController < ApplicationController
   end
 
   def merge
-    @similar_authors = @author.similar_authors
+    @similar_authors = @author.similar
   end
 
   def perform_merge

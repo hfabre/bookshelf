@@ -22,7 +22,76 @@
         915
       ],
       "note": "Intentional: UsersController is admin-only (before_action :require_admin), so permitting :admin here is the admin user-management panel granting/revoking admin, not a privilege-escalation vector."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "2ccfa71c64c0c7a537c89e8c646b6a0f6a3eaead46800c9c54e07b672bda4725",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/searchable.rb",
+      "line": 23,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "connection.execute(\"INSERT INTO #{search_index}(#{search_index}) VALUES('rebuild')\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Searchable",
+        "method": "rebuild_search_index"
+      },
+      "user_input": "search_index",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "The interpolated name is the model's own FTS5 table, derived from table_name: no request data reaches it, and a table name cannot be bound as a parameter."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "52957a5aa35f45b484833616e6448d22740511b76be0e7d0e8e94d429587a666",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/searchable.rb",
+      "line": 21,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "connection.execute(\"DELETE FROM #{search_index}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Searchable",
+        "method": "rebuild_search_index"
+      },
+      "user_input": "search_index",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "The interpolated name is the model's own FTS5 table, derived from table_name: no request data reaches it, and a table name cannot be bound as a parameter."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "89ff10923147db53e0130d40e8fa651d4e76d307ff46ca12c2f6c3a02c8183f0",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/searchable.rb",
+      "line": 35,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "self.class.joins(\"JOIN #{self.class.search_index} ON #{self.class.table_name}.id = #{self.class.search_index}.rowid\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Searchable",
+        "method": "similar"
+      },
+      "user_input": "self.class.search_index",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": "Table and index names come from table_name; the search terms are bound to the MATCH placeholder."
     }
   ],
-  "brakeman_version": "8.0.5"
+  "brakeman_version": "8.0.6"
 }
