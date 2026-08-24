@@ -1,12 +1,14 @@
 class SeriesController < ApplicationController
   include ZipKit::RailsStreaming
   include Paginated
+  include LibraryScoped
 
-  before_action :set_serie, only: [ :show, :edit, :update, :download, :merge, :perform_merge ]
+  before_action :set_library_owner, only: [ :index, :show ]
+  before_action :set_serie, only: [ :edit, :update, :download, :merge, :perform_merge ]
   before_action :require_admin, only: [ :edit, :update ]
 
   def index
-    @series = Serie.for_user(current_user).order(rating: :desc, name: :asc, id: :asc)
+    @series = Serie.for_user(library_owner).order(rating: :desc, name: :asc, id: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @series = filter_series(@series)
 
@@ -20,6 +22,7 @@ class SeriesController < ApplicationController
   end
 
   def show
+    @serie = library_owner.series.find(params[:id])
     @books = @serie.books.includes(:authors).order(:serie_index, :title)
   end
 

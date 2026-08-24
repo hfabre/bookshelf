@@ -1,7 +1,7 @@
 <% if @page == 1 %>
 <div class="mb-8 min-w-full flex items-start gap-4">
     <div class="flex-grow">
-        <%= render "shared/search_form", path: series_search_path, placeholder: t(".search_placeholder"), turbo_frame: "series", extra_fields: "series/filters" %>
+        <%= render "shared/search_form", path: current_series_path, placeholder: t(".search_placeholder"), turbo_frame: "series", extra_fields: "series/filters" %>
     </div>
 
     <div class="shrink-0 py-5 sm:py-6 flex items-center gap-3">

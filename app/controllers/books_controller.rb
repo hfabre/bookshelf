@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
   include Paginated
+  include LibraryScoped
 
+  before_action :set_library_owner, only: :index
   before_action :set_book, only: [ :edit, :update, :download, :destroy ]
 
   def index
-    @books = current_user.books.without_blobs.includes(:authors, :serie).ordered
+    @books = library_owner.books.without_blobs.includes(:authors, :serie).ordered
     @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @books = paginate(filter_books(@books))
   end

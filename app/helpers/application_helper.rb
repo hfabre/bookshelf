@@ -44,28 +44,6 @@ module ApplicationHelper
     "#{request.path}?#{request.query_parameters.merge(view: mode).to_query}"
   end
 
-  # Search path helpers
-  def books_search_path
-    current_books_path
-  end
-
-  def series_search_path
-    current_series_path
-  end
-
-  def authors_search_path
-    current_authors_path
-  end
-
-  # Back link helpers
-  def series_back_path
-    current_series_path
-  end
-
-  def authors_back_path
-    current_authors_path
-  end
-
   # Show page link helpers
   def serie_show_path(serie)
     browsing_other_library? ? library_serie_path(current_library_owner, serie) : serie_path(serie)

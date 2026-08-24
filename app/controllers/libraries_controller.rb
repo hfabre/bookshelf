@@ -1,8 +1,6 @@
 class LibrariesController < ApplicationController
-  include Paginated
-
-  before_action :set_library_user, except: [ :index ]
-  before_action :ensure_public_library, except: [ :index ]
+  before_action :set_library_user, only: :show
+  before_action :ensure_public_library, only: :show
 
   def index
     @public_users = User.where(public_library: true).order(:email_address)
@@ -10,48 +8,6 @@ class LibrariesController < ApplicationController
 
   def show
     redirect_to library_books_path(@library_user)
-  end
-
-  def books
-    @books = @library_user.books.without_blobs.includes(:authors, :serie).ordered
-    @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
-    @books = paginate(@books)
-    @library_owner = @library_user
-    render "books/index"
-  end
-
-  def series
-    @series = @library_user.series.order(rating: :desc, name: :asc, id: :asc)
-    @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
-    @series = @series.to_read if params[:filter] == "to_read"
-    @series = @series.to_reread if params[:filter] == "to_reread"
-    @library_owner = @library_user
-    @series = paginate(@series)
-    @previews = BookServices::IndexPreviews.for_series(@series)
-    render "series/index"
-  end
-
-  def authors
-    @authors = @library_user.authors.ordered
-    @authors = @authors.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
-    @library_owner = @library_user
-    @authors = paginate(@authors)
-    @previews = BookServices::IndexPreviews.for_authors(@authors)
-    render "authors/index"
-  end
-
-  def show_serie
-    @serie = @library_user.series.find(params[:serie_id])
-    @books = @serie.books.includes(:authors).order(:serie_index, :title)
-    @library_owner = @library_user
-    render "series/show"
-  end
-
-  def show_author
-    @author = @library_user.authors.find(params[:author_id])
-    @books = @author.books.includes(:serie, :authors).ordered
-    @library_owner = @library_user
-    render "authors/show"
   end
 
   private
