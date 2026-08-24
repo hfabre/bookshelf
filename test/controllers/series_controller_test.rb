@@ -13,6 +13,78 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
+    it "links the cover of the first book with a cover instead of embedding it" do
+      book = books(:merged_book_two)
+      book.update_columns(cover_bytes: "img", cover_type: "image/png")
+
+      get series_url
+
+      _(response.body).must_include cover_book_path(book, v: book.cache_version)
+      _(response.body).wont_include "data:image/png;base64"
+    end
+
+    describe "pagination" do
+      # 45 of these plus the 4 fixtures owned by :one fills two pages
+      before { 45.times { |i| user.series.create!(name: "Zzz Page Serie #{i.to_s.rjust(2, "0")}") } }
+
+      it "renders a single page and a lazy frame that pulls in the next one" do
+        get series_url
+
+        _(css_select("turbo-frame#series h3").size).must_equal 40
+        frame = css_select("turbo-frame#series_page_2").first
+        _(frame["loading"]).must_equal "lazy"
+        _(frame["src"]).must_equal "/series?page=2"
+        # Turbo only loads the frame once it is seen scrolling in, which needs it
+        # to take up space: an empty one would never load.
+        _(frame.text.strip).wont_be_empty
+      end
+
+      it "returns a later page inside its own frame, without the search form" do
+        get series_url(page: 2)
+
+        _(css_select("turbo-frame#series_page_2").size).must_equal 1
+        _(css_select("turbo-frame#series_page_2 h3").size).must_equal 9
+        _(css_select("turbo-frame#series").size).must_equal 0
+        _(css_select("input[name=q]").size).must_equal 0
+      end
+
+      it "stops chaining frames once the last page is served" do
+        get series_url(page: 2)
+
+        _(css_select("turbo-frame#series_page_3").size).must_equal 0
+      end
+
+      it "carries the search into the next page url" do
+        get series_url(q: "Page Serie")
+
+        _(css_select("turbo-frame#series_page_2").first["src"]).must_include "q=Page+Serie"
+      end
+
+      it "lays a later page out like the one it continues" do
+        get series_url
+        _(css_select("turbo-frame#series_page_2").first["class"]).must_equal "col-span-full grid grid-cols-5 gap-8"
+
+        get series_url(view: "list")
+        _(css_select("turbo-frame#series_page_2").first["class"]).must_equal "flex flex-col divide-y divide-gray-100"
+      end
+
+      it "shows each serie on exactly one page" do
+        get series_url
+        first_page = css_select("turbo-frame#series h3").map { |h| h.text.strip }
+        get series_url(page: 2)
+        second_page = css_select("turbo-frame#series_page_2 h3").map { |h| h.text.strip }
+
+        _(first_page & second_page).must_be_empty
+        _((first_page + second_page).size).must_equal 49
+      end
+
+      it "leaves the json used by the autocomplete unpaginated" do
+        get series_url(format: :json)
+
+        _(JSON.parse(response.body).size).must_equal 49
+      end
+    end
+
     it "returns the filtered series as json" do
       get series_url(format: :json, q: "Shippuden")
 

@@ -1,3 +1,4 @@
+<% if @page == 1 %>
 <div class="mb-8 min-w-full flex items-start gap-4">
     <div class="flex-grow">
         <%= render "shared/search_form", path: authors_search_path, placeholder: t(".search_placeholder"), turbo_frame: "authors" %>
@@ -7,11 +8,12 @@
         <%= render "shared/view_toggle" %>
     </div>
 </div>
+<% end %>
 
-<%= turbo_frame_tag "authors" do %>
+<%= render layout: "shared/paginated_list", locals: { name: "authors" } do %>
     <% if @view_mode == "list" %>
-        <%= render "authors/authors_rows", authors: @authors %>
+        <%= render "authors/authors_rows", authors: @authors, previews: @previews %>
     <% else %>
-        <%= render "authors/authors_list", authors: @authors %>
+        <%= render "authors/authors_list", authors: @authors, previews: @previews %>
     <% end %>
 <% end %>

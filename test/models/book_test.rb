@@ -58,19 +58,27 @@ describe Book do
     end
   end
 
-  describe "#cover_data_url" do
-    it "returns nil without a cover" do
-      _(Book.new(cover_bytes: nil).cover_data_url).must_be_nil
-    end
-
-    it "builds a base64 data url from the cover type and bytes" do
-      book = Book.new(cover_bytes: "img", cover_type: "image/png")
-      _(book.cover_data_url).must_equal "data:image/png;base64,#{Base64.encode64("img")}"
-    end
-
+  describe "#cover_mime_type" do
     it "falls back to image/jpeg when no cover type is set" do
-      book = Book.new(cover_bytes: "img", cover_type: nil)
-      _(book.cover_data_url).must_equal "data:image/jpeg;base64,#{Base64.encode64("img")}"
+      _(Book.new(cover_type: "image/png").cover_mime_type).must_equal "image/png"
+      _(Book.new(cover_type: nil).cover_mime_type).must_equal "image/jpeg"
+    end
+  end
+
+  describe ".without_blobs" do
+    it "leaves out the blobs and still answers cover?" do
+      book = books(:with_authors)
+      book.update_columns(cover_bytes: "img", cover_type: "image/png")
+
+      lean = Book.without_blobs.find(book.id)
+
+      _(lean.cover?).must_equal true
+      _(-> { lean.epub_content }).must_raise ActiveModel::MissingAttributeError
+      _(-> { lean.cover_bytes }).must_raise ActiveModel::MissingAttributeError
+    end
+
+    it "answers cover? without a cover" do
+      _(Book.without_blobs.find(books(:merged_book_one).id).cover?).must_equal false
     end
   end
 

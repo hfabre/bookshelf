@@ -5,7 +5,7 @@ class Author < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :user_id }
 
   scope :for_user, ->(user) { where(user: user) }
-  scope :ordered, -> { order(:name) }
+  scope :ordered, -> { order(:name, :id) }
   scope :without_books, -> { where.missing(:books) }
 
   # Keep FTS5 search index in sync

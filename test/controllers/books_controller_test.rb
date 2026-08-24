@@ -60,6 +60,27 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  describe "pagination" do
+    before do
+      41.times do |i|
+        user.books.create!(filename: "page-#{i}.epub", epub_content: "x", title: "Zzz Page Book #{i.to_s.rjust(2, "0")}")
+      end
+    end
+
+    it "renders a single page and a lazy frame for the next one" do
+      get books_url
+
+      _(css_select("turbo-frame#books h3").size).must_equal 40
+      _(css_select("turbo-frame#books_page_2").first["src"]).must_equal "/books?page=2"
+    end
+
+    it "carries the filter into the next page url" do
+      get books_url(filter: "no_serie")
+
+      _(css_select("turbo-frame#books_page_2").first["src"]).must_include "filter=no_serie"
+    end
+  end
+
   describe "GET #edit" do
     it "renders the edit form" do
       get edit_book_url(books(:with_authors))
@@ -150,6 +171,58 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
       assert_equal "application/epub+zip", response.media_type
       _(response.body).must_equal "epub-bytes"
+    end
+  end
+
+  describe "GET #cover" do
+    it "sends the cover bytes" do
+      book = books(:merged_book_one)
+      book.update_columns(cover_bytes: "img", cover_type: "image/png")
+
+      get cover_book_url(book)
+
+      assert_response :success
+      assert_equal "image/png", response.media_type
+      _(response.body).must_equal "img"
+    end
+
+    it "is not found when the book has no cover" do
+      get cover_book_url(books(:merged_book_one))
+
+      assert_response :not_found
+    end
+
+    it "serves covers from a public library to other users" do
+      book = books(:merged_book_one)
+      book.update_columns(cover_bytes: "img")
+
+      sign_in_as(users(:two))
+      get cover_book_url(book)
+
+      assert_response :success
+    end
+
+    it "changes the cover url when the cover is replaced, so a cached one is not reused" do
+      book = books(:merged_book_one)
+      book.update!(cover_bytes: "old", cover_type: "image/png")
+      get books_url
+      stale_url = cover_book_path(book, v: book.cache_version)
+      assert_includes response.body, stale_url
+
+      book.update!(cover_bytes: "new")
+      get books_url
+
+      assert_not_includes response.body, stale_url
+      assert_includes response.body, cover_book_path(book, v: book.reload.cache_version)
+    end
+
+    it "is not found for a book of a private library" do
+      book = books(:failed_book)
+      book.update_columns(cover_bytes: "img")
+
+      get cover_book_url(book)
+
+      assert_response :not_found
     end
   end
 

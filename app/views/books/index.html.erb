@@ -1,3 +1,4 @@
+<% if @page == 1 %>
 <div class="mb-8 min-w-full flex items-start gap-4">
     <div class="flex-grow">
         <%= render "shared/search_form", path: books_search_path, placeholder: t(".search_placeholder"), turbo_frame: "books", extra_fields: "books/filters" %>
@@ -7,8 +8,9 @@
         <%= render "shared/view_toggle" %>
     </div>
 </div>
+<% end %>
 
-<%= turbo_frame_tag "books" do %>
+<%= render layout: "shared/paginated_list", locals: { name: "books" } do %>
     <% if @view_mode == "list" %>
         <%= render "books/books_rows", books: @books %>
     <% else %>
