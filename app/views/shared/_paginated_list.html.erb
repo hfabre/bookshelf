@@ -1,0 +1,14 @@
+<%# The first page owns the frame the search replaces and the container the rows
+    live in. Later pages are loaded into a frame that is already on the page, so
+    they only repeat the layout, and nest inside the container above them. %>
+<% if @page.to_i > 1 %>
+    <%= turbo_frame_tag "#{name}_page_#{@page}", class: index_page_class do %>
+        <%= yield %>
+    <% end %>
+<% else %>
+    <%= turbo_frame_tag name do %>
+        <div class="<%= index_container_class %>">
+            <%= yield %>
+        </div>
+    <% end %>
+<% end %>

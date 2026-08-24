@@ -11,7 +11,7 @@ class Book < ApplicationRecord
 
   HAS_COVER_SQL = "length(coalesce(books.cover_bytes, '')) > 0"
 
-  scope :ordered, -> { order(:title) }
+  scope :ordered, -> { order(:title, :id) }
   # Selects every column except the two binary ones, so listing pages don't drag
   # a whole epub per row into memory. Covers come from BooksController#cover, so
   # the bytes aren't needed either -- only whether there are any, hence has_cover.

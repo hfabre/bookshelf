@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
+  include Paginated
+
   before_action :set_book, only: [ :edit, :update, :download, :destroy ]
 
   def index
     @books = current_user.books.without_blobs.includes(:authors, :serie).ordered
     @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
-    @books = filter_books(@books)
+    @books = paginate(filter_books(@books))
   end
 
   # Covers used to be inlined as base64 data URLs, which made every listing

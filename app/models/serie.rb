@@ -7,7 +7,7 @@ class Serie < ApplicationRecord
 
   # Scope to get series for a specific user
   scope :for_user, ->(user) { where(user: user) }
-  scope :ordered, -> { order(:name) }
+  scope :ordered, -> { order(:name, :id) }
   scope :without_books, -> { where.missing(:books) }
   scope :to_read, -> { where(reading_state: [ nil, "unread", "reading" ]) }
   scope :to_reread, -> { where(reading_state: "finished", rating: nil) }

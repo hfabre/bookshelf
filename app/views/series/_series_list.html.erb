@@ -1,4 +1,3 @@
-<div class="grid grid-cols-5 gap-8">
     <% series.each do |serie| %>
         <div class="relative group">
         <% first_book = previews.cover_book(serie) %>
@@ -62,4 +61,4 @@
             <% end %>
         </div>
     <% end %>
-</div>
+<%= next_page_frame("series") %>

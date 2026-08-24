@@ -60,6 +60,27 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  describe "pagination" do
+    before do
+      41.times do |i|
+        user.books.create!(filename: "page-#{i}.epub", epub_content: "x", title: "Zzz Page Book #{i.to_s.rjust(2, "0")}")
+      end
+    end
+
+    it "renders a single page and a lazy frame for the next one" do
+      get books_url
+
+      _(css_select("turbo-frame#books h3").size).must_equal 40
+      _(css_select("turbo-frame#books_page_2").first["src"]).must_equal "/books?page=2"
+    end
+
+    it "carries the filter into the next page url" do
+      get books_url(filter: "no_serie")
+
+      _(css_select("turbo-frame#books_page_2").first["src"]).must_include "filter=no_serie"
+    end
+  end
+
   describe "GET #edit" do
     it "renders the edit form" do
       get edit_book_url(books(:with_authors))

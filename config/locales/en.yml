@@ -45,6 +45,7 @@ en:
   common:
     access_denied: "Access denied."
     cancel: "Cancel"
+    loading: "Loading more..."
     no_cover: "No cover"
     view_cards: "Card view"
     view_list: "List view"

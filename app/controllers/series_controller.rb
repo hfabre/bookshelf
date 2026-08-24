@@ -1,16 +1,20 @@
 class SeriesController < ApplicationController
   include ZipKit::RailsStreaming
+  include Paginated
 
   before_action :set_serie, only: [ :show, :edit, :update, :download, :merge, :perform_merge ]
   before_action :require_admin, only: [ :edit, :update ]
 
   def index
-    @series = Serie.for_user(current_user).order(rating: :desc, name: :asc)
+    @series = Serie.for_user(current_user).order(rating: :desc, name: :asc, id: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @series = filter_series(@series)
 
     respond_to do |format|
-      format.html { @previews = BookServices::IndexPreviews.for_series(@series) }
+      format.html do
+        @series = paginate(@series)
+        @previews = BookServices::IndexPreviews.for_series(@series)
+      end
       format.json { render json: @series.map { |s| { id: s.id, name: s.name } } }
     end
   end

@@ -1,4 +1,6 @@
 class AuthorsController < ApplicationController
+  include Paginated
+
   before_action :set_author, only: [ :show, :edit, :update, :download, :merge, :perform_merge ]
   before_action :require_admin, only: [ :edit, :update ]
 
@@ -7,7 +9,10 @@ class AuthorsController < ApplicationController
     @authors = @authors.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
 
     respond_to do |format|
-      format.html { @previews = BookServices::IndexPreviews.for_authors(@authors) }
+      format.html do
+        @authors = paginate(@authors)
+        @previews = BookServices::IndexPreviews.for_authors(@authors)
+      end
       format.json { render json: @authors.map { |a| { id: a.id, name: a.name } } }
     end
   end
