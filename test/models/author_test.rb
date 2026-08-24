@@ -51,4 +51,32 @@ describe Author do
       assert_mock service
     end
   end
+
+  describe "#similar" do
+    # Fixtures skip the after_commit callbacks that maintain the FTS index
+    before { Author.rebuild_search_index }
+
+    it "returns nothing when the author name is blank" do
+      _(Author.new(name: "", user: users(:one)).similar).must_be_empty
+    end
+
+    it "finds same-user authors matching the name, excluding self and other users" do
+      results = authors(:sanderson).similar
+
+      _(results).must_include authors(:brandon_mull)
+      _(results).wont_include authors(:sanderson)          # self
+      _(results).wont_include authors(:brandon_other_user) # different user
+      _(results).wont_include authors(:tolkien)            # same user, no shared token
+    end
+
+    it "stops matching a destroyed author" do
+      author = users(:one).authors.create!(name: "Zzz Indexed Author")
+      other = users(:one).authors.create!(name: "Zzz Indexed Twin")
+      _(other.similar).must_include author
+
+      author.destroy
+
+      _(other.reload.similar).wont_include author
+    end
+  end
 end

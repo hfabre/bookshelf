@@ -63,7 +63,7 @@ class SeriesController < ApplicationController
   end
 
   def merge
-    @similar_series = @serie.similar_series
+    @similar_series = @serie.similar
   end
 
   def perform_merge
