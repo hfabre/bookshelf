@@ -25,11 +25,13 @@ Rails.application.routes.draw do
   # Public libraries
   get "libraries", to: "libraries#index"
   get "libraries/:user_id", to: "libraries#show", as: "library"
-  get "libraries/:user_id/books", to: "libraries#books", as: "library_books"
-  get "libraries/:user_id/series", to: "libraries#series", as: "library_series"
-  get "libraries/:user_id/authors", to: "libraries#authors", as: "library_authors"
-  get "libraries/:user_id/series/:serie_id", to: "libraries#show_serie", as: "library_serie"
-  get "libraries/:user_id/authors/:author_id", to: "libraries#show_author", as: "library_author"
+  # Browsing a public library is the ordinary browse pages scoped to its owner,
+  # see LibraryScoped.
+  get "libraries/:user_id/books", to: "books#index", as: "library_books"
+  get "libraries/:user_id/series", to: "series#index", as: "library_series"
+  get "libraries/:user_id/authors", to: "authors#index", as: "library_authors"
+  get "libraries/:user_id/series/:id", to: "series#show", as: "library_serie"
+  get "libraries/:user_id/authors/:id", to: "authors#show", as: "library_author"
 
   resources :books, only: [ :index, :edit, :update, :destroy ] do
     collection do
