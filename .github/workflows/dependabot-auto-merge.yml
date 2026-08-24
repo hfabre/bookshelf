@@ -1,0 +1,62 @@
+name: Dependabot auto-merge
+
+# Merges dependabot's minor/patch pull requests once CI is green.
+# Major bumps are left open on purpose.
+
+on:
+  workflow_run:
+    workflows: [ CI ]
+    types: [ completed ]
+
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Merge if this is a non-major dependabot update
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+
+          pr=$(gh pr list --repo "$REPO" --head "$BRANCH" --state open \
+                 --json number,title,author \
+                 --jq '.[] | select(.author.login | test("dependabot")) | "\(.number)\t\(.title)"')
+
+          if [ -z "$pr" ]; then
+            echo "No open dependabot pull request on $BRANCH, nothing to do."
+            exit 0
+          fi
+
+          number=${pr%%$'\t'*}
+          title=${pr#*$'\t'}
+          echo "Found #$number: $title"
+
+          case "$title" in
+            *"group with"*)
+              # Grouped pull requests only ever contain minor/patch updates,
+              # see the update-types in .github/dependabot.yml
+              ;;
+            "Bump "*" from "*" to "*)
+              from=${title##* from }
+              from=${from%% to *}
+              to=${title##* to }
+              if [ "${from%%.*}" != "${to%%.*}" ]; then
+                echo "Major bump ($from -> $to), leaving it open for review."
+                exit 0
+              fi
+              ;;
+            *)
+              echo "Unrecognised title, leaving it open for review."
+              exit 0
+              ;;
+          esac
+
+          gh pr merge --repo "$REPO" --squash --delete-branch "$number"
