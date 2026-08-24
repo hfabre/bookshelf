@@ -11,25 +11,27 @@ class LibrariesController < ApplicationController
   end
 
   def books
-    @books = @library_user.books.includes(:authors, :serie).ordered
+    @books = @library_user.books.without_blobs.includes(:authors, :serie).ordered
     @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @library_owner = @library_user
     render "books/index"
   end
 
   def series
-    @series = @library_user.series.includes(:books).order(rating: :desc, name: :asc)
+    @series = @library_user.series.order(rating: :desc, name: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @series = @series.to_read if params[:filter] == "to_read"
     @series = @series.to_reread if params[:filter] == "to_reread"
     @library_owner = @library_user
+    @previews = BookServices::IndexPreviews.for_series(@series)
     render "series/index"
   end
 
   def authors
-    @authors = @library_user.authors.includes(books: :serie).ordered
+    @authors = @library_user.authors.ordered
     @authors = @authors.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @library_owner = @library_user
+    @previews = BookServices::IndexPreviews.for_authors(@authors)
     render "authors/index"
   end
 

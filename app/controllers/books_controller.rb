@@ -2,9 +2,21 @@ class BooksController < ApplicationController
   before_action :set_book, only: [ :edit, :update, :download, :destroy ]
 
   def index
-    @books = current_user.books.includes(:authors, :serie).ordered
+    @books = current_user.books.without_blobs.includes(:authors, :serie).ordered
     @books = @books.where("title LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @books = filter_books(@books)
+  end
+
+  # Covers used to be inlined as base64 data URLs, which made every listing
+  # weigh as much as the covers on it. Served here so the browser caches them.
+  def cover
+    book = cover_book
+    return head :not_found unless book&.cover?
+
+    expires_in 1.year, public: false
+    return unless stale?(etag: book, last_modified: book.updated_at)
+
+    send_data book.cover_bytes, type: book.cover_mime_type, disposition: "inline"
   end
 
   def edit
@@ -61,6 +73,15 @@ class BooksController < ApplicationController
 
   def set_book
     @book = current_user.books.find(params[:id])
+  end
+
+  # Covers are also shown while browsing someone else's public library.
+  def cover_book
+    readable_users = User.where(public_library: true).or(User.where(id: current_user.id))
+
+    Book.where(user: readable_users)
+        .select(:id, :updated_at, :cover_bytes, :cover_type)
+        .find_by(id: params[:id])
   end
 
   # Only accept local paths to avoid open redirects.

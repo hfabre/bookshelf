@@ -13,6 +13,16 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
+    it "links the cover of the first book with a cover instead of embedding it" do
+      book = books(:merged_book_two)
+      book.update_columns(cover_bytes: "img", cover_type: "image/png")
+
+      get series_url
+
+      _(response.body).must_include cover_book_path(book, v: book.cache_version)
+      _(response.body).wont_include "data:image/png;base64"
+    end
+
     it "returns the filtered series as json" do
       get series_url(format: :json, q: "Shippuden")
 

@@ -63,7 +63,7 @@
       <div class="flex items-start space-x-4">
         <div class="flex-shrink-0">
           <% if @book.cover? %>
-            <img src="<%= @book.cover_data_url %>" alt="Current cover" class="w-24 h-32 object-cover rounded-md border">
+            <%= book_cover(@book, alt: "Current cover", class: "w-24 h-32 object-cover rounded-md border") %>
           <% else %>
             <div class="w-24 h-32 bg-gray-200 rounded-md border flex items-center justify-center">
               <span class="text-gray-400 text-xs"><%= t("common.no_cover") %></span>

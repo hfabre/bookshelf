@@ -8,13 +8,14 @@ module ApplicationHelper
     nil
   end
 
+  # TODO: add placeholder image when the book has no cover
   def book_cover(book, options = {})
-    if book.cover_data_url.present?
-      image_tag book.cover_data_url, options
-    else
-      # TODO: add placeholder image
-      # image_tag "cover-placeholder.png", options
-    end
+    return unless book.cover?
+
+    # v= lets the browser cache the cover for a year and still pick up an edit:
+    # cache_version moves whenever the record is saved.
+    image_tag cover_book_path(book, v: book.cache_version),
+              { loading: "lazy", decoding: "async" }.merge(options)
   end
 
   def current_library_owner

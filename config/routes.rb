@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
     member do
       get :download
+      get :cover
     end
   end
 

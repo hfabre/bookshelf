@@ -1,6 +1,6 @@
 <div class="grid grid-cols-5 gap-8">
     <% authors.each do |author| %>
-        <% first_book = author.books.first %>
+        <% first_book = previews.cover_book(author) %>
         <div class="relative group">
             <%= link_to author_show_path(author), class: "block h-full", data: { turbo_frame: "_top" } do %>
                 <article class="h-full flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
@@ -26,7 +26,7 @@
                         </h3>
 
                         <div class="text-xs text-gray-500 mt-auto">
-                            <%= t("common.book_count", count: author.books.count) %>
+                            <%= t("common.book_count", count: previews.book_count(author)) %>
                         </div>
                     </div>
                 </article>

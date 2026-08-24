@@ -1,7 +1,7 @@
 <div class="grid grid-cols-5 gap-8">
     <% series.each do |serie| %>
         <div class="relative group">
-        <% first_book = serie.books.first %>
+        <% first_book = previews.cover_book(serie) %>
         <%= link_to serie_show_path(serie), class: "block h-full", data: { turbo_frame: "_top" } do %>
             <article class="h-full flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
                 <div class="aspect-[2.8/4] w-full relative overflow-hidden bg-gray-100 flex-shrink-0">
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="text-xs text-gray-500 mt-auto">
-                        <%= t("common.book_count", count: serie.books.count) %>
+                        <%= t("common.book_count", count: previews.book_count(serie)) %>
                     </div>
                 </div>
             </article>

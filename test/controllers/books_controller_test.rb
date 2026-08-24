@@ -153,6 +153,58 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  describe "GET #cover" do
+    it "sends the cover bytes" do
+      book = books(:merged_book_one)
+      book.update_columns(cover_bytes: "img", cover_type: "image/png")
+
+      get cover_book_url(book)
+
+      assert_response :success
+      assert_equal "image/png", response.media_type
+      _(response.body).must_equal "img"
+    end
+
+    it "is not found when the book has no cover" do
+      get cover_book_url(books(:merged_book_one))
+
+      assert_response :not_found
+    end
+
+    it "serves covers from a public library to other users" do
+      book = books(:merged_book_one)
+      book.update_columns(cover_bytes: "img")
+
+      sign_in_as(users(:two))
+      get cover_book_url(book)
+
+      assert_response :success
+    end
+
+    it "changes the cover url when the cover is replaced, so a cached one is not reused" do
+      book = books(:merged_book_one)
+      book.update!(cover_bytes: "old", cover_type: "image/png")
+      get books_url
+      stale_url = cover_book_path(book, v: book.cache_version)
+      assert_includes response.body, stale_url
+
+      book.update!(cover_bytes: "new")
+      get books_url
+
+      assert_not_includes response.body, stale_url
+      assert_includes response.body, cover_book_path(book, v: book.reload.cache_version)
+    end
+
+    it "is not found for a book of a private library" do
+      book = books(:failed_book)
+      book.update_columns(cover_bytes: "img")
+
+      get cover_book_url(book)
+
+      assert_response :not_found
+    end
+  end
+
   describe "POST #upload" do
     it "calls the service and reports how many books were created" do
       service = Minitest::Mock.new

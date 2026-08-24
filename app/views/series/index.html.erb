@@ -20,8 +20,8 @@
 
 <%= turbo_frame_tag "series" do %>
     <% if @view_mode == "list" %>
-        <%= render "series/series_rows", series: @series %>
+        <%= render "series/series_rows", series: @series, previews: @previews %>
     <% else %>
-        <%= render "series/series_list", series: @series %>
+        <%= render "series/series_list", series: @series, previews: @previews %>
     <% end %>
 <% end %>

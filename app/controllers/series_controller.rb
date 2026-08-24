@@ -5,12 +5,12 @@ class SeriesController < ApplicationController
   before_action :require_admin, only: [ :edit, :update ]
 
   def index
-    @series = Serie.for_user(current_user).includes(:books).order(rating: :desc, name: :asc)
+    @series = Serie.for_user(current_user).order(rating: :desc, name: :asc)
     @series = @series.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
     @series = filter_series(@series)
 
     respond_to do |format|
-      format.html
+      format.html { @previews = BookServices::IndexPreviews.for_series(@series) }
       format.json { render json: @series.map { |s| { id: s.id, name: s.name } } }
     end
   end

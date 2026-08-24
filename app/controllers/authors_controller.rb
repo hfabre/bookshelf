@@ -3,11 +3,11 @@ class AuthorsController < ApplicationController
   before_action :require_admin, only: [ :edit, :update ]
 
   def index
-    @authors = current_user.authors.includes(books: :serie).ordered
+    @authors = current_user.authors.ordered
     @authors = @authors.where("name LIKE ?", "%#{params[:q]}%") if params[:q].present?
 
     respond_to do |format|
-      format.html
+      format.html { @previews = BookServices::IndexPreviews.for_authors(@authors) }
       format.json { render json: @authors.map { |a| { id: a.id, name: a.name } } }
     end
   end

@@ -10,8 +10,8 @@
 
 <%= turbo_frame_tag "authors" do %>
     <% if @view_mode == "list" %>
-        <%= render "authors/authors_rows", authors: @authors %>
+        <%= render "authors/authors_rows", authors: @authors, previews: @previews %>
     <% else %>
-        <%= render "authors/authors_list", authors: @authors %>
+        <%= render "authors/authors_list", authors: @authors, previews: @previews %>
     <% end %>
 <% end %>
