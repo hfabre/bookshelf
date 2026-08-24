@@ -24,10 +24,10 @@
 
   <body>
     <header class="px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm min-h-16">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 py-3 text-sm min-h-16">
         <div class="flex items-center gap-4">
           <a href="/">
-            <%= image_tag("logo-no-background.svg", class: "max-w-56") %>
+            <%= image_tag("logo-no-background.svg", class: "max-w-40 sm:max-w-56") %>
           </a>
         </div>
         <% if current_user %>
@@ -35,7 +35,7 @@
           <% unless browsing_other_library? %>
             <%= form_with url: upload_books_path, multipart: true, local: true,
                 data: { controller: "upload", action: "change->upload#handleFiles" },
-                class: "mr-4" do |form| %>
+                class: "sm:mr-4" do |form| %>
               <%= form.file_field :files, multiple: true, accept: ".epub",
                   class: "hidden", id: "epub-file-input",
                   data: { upload_target: "fileInput" } %>
@@ -45,15 +45,37 @@
             <% end %>
           <% end %>
 
-            <%= link_to t(".sign_out"), session_path, data: { turbo_method: :delete }, class: "inline-block rounded-sm border border-indigo-600 px-12 py-3 text-sm font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:ring-3 focus:outline-hidden" %>
+            <%= link_to t(".sign_out"), session_path, data: { turbo_method: :delete }, class: "inline-block rounded-sm border border-indigo-600 px-4 py-2 sm:px-12 sm:py-3 text-sm font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:ring-3 focus:outline-hidden" %>
           </div>
         <% end %>
       </div>
     </header>
 
+    <% if current_user %>
+      <%# The sidebar is desktop only, so the same destinations sit here on a phone. %>
+      <nav class="lg:hidden overflow-x-auto border-b border-zinc-100 bg-white">
+        <ul class="flex items-center gap-1 whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-500">
+          <% if browsing_other_library? %>
+            <li class="px-2 text-xs font-semibold uppercase tracking-wide text-indigo-600">
+              <%= current_library_owner.display_name %>
+            </li>
+          <% end %>
+          <li><%= link_to t(".series"), current_series_path, class: "block rounded-lg px-3 py-2 hover:bg-gray-100 hover:text-gray-700" %></li>
+          <li><%= link_to t(".authors"), current_authors_path, class: "block rounded-lg px-3 py-2 hover:bg-gray-100 hover:text-gray-700" %></li>
+          <li><%= link_to t(".books"), current_books_path, class: "block rounded-lg px-3 py-2 hover:bg-gray-100 hover:text-gray-700" %></li>
+          <li aria-hidden="true" class="mx-1 h-4 w-px shrink-0 bg-zinc-200"></li>
+          <% if browsing_other_library? %>
+            <li><%= link_to t(".back_to_my_library"), books_path, class: "block rounded-lg px-3 py-2 hover:bg-gray-100 hover:text-gray-700" %></li>
+          <% end %>
+          <li><%= link_to t(".public_libraries"), libraries_path, class: "block rounded-lg px-3 py-2 hover:bg-gray-100 hover:text-gray-700" %></li>
+          <li><%= link_to t(".edit_profile"), edit_profile_path, class: "block rounded-lg px-3 py-2 hover:bg-gray-100 hover:text-gray-700" %></li>
+        </ul>
+      </nav>
+    <% end %>
+
     <div class="flex">
       <% if current_user %>
-        <div class="flex h-screen flex-col justify-between border-e border-zinc-100 bg-white sticky top-0">
+        <div class="hidden lg:flex h-screen flex-col justify-between border-e border-zinc-100 bg-white sticky top-0">
           <div class="px-4 py-6 min-w-64">
             <!-- Library Owner Section -->
             <div class="mb-6">
@@ -213,7 +235,7 @@
           </div>
         <% end %>
 
-        <main class="container mx-auto mt-6 px-5 flex flex-col">
+        <main class="container mx-auto mt-6 px-3 sm:px-5 flex flex-col">
           <%= yield %>
         </main>
       </div>

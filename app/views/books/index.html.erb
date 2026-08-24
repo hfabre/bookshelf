@@ -1,10 +1,10 @@
 <% if @page == 1 %>
-<div class="mb-8 min-w-full flex items-start gap-4">
+<div class="mb-4 sm:mb-8 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4">
     <div class="flex-grow">
         <%= render "shared/search_form", path: current_books_path, placeholder: t(".search_placeholder"), turbo_frame: "books", extra_fields: "books/filters" %>
     </div>
 
-    <div class="shrink-0 py-5 sm:py-6">
+    <div class="shrink-0 sm:py-6">
         <%= render "shared/view_toggle" %>
     </div>
 </div>
