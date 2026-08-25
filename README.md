@@ -2,6 +2,8 @@
 
 A self-hosted library for your EPUB collection, built around the way books actually come — in series. Drop in your files, and Bookshelf reads the metadata out of them, groups the books by series and author, and lets you tidy up the details from a web UI. Edits are written back into the EPUB itself, so the files stay correct wherever you read them.
 
+![Bookshelf series view](docs/screenshot-series.png)
+
 ## Features
 
 - **Bulk upload** — add a whole folder of EPUBs at once; metadata is pulled from each file in the background.
