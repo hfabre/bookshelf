@@ -82,7 +82,7 @@ GEM
     bcrypt (3.1.22)
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.25.0)
+    bootsnap (1.26.0)
       msgpack (~> 1.5)
     brakeman (8.0.6)
       racc
@@ -281,7 +281,7 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
-    rubyzip (3.5.0)
+    rubyzip (3.6.0)
     securerandom (0.4.1)
     selenium-webdriver (4.48.0)
       base64 (~> 0.2)
@@ -383,7 +383,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.1)
   rubocop-rails-omakase
-  rubyzip (~> 3.5)
+  rubyzip (~> 3.6)
   selenium-webdriver
   solid_cable
   solid_cache
