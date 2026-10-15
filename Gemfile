@@ -66,4 +66,4 @@ gem "nokogiri"
 gem "rubyzip", "~> 3.7"
 
 # Streaming zip downloads (constant memory)
-gem "zip_kit", "~> 6.3"
+gem "zip_kit", "~> 6.4"
