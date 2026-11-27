@@ -90,6 +90,40 @@ jobs:
       #     path: ${{ github.workspace }}/tmp/screenshots
       #     if-no-files-found: ignore
 
+  # Build and boot the production image on pull requests, so a dependency that breaks
+  # assets:precompile or the production boot fails the PR rather than `publish` on main.
+  build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          load: true
+          tags: bookshelf:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+
+      - name: Boot the image and check /up
+        run: |
+          docker run -d --name bookshelf -p 3000:80 \
+            -e SECRET_KEY_BASE=ci-dummy-secret -e SOLID_QUEUE_IN_PUMA=1 bookshelf:ci
+          for i in $(seq 1 30); do
+            curl -fsS http://localhost:3000/up && exit 0
+            sleep 2
+          done
+          docker logs bookshelf
+          exit 1
+
   # Build the production image and push it to GHCR once the rest of CI is green.
   # Runs on version tags (`git tag 1.2.3 && git push --tags` → `1.2.3`/`1.2`/`latest`)
   # and on every push to main (→ `nightly`). Never on pull requests.
