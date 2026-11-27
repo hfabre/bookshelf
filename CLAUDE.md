@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Bookshelf is a Rails 8.1 (Ruby 3.3.5) web app to manage EPUB files, focused on books grouped into series. Users upload EPUBs, metadata is extracted from the files, and books can be edited (which writes changes back into the EPUB), rated, and shared via public libraries.
+Bookshelf is a Rails 8.1 (Ruby 4.0.10) web app to manage EPUB files, focused on books grouped into series. Users upload EPUBs, metadata is extracted from the files, and books can be edited (which writes changes back into the EPUB), rated, and shared via public libraries.
 
 ## Commands
 
